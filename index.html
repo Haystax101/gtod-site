@@ -9,7 +9,7 @@
   <meta property="og:description" content="Building the biggest community of ambitious young people. Ask us anything — our podcast is 100% Q&A.">
   <meta property="og:image" content="assets/logo.png">
   <meta property="og:type" content="website">
-  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,6 +56,7 @@
       width: 44px; height: 44px; border-radius: 50%;
       overflow: hidden; flex-shrink: 0; background: var(--black);
     }
+    .nav-logo img, .hero-art .logo-circle img { max-width: none; }
     .nav-logo img { width: 110%; height: 110%; margin: -5%; }
     .nav-name {
       font-family: 'Oswald', sans-serif; font-weight: 700;
@@ -71,7 +72,12 @@
     nav.links a:hover { color: var(--cream); }
     nav.links a.ask-link { color: var(--orange); }
     nav.links a.ask-link:hover { color: var(--orange-hot); }
-    @media (max-width: 640px) { nav.links a:not(.ask-link) { display: none; } }
+    @media (max-width: 640px) {
+      nav.links a:not(.ask-link) { display: none; }
+      .nav { gap: 10px; }
+      .nav-name { font-size: 0.9rem; white-space: nowrap; }
+      nav.links a.ask-link { font-size: 0.85rem; white-space: nowrap; }
+    }
 
     /* ---------- Hero ---------- */
     .hero { padding: 72px 0 88px; position: relative; }
@@ -130,7 +136,7 @@
       box-shadow: 0 0 0 6px var(--panel), 0 0 90px rgba(242, 102, 43, 0.22);
       margin: 0 auto;
     }
-    .hero-art .logo-circle img { width: 106%; height: 106%; margin: -3%; }
+    .hero-art .logo-circle img { width: 108%; height: 108%; margin: -4%; }
 
     /* ---------- Stats strip ---------- */
     .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); }
