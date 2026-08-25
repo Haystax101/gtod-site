@@ -20,8 +20,9 @@ especially welcome). 11K+ strong on TikTok, with a 100% Q&A podcast on Spotify &
 
 ## Hero phone video
 
-The hero shows a phone frame that plays `assets/reel.mp4` — a 9:16 screen
-recording of scrolling through the TikTok videos. To add or replace it, upload
+The hero shows a phone frame that plays `assets/reel.mp4` — a portrait screen
+recording of scrolling through the TikTok videos (the frame matches a phone's
+9:19.5 screen; anything portrait gets cover-cropped to fit). To add or replace it, upload
 the file at that exact path (GitHub → `assets` folder → *Add file → Upload
 files*). MP4 (H.264), ideally under ~15&nbsp;MB; it autoplays muted and loops.
 Until the file exists, the phone shows the logo and handle instead.
