@@ -30,9 +30,9 @@ Until the file exists, the phone shows the logo and handle instead.
 ## Question form
 
 The ask section posts to [FormSubmit](https://formsubmit.co), which forwards
-submissions to `questions@getthereoneday.com`. **One-time activation:** submit a
-test question on the live site, then click the confirmation link FormSubmit emails
-to that inbox. Every question after that lands straight in the inbox.
+submissions to `questions@getthereoneday.com` via the activated alias in the
+form's `action` URL (the alias hides the real address from the page source).
+The form is activated; every question lands straight in that inbox.
 
 ## Links still to fill in
 
