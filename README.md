@@ -1,13 +1,13 @@
-# Get There One Day — Landing Site
+# Get There One Day Landing Site
 
-Single-page landing site for **Get There One Day** — the community for ambitious young
+Single-page landing site for **Get There One Day**, the community for ambitious young
 people at uni, at school, at work, and building their own thing (degree apprentices
 especially welcome). 11K+ strong on TikTok, with a 100% Q&A podcast on Spotify & YouTube.
 
 ## Structure
 
-- `index.html` — the whole site (styles inlined, no build step)
-- `assets/logo.png` — the GTOD circular logo (also used as favicon)
+- `index.html` - the whole site (styles inlined, no build step)
+- `assets/logo.png` - the GTOD circular logo (also used as favicon)
 
 ## Deploying (Hostinger, tracking this repo)
 
@@ -16,13 +16,13 @@ especially welcome). 11K+ strong on TikTok, with a 100% Q&A podcast on Spotify &
 3. Click **Deploy** once, then copy the **webhook URL** Hostinger shows and add it in
    GitHub → repo **Settings → Webhooks** so every push auto-deploys
 
-(Alternative: GitHub Pages — Settings → Pages → deploy from `main` / root.)
+(Alternative: GitHub Pages via Settings → Pages → deploy from `main` / root.)
 
 ## Hero phone video
 
-The hero shows a phone frame that plays `assets/reel.mp4` — a portrait screen
-recording of scrolling through the TikTok videos (the frame matches a phone's
-9:19.5 screen; anything portrait gets cover-cropped to fit). To add or replace it, upload
+The hero shows a phone frame that plays `assets/reel.mp4`, a portrait screen
+recording of scrolling through the TikTok videos (the frame matches the
+iPhone 16 Pro screen, 1206 x 2622; other portrait sizes get cover-cropped to fit). To add or replace it, upload
 the file at that exact path (GitHub → `assets` folder → *Add file → Upload
 files*). MP4 (H.264), ideally under ~15&nbsp;MB; it autoplays muted and loops.
 Until the file exists, the phone shows the logo and handle instead.
