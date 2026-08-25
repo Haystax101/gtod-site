@@ -27,6 +27,16 @@ the file at that exact path (GitHub → `assets` folder → *Add file → Upload
 files*). MP4 (H.264), ideally under ~15&nbsp;MB; it autoplays muted and loops.
 Until the file exists, the phone shows the logo and handle instead.
 
+## Analytics (PostHog)
+
+`index.html` has a PostHog snippet near the top, gated behind a placeholder key
+so it does nothing until configured. To switch it on: sign up at posthog.com,
+then in the site head set `POSTHOG_KEY` to the project API key (`phc_...`, from
+Settings -> Project) and `POSTHOG_HOST` to the region shown there
+(`https://eu.i.posthog.com` or `https://us.i.posthog.com`). Pageviews and
+clicks are captured automatically; question submissions fire a
+`question_submitted` event.
+
 ## Question form
 
 The ask section posts to [FormSubmit](https://formsubmit.co), which forwards
