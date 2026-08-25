@@ -56,7 +56,7 @@
       width: 44px; height: 44px; border-radius: 50%;
       overflow: hidden; flex-shrink: 0; background: var(--black);
     }
-    .nav-logo img, .hero-art .logo-circle img { max-width: none; }
+    .nav-logo img { max-width: none; }
     .nav-logo img { width: 110%; height: 110%; margin: -5%; }
     .nav-name {
       font-family: 'Oswald', sans-serif; font-weight: 700;
@@ -129,14 +129,46 @@
       border: 2px solid var(--teal); color: var(--cream);
     }
     .btn-ghost:hover { border-color: var(--orange); }
-    .hero-art { position: relative; }
-    .hero-art .logo-circle {
-      width: min(340px, 70vw); aspect-ratio: 1;
-      border-radius: 50%; overflow: hidden;
-      box-shadow: 0 0 0 6px var(--panel), 0 0 90px rgba(242, 102, 43, 0.22);
-      margin: 0 auto;
+    .hero-art { display: flex; justify-content: center; }
+    .phone {
+      position: relative; width: min(270px, 60vw);
+      padding: 12px; border-radius: 48px;
+      background: linear-gradient(160deg, #262322, #171514);
+      border: 1px solid #363130;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 90px rgba(242, 102, 43, 0.15),
+                  inset 0 0 0 2px #0b0a0a;
+      animation: float 7s ease-in-out infinite;
     }
-    .hero-art .logo-circle img { width: 108%; height: 108%; margin: -4%; }
+    @keyframes float {
+      0%, 100% { transform: rotate(2.5deg) translateY(0); }
+      50% { transform: rotate(2.5deg) translateY(-12px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .phone { animation: none; transform: rotate(2.5deg); }
+    }
+    .screen {
+      position: relative; aspect-ratio: 9 / 16;
+      border-radius: 36px; overflow: hidden; background: #000;
+    }
+    .screen video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; max-width: none;
+    }
+    .screen-fallback {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; text-align: center;
+      background: radial-gradient(circle at 50% 30%, #221d1a, var(--black) 75%);
+    }
+    .screen-fallback img { width: 44%; }
+    .screen-fallback span {
+      font-family: 'Oswald', sans-serif; font-weight: 500;
+      letter-spacing: 0.08em; font-size: 0.9rem; color: var(--muted);
+    }
+    .island {
+      position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+      width: 34%; height: 20px; background: #0b0a0a; border-radius: 999px;
+    }
 
     /* ---------- Stats strip ---------- */
     .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--panel); }
@@ -184,22 +216,6 @@
 
     /* Podcast */
     .podcast { background: var(--panel); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .pod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-top: 8px; }
-    @media (max-width: 820px) { .pod-grid { grid-template-columns: 1fr; } }
-    .steps { list-style: none; counter-reset: step; margin-top: 6px; }
-    .steps li {
-      counter-increment: step; position: relative;
-      padding: 0 0 22px 58px; color: var(--muted);
-    }
-    .steps li strong { color: var(--cream); display: block; font-size: 1.05rem; }
-    .steps li::before {
-      content: counter(step, decimal-leading-zero);
-      position: absolute; left: 0; top: 2px;
-      font-family: 'Oswald', sans-serif; font-weight: 700;
-      color: var(--orange); font-size: 1.3rem;
-      border: 2px solid var(--teal); border-radius: 8px;
-      width: 42px; height: 42px; display: grid; place-items: center;
-    }
     .listen-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
 
     /* Ask card */
@@ -284,7 +300,7 @@
   <section class="hero" id="top">
     <div class="wrap">
       <div>
-        <div class="kicker">⚡ <b>11K+</b>&nbsp;strong on TikTok — and growing</div>
+        <div class="kicker"><b>11K+</b>&nbsp;strong on TikTok — and growing</div>
         <div class="stack" aria-label="Get There One Day">
           <div class="row"><span class="bar bar-teal">Get There</span></div>
           <div class="row"><span class="bar bar-orange">One</span></div>
@@ -296,12 +312,22 @@
           Real talk about getting where you want to be, one day at a time.
         </p>
         <div class="cta-row">
-          <a class="btn btn-orange" href="#ask">🎙 Submit a question</a>
+          <a class="btn btn-orange" href="#ask">Submit a question</a>
           <a class="btn btn-ghost" href="#podcast">Listen to the podcast</a>
         </div>
       </div>
       <div class="hero-art">
-        <div class="logo-circle"><img src="assets/logo.png" alt="Get There One Day circular logo"></div>
+        <div class="phone">
+          <div class="screen">
+            <div class="screen-fallback">
+              <img src="assets/favicon.png" alt="Get There One Day logo">
+              <span>@getthereonedaypod</span>
+            </div>
+            <!-- Drop a 9:16 screen recording at assets/reel.mp4 and it plays here automatically -->
+            <video src="assets/reel.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Get There One Day TikTok videos"></video>
+          </div>
+          <div class="island"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -349,26 +375,17 @@
     <div class="wrap">
       <div class="section-tag">The podcast</div>
       <h2>No scripts. No fluff. <span class="hl">100% your questions.</span></h2>
-      <div class="pod-grid">
-        <div>
-          <p class="copy">
-            The Get There One Day podcast is entirely Q&amp;A. Every episode is built
-            from questions sent in by the community — careers, uni vs. apprenticeships,
-            money, motivation, starting something of your own. If you're wondering it,
-            someone else is too.
-          </p>
-          <div class="listen-row">
-            <!-- TODO: replace with the real Spotify show URL -->
-            <a class="btn btn-orange" href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify</a>
-            <!-- TODO: replace with the real YouTube channel URL -->
-            <a class="btn btn-ghost" href="https://www.youtube.com/@getthereoneday" target="_blank" rel="noopener">YouTube</a>
-          </div>
-        </div>
-        <ol class="steps">
-          <li><strong>You ask</strong> Send your question in — takes 30 seconds, no name needed if you'd rather stay anonymous.</li>
-          <li><strong>We pick</strong> The best questions from the community make the episode.</li>
-          <li><strong>We answer on the pod</strong> Honest answers on Spotify and YouTube. No question too big or too small.</li>
-        </ol>
+      <p class="copy">
+        The Get There One Day podcast is entirely Q&amp;A. Every episode is built
+        from questions sent in by the community — careers, uni vs. apprenticeships,
+        money, motivation, starting something of your own. If you're wondering it,
+        someone else is too.
+      </p>
+      <div class="listen-row">
+        <!-- TODO: replace with the real Spotify show URL -->
+        <a class="btn btn-orange" href="https://open.spotify.com/" target="_blank" rel="noopener">Spotify</a>
+        <!-- TODO: replace with the real YouTube channel URL -->
+        <a class="btn btn-ghost" href="https://www.youtube.com/@getthereoneday" target="_blank" rel="noopener">YouTube</a>
       </div>
     </div>
   </section>
@@ -384,17 +401,17 @@
           Drop it below and it could be answered on the next episode of the podcast.
         </p>
         <form class="ask-form" action="https://formsubmit.co/questions@getthereoneday.com" method="POST">
-          <input type="hidden" name="_subject" value="🎙 New podcast question — getthereoneday.com">
+          <input type="hidden" name="_subject" value="New podcast question — getthereoneday.com">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_next" value="https://getthereoneday.com/?submitted=1" id="next-url">
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <input type="text" name="name" placeholder="Your name or @handle (optional — anonymous is fine)">
           <textarea name="question" required rows="4" maxlength="2000" placeholder="What do you want answered on the pod? Careers, uni, apprenticeships, money — ask anything."></textarea>
-          <button class="btn btn-orange" type="submit">🎙 Submit your question</button>
+          <button class="btn btn-orange" type="submit">Submit your question</button>
         </form>
         <div class="thanks" id="thanks" hidden>
-          Question received. 🎙 Keep an eye (and ear) on the next episode —
+          Question received. Keep an eye (and ear) on the next episode —
           and follow us on <a href="https://www.tiktok.com/@getthereonedaypod" target="_blank" rel="noopener">TikTok</a> so you don't miss it.
           <br><a href="./#ask" id="ask-again">Ask another question →</a>
         </div>
@@ -443,7 +460,7 @@
     <div class="wrap">
       <div class="nav-logo"><img src="assets/logo.png" alt=""></div>
       <div class="fine"><b>Get There One Day</b> · © 2026 · All rights reserved</div>
-      <div class="tag">One day at a time ⚡</div>
+      <div class="tag">One day at a time</div>
     </div>
   </footer>
 
@@ -455,6 +472,9 @@
       document.querySelector('.ask-form').hidden = true;
       document.getElementById('thanks').hidden = false;
     }
+    // Until assets/reel.mp4 exists, drop the broken video so the fallback shows
+    const reel = document.querySelector('.screen video');
+    reel.addEventListener('error', () => reel.remove(), { once: true });
     document.getElementById('ask-again').addEventListener('click', (e) => {
       e.preventDefault();
       document.querySelector('.ask-form').hidden = false;
