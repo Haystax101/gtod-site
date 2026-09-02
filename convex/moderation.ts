@@ -302,7 +302,7 @@ export function displayName(name?: string): string {
 function moderatorList(): string[] {
   return (process.env.COMMUNITY_MODERATORS ?? '')
     .split(',')
-    .map((s) => s.trim().toLowerCase())
+    .map((s: string) => s.trim().toLowerCase())
     .filter(Boolean)
 }
 
