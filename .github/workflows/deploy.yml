@@ -1,0 +1,50 @@
+name: Build and publish to the deploy branch
+
+# Hostinger tracks the `deploy` branch (built static files) rather than `main`
+# (React source). Every push to main deploys the Convex backend, rebuilds the
+# site against it, and force-pushes the output to `deploy`, so Hostinger's
+# webhook picks it up automatically.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Pushes convex/ to the production deployment, then builds the front end
+      # with VITE_CONVEX_URL pointed at it. CONVEX_DEPLOY_KEY comes from the
+      # Convex dashboard (Settings → Deploy keys → Production).
+      - run: npx convex deploy --cmd 'npm run build'
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+          # Optional. Without them analytics stays off and the site still renders.
+          VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ secrets.VITE_POSTHOG_HOST }}
+
+      - name: Push dist to the deploy branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: deploy
+          force_orphan: true
+          enable_jekyll: false
