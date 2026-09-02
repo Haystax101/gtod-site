@@ -324,9 +324,9 @@ export function tasksFor(
         dueAt: deadline,
         repeat: 'once',
       })
-      if (days !== undefined && days >= 0 && days <= 7) {
+      if (deadline !== undefined && days !== undefined && days >= 0 && days <= 7) {
         drafts.push({
-          title: `Sit your ${who} online test before ${formatDay(deadline!)}`,
+          title: `Sit your ${who} online test before ${formatDay(deadline)}`,
           detail: `Invitations expire. Missing the window counts as a withdrawal, not a delay.`,
           dueAt: deadline,
           repeat: 'weekly',
@@ -979,11 +979,11 @@ async function recentTasks(ctx: MutationCtx, userId: Id<'users'>, now: number) {
 async function syncTasks(
   ctx: MutationCtx,
   userId: Id<'users'>,
-  application: ApplicationLike,
+  application: Doc<'applications'>,
   scheme: Doc<'schemes'> | null,
   now: number,
 ): Promise<number> {
-  const applicationId = (application as Doc<'applications'>)._id
+  const applicationId = application._id
   const history = await recentTasks(ctx, userId, now)
   const usedThisWeek = history.filter(
     (t) => t.weekOf === weekOf(now) && t.source === 'generated',
@@ -1021,7 +1021,7 @@ export const generateWeeklyTasks = internalMutation({
     const now = args.now ?? Date.now()
     const applications = await ctx.db.query('applications').collect()
 
-    const byUser = new Map<string, Doc<'applications'>[]>()
+    const byUser = new Map<Id<'users'>, Doc<'applications'>[]>()
     for (const application of applications) {
       if (isClosed(application.stage)) continue
       const list = byUser.get(application.userId) ?? []
@@ -1031,7 +1031,7 @@ export const generateWeeklyTasks = internalMutation({
 
     let created = 0
     for (const [userId, apps] of byUser) {
-      const history = await recentTasks(ctx, userId as Id<'users'>, now)
+      const history = await recentTasks(ctx, userId, now)
       let budget =
         MAX_GENERATED_PER_WEEK -
         history.filter((t) => t.weekOf === weekOf(now) && t.source === 'generated').length
@@ -1052,7 +1052,7 @@ export const generateWeeklyTasks = internalMutation({
         if (!drafts.length) continue
         const written = await writeDrafts(
           ctx,
-          userId as Id<'users'>,
+          userId,
           application._id,
           drafts,
           history,
