@@ -66,6 +66,9 @@ export default defineSchema({
     messages: v.number(),
     inputTokens: v.number(),
     outputTokens: v.number(),
+    // Voice draws from the same costMicros envelope as chat, so a user cannot
+    // exceed the monthly ceiling by switching between them.
+    voiceSeconds: v.optional(v.number()),
     costMicros: v.number(),
   }).index('by_user_month', ['userId', 'month']),
 
@@ -83,6 +86,205 @@ export default defineSchema({
     alwaysOn: v.optional(v.boolean()),
     updatedAt: v.number(),
   }).index('by_slug', ['slug']),
+
+  // ---------------------------------------------------------------- timeline
+
+  // Curated employer schemes. Hand-maintained, not scraped: scraping vacancy
+  // data carries UK database-right and terms-of-service exposure, and stale
+  // dates destroy trust faster than missing ones. `verified` marks a date a
+  // human has confirmed against the employer's own page.
+  schemes: defineTable({
+    slug: v.string(),
+    employer: v.string(),
+    name: v.string(),
+    level: v.optional(v.number()),
+    sector: v.optional(v.string()),
+    url: v.string(),
+    // Dates are optional because many schemes recruit on a rolling basis and
+    // publish no window at all. Never invent one.
+    opensAt: v.optional(v.number()),
+    closesAt: v.optional(v.number()),
+    rolling: v.optional(v.boolean()),
+    locations: v.optional(v.array(v.string())),
+    entryRequirements: v.optional(v.string()),
+    salary: v.optional(v.string()),
+    notes: v.optional(v.string()),
+    verified: v.boolean(),
+    verifiedAt: v.optional(v.number()),
+    updatedAt: v.number(),
+  })
+    .index('by_slug', ['slug'])
+    .index('by_closesAt', ['closesAt']),
+
+  // A scheme a user is tracking, and where they have got to with it.
+  applications: defineTable({
+    userId: v.id('users'),
+    schemeId: v.optional(v.id('schemes')),
+    // Free-text fallback so a user can track something not in our directory.
+    customEmployer: v.optional(v.string()),
+    customName: v.optional(v.string()),
+    stage: v.union(
+      v.literal('interested'),
+      v.literal('applying'),
+      v.literal('submitted'),
+      v.literal('online_test'),
+      v.literal('video_interview'),
+      v.literal('assessment_centre'),
+      v.literal('final_interview'),
+      v.literal('offer'),
+      v.literal('rejected'),
+      v.literal('withdrawn'),
+    ),
+    deadlineAt: v.optional(v.number()),
+    notes: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_user', ['userId', 'updatedAt'])
+    .index('by_user_stage', ['userId', 'stage']),
+
+  // Weekly todos. Generated from application stage and deadlines by a cron,
+  // plus anything the user adds themselves.
+  tasks: defineTable({
+    userId: v.id('users'),
+    applicationId: v.optional(v.id('applications')),
+    title: v.string(),
+    detail: v.optional(v.string()),
+    dueAt: v.optional(v.number()),
+    weekOf: v.string(), // ISO date of the Monday, so a week can be queried whole
+    source: v.union(v.literal('generated'), v.literal('user')),
+    doneAt: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index('by_user_week', ['userId', 'weekOf'])
+    .index('by_user_done', ['userId', 'doneAt']),
+
+  // ---------------------------------------------------------------- coaching
+
+  // Reusable competency answers. The compounding asset: the more a user banks,
+  // the more expensive leaving becomes.
+  answers: defineTable({
+    userId: v.id('users'),
+    competency: v.string(),
+    prompt: v.string(),
+    body: v.string(),
+    starComplete: v.optional(v.boolean()),
+    lastCritiqueAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index('by_user', ['userId', 'updatedAt'])
+    .index('by_user_competency', ['userId', 'competency']),
+
+  // Charge's critique of an answer, kept so a user can see progress over time.
+  critiques: defineTable({
+    answerId: v.id('answers'),
+    userId: v.id('users'),
+    body: v.string(),
+    strengths: v.optional(v.array(v.string())),
+    fixes: v.optional(v.array(v.string())),
+    createdAt: v.number(),
+  }).index('by_answer', ['answerId', 'createdAt']),
+
+  // A rejection, and the debrief built from it. The modal outcome of this
+  // market and the thing no competitor addresses at all.
+  rejections: defineTable({
+    userId: v.id('users'),
+    applicationId: v.optional(v.id('applications')),
+    stage: v.string(),
+    feedbackGiven: v.optional(v.string()),
+    debrief: v.optional(v.string()),
+    actions: v.optional(v.array(v.string())),
+    createdAt: v.number(),
+  }).index('by_user', ['userId', 'createdAt']),
+
+  // --------------------------------------------------------------- community
+
+  // A cohort is scoped to a scheme and intake year, so it is never a general
+  // teen forum. Narrow scope is both the product point and the safety posture.
+  cohorts: defineTable({
+    slug: v.string(),
+    name: v.string(),
+    schemeId: v.optional(v.id('schemes')),
+    intakeYear: v.number(),
+    memberCount: v.number(),
+    enabled: v.boolean(),
+    createdAt: v.number(),
+  })
+    .index('by_slug', ['slug'])
+    .index('by_intakeYear', ['intakeYear']),
+
+  cohortMembers: defineTable({
+    cohortId: v.id('cohorts'),
+    userId: v.id('users'),
+    joinedAt: v.number(),
+  })
+    .index('by_cohort', ['cohortId'])
+    .index('by_user', ['userId']),
+
+  // Posts default to `pending`. The audience is 16-19, so publication is a
+  // decision someone makes, not the default state of user input.
+  posts: defineTable({
+    cohortId: v.id('cohorts'),
+    userId: v.id('users'),
+    body: v.string(),
+    replyToId: v.optional(v.id('posts')),
+    status: v.union(
+      v.literal('pending'),
+      v.literal('visible'),
+      v.literal('hidden'),
+      v.literal('removed'),
+    ),
+    moderatedBy: v.optional(v.string()),
+    moderatedAt: v.optional(v.number()),
+    moderationNote: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index('by_cohort', ['cohortId', 'createdAt'])
+    .index('by_status', ['status', 'createdAt'])
+    .index('by_user', ['userId', 'createdAt']),
+
+  reports: defineTable({
+    postId: v.id('posts'),
+    reporterId: v.id('users'),
+    reason: v.string(),
+    resolvedAt: v.optional(v.number()),
+    createdAt: v.number(),
+  })
+    .index('by_post', ['postId'])
+    .index('by_unresolved', ['resolvedAt', 'createdAt']),
+
+  blocks: defineTable({
+    userId: v.id('users'),
+    blockedUserId: v.id('users'),
+    createdAt: v.number(),
+  }).index('by_user', ['userId']),
+
+  // ------------------------------------------------------------------- voice
+
+  // One row per live audio session. Written before the session starts so an
+  // abandoned or crashed session still consumes its reservation rather than
+  // silently costing nothing until reconciliation.
+  voiceSessions: defineTable({
+    userId: v.id('users'),
+    kind: v.union(v.literal('interview'), v.literal('checkin'), v.literal('practice')),
+    applicationId: v.optional(v.id('applications')),
+    status: v.union(
+      v.literal('reserved'),
+      v.literal('active'),
+      v.literal('ended'),
+      v.literal('expired'),
+    ),
+    reservedMinutes: v.number(),
+    seconds: v.number(),
+    costMicros: v.number(),
+    startedAt: v.number(),
+    endedAt: v.optional(v.number()),
+    transcript: v.optional(v.string()),
+    summary: v.optional(v.string()),
+  })
+    .index('by_user', ['userId', 'startedAt'])
+    .index('by_user_status', ['userId', 'status']),
 
   // Reserved for when the knowledge base outgrows the prompt: chunk + embed docs
   // here and switch prompt.ts to vector retrieval. Unused until then.
