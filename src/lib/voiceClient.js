@@ -79,6 +79,7 @@ function decodeFrame(raw) {
  *
  * @param {object} opts
  * @param {string} opts.url           provider websocket endpoint
+ * @param {string} opts.model         live model id, e.g. from VITE_VOICE_MODEL
  * @param {string} opts.token         short-lived credential minted server-side
  * @param {number} opts.sessionMinutes hard ceiling from the server
  * @param {string} opts.system        system instruction for this session
@@ -89,7 +90,7 @@ function decodeFrame(raw) {
  */
 export function startVoiceSession(opts) {
   const {
-    url, token, sessionMinutes, system, context = '',
+    url, token, model, sessionMinutes, system, context = '',
     onState = () => {}, onHeartbeat = () => {},
   } = opts
 
@@ -128,6 +129,10 @@ export function startVoiceSession(opts) {
     try {
       onState({ status: 'connecting' })
 
+      if (!model) {
+        throw Object.assign(new Error('no-model'), { name: 'ConfigError' })
+      }
+
       stream = await navigator.mediaDevices.getUserMedia({
         audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
       })
@@ -145,6 +150,10 @@ export function startVoiceSession(opts) {
       socket.onopen = () => {
         socket.send(JSON.stringify({
           setup: {
+            // The Live API keys the session to a model here. Without it the
+            // socket opens and then closes with nothing useful to report, so
+            // the caller is required to supply one.
+            model,
             systemInstruction: context ? `${system}\n\n${context}` : system,
             audioConfig: { sampleRateHertz: INPUT_SAMPLE_RATE },
           },
@@ -189,9 +198,11 @@ export function startVoiceSession(opts) {
       onState({
         status: 'error',
         error:
-          err?.name === 'NotAllowedError'
-            ? 'Charge needs microphone access for a call. Allow it in your browser and try again.'
-            : 'Could not start the call. Check your connection and try again.',
+          err?.name === 'ConfigError'
+            ? 'Voice is not configured yet: no model is set. Set VITE_VOICE_MODEL and rebuild.'
+            : err?.name === 'NotAllowedError'
+              ? 'Charge needs microphone access for a call. Allow it in your browser and try again.'
+              : 'Could not start the call. Check your connection and try again.',
       })
       await stop('error')
     }

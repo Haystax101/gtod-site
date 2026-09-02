@@ -48,6 +48,7 @@ export default function Interview() {
 
       sessionRef.current = startVoiceSession({
         url: import.meta.env.VITE_VOICE_WS_URL ?? 'wss://generativelanguage.googleapis.com/ws',
+        model: import.meta.env.VITE_VOICE_MODEL,
         token: session.token,
         sessionMinutes: session.sessionMinutes,
         system: session.system ?? '',

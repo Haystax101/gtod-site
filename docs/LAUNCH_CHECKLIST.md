@@ -22,6 +22,7 @@ Front end (`.env.local`, baked in at build time):
 | Variable | Needed for |
 |---|---|
 | `VITE_VOICE_WS_URL` | the voice websocket endpoint |
+| `VITE_VOICE_MODEL` | the Live model id. **Required** - voice refuses to start without it |
 
 ## 2. Things that must be verified, not assumed (you)
 
@@ -39,9 +40,14 @@ is a small, contained edit.
    credential stays short-lived and single-session, and the raw API key is never
    returned to the browser.
 4. **The voice websocket protocol** in `src/lib/voiceClient.js` -
-   `encodeFrame`, `decodeFrame` and the `onmessage` branch. Everything else in
-   that file (capture, resampling, playback, teardown, timing) is
-   provider-independent.
+   `encodeFrame`, `decodeFrame`, the `onmessage` branch, and the socket URL.
+   The default `wss://generativelanguage.googleapis.com/ws` is a placeholder:
+   the real Live endpoint carries a full service path, so this will not connect
+   as-is. Everything else in that file (capture, resampling, playback,
+   teardown, timing) is provider-independent.
+   Also set `VITE_VOICE_MODEL` to a Live-capable model id. The setup frame
+   requires it and the client now refuses to open a socket without one, rather
+   than connecting and dying on an opaque close.
 5. **The real per-minute audio rate.** Then run
    `python3 tools/cost/model.py --voice-rate-per-min <rate> --heavy-user` and
    confirm the margin is still positive. If it is not, lower
