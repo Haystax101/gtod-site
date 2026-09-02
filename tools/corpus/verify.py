@@ -244,8 +244,12 @@ def main() -> int:
     args = ap.parse_args()
 
     root = Path(args.path)
+    # _meta holds specs, _unverified holds quarantined drafts that deliberately
+    # fail these checks. Neither is part of the verified corpus.
     files = sorted(p for p in root.rglob("*.md")
-                   if "_meta" not in p.parts and p.name != "README.md")
+                   if "_meta" not in p.parts
+                   and "_unverified" not in p.parts
+                   and p.name != "README.md")
     if not files:
         print(f"No markdown documents found under {root}")
         return 0
