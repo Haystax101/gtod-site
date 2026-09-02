@@ -17,135 +17,145 @@ region: uk
 audience: [school-leaver, sixth-former, parent]
 topics: [applying, deadlines, timeline, year-12, year-13, results-day]
 volatility: high
-last_verified: 2026-09-02
+last_verified: never  # never verified against a source; see evidence_quality
 maintainer: gtod
+evidence_quality: search-extracts-only
+verification_note: >
+  NOT VERIFIED. No URL in this document was opened. Outbound egress to every
+  research domain was denied by network policy on 2026-09-02 (see
+  ../../_meta/RESEARCH_BLOCKED.md). Every source below was seen only as a
+  web-search result. In the sources list, `accessed` records the date of that
+  search and NOT a page visit, and `type` records what kind of publisher the
+  source is and NOT that the cited claim was confirmed there. Do not seed this
+  document into the Convex knowledge table. Promotion requires a human to open
+  each URL per ../README.md.
 sources:
   - id: s1
     title: How to apply for an apprenticeship
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/how-apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s2
     title: Degree apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/degree-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s3
     title: 2027 entry deadline for all undergraduate courses, except those with a 15 October deadline
     publisher: UCAS
     url: https://www.ucas.com/events/2027-entry-deadline-for-all-undergraduate-courses-except-those-with-a-15-october-deadline-475546
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s4
     title: Dates and deadlines for uni applications
     publisher: UCAS
     url: https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s5
     title: BAE Systems opens 2026 apprenticeship applications as training numbers hit record high
     publisher: The Manufacturer
     url: https://www.themanufacturer.com/articles/bae-systems-opens-2026-apprenticeship-applications-as-training-numbers-hit-record-high/
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s6
     title: BAE Systems 2026 apprenticeships open for applications
     publisher: Manufacturing Management
     url: https://www.manufacturingmanagement.co.uk/content/news/bae-systems-2026-apprenticeships-open-for-applications
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s7
     title: Apprenticeship FAQs
     publisher: BAE Systems
     url: https://www.baesystems.com/en/careers/careers-in-the-uk/apprenticeships/faqs
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s8
     title: 20 years of talent - Rolls-Royce Motor Cars opens application window for apprenticeship programme
     publisher: Rolls-Royce Motor Cars PressClub
     url: https://www.press.rolls-roycemotorcars.com/rolls-royce-motor-cars-pressclub/article/detail/T0455434EN/20-years-of-talent:-rolls-royce-motor-cars-opens-application-window-for-apprenticeship-programme?language=en
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s9
     title: UK apprenticeships and school leaver programmes
     publisher: Rolls-Royce
     url: https://careers.rolls-royce.com/en/students-and-graduates/united-kingdom/apprenticeships-and-school-leavers
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s10
     title: Find a degree apprenticeship
     publisher: Office for Students
     url: https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/find-a-degree-apprenticeship/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s11
     title: Results day 2026 - what's next after picking up your A level, T Level and VTQ results?
     publisher: DfE Education Hub blog
     url: https://educationhub.blog.gov.uk/2026/08/results-day-2026-next-after-picking-up-a-level-t-level-vtq-results/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s12
     title: Your A level results are in - now what? Exploring apprenticeships as your next step
     publisher: DfE Education Hub blog
     url: https://educationhub.blog.gov.uk/2025/08/your-a-level-results-are-in-now-what-exploring-apprenticeships-as-your-next-step/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s13
     title: Find an apprenticeship
     publisher: GOV.UK
     url: https://www.gov.uk/apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s14
     title: When to apply for apprenticeships - 2027 deadlines
     publisher: CV-Library
     url: https://www.cv-library.co.uk/career-advice/apprenticeships/when-to-apply-for-apprenticeships
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s15
     title: The degree apprenticeship application timeline, month by month
     publisher: The Apprentice Route
     url: https://theapprenticeroute.co.uk/articles/degree-apprenticeship-application-timeline/
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s16
     title: When do I apply for degree apprenticeships?
     publisher: Springpod
     url: https://articles.springpod.com/i/when-do-i-apply-for-degree-apprenticeships
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s17
     title: Flying Start degree programmes
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/entry-level/flying-start.html
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s18
     title: A-level exam dates 2027 - key dates to know
     publisher: Atom Learning
     url: https://www.atomlearning.com/blog/a-level-exam-dates
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s19
     title: When do you apply for an apprenticeship? (And other FAQs)
     publisher: Indeed UK
     url: https://uk.indeed.com/career-advice/finding-a-job/when-apply-for-apprenticeship
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s20
     title: Higher and degree apprenticeship vacancy listing
     publisher: Amazing Apprenticeships
     url: https://www.amazingapprenticeships.com/higher-degree-listing/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s21
     title: Preparing for apprenticeship applications - summer of year 12 edition
     publisher: Notgoingtouni
     url: https://notgoingtouni.co.uk/blogs/preparing-for-apprenticeship-applications-summer-of-year-12-edition
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
 ---
 
 ## In one line

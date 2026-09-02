@@ -17,129 +17,139 @@ region: uk
 audience: [school-leaver, sixth-former, parent, career-changer]
 topics: [rejection, reapplying, feedback, alternatives, competition, foundation-apprenticeship]
 volatility: medium
-last_verified: 2026-09-02
+last_verified: never  # never verified against a source; see evidence_quality
 maintainer: gtod
+evidence_quality: search-extracts-only
+verification_note: >
+  NOT VERIFIED. No URL in this document was opened. Outbound egress to every
+  research domain was denied by network policy on 2026-09-02 (see
+  ../../_meta/RESEARCH_BLOCKED.md). Every source below was seen only as a
+  web-search result. In the sources list, `accessed` records the date of that
+  search and NOT a page visit, and `type` records what kind of publisher the
+  source is and NOT that the cited claim was confirmed there. Do not seed this
+  document into the Convex knowledge table. Promotion requires a human to open
+  each URL per ../README.md.
 sources:
   - id: s1
     title: Early Careers FAQs
     publisher: EY UK
     url: https://www.ey.com/en_uk/careers/students/faqs
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s2
     title: Can I re-apply to an Apprenticeship Programme after 3 months?
     publisher: EY UK candidate Q&A
     url: https://ey-uk.careerpages.rec-marketing.dc3.pageuppeople.com/discussions/can-i-re-apply-to-an-apprenticeship-programme-after-3-months
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s3
     title: If I fail part of the recruitment process when can I apply again?
     publisher: EY UK candidate Q&A
     url: https://ey-uk.career-inspiration.com/discussion/21513/if-i-fail-part-of-the-recruitment-process-when-can-i-apply-again
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s4
     title: How to apply
     publisher: EY UK
     url: https://www.ey.com/en_uk/careers/students/application-process
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s5
     title: Apprenticeship FAQs
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/apprenticeship-faqs
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s6
     title: Dealing with job rejection as a graduate
     publisher: TARGETjobs
     url: https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/dealing-job-rejection-graduate
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s7
     title: Been rejected after a graduate job interview? Here's how to get feedback
     publisher: TARGETjobs
     url: https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/been-rejected-after-graduate-job-interview-heres-how-get-feedback
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s8
     title: Degree apprenticeships draw 11 applicants per place
     publisher: Insurance Business UK
     url: https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s9
     title: Triple rise in the number of degree apprenticeship applications
     publisher: Personnel Today
     url: https://www.personneltoday.com/hr/triple-rise-in-the-number-of-degree-apprenticeship-applications/
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s10
     title: Level 2 apprenticeships (foundation apprenticeships)
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/england/level-2-foundation-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s11
     title: English and maths rules for foundation apprentices revealed
     publisher: FE Week
     url: https://feweek.co.uk/english-and-maths-rules-for-foundation-apprentices-revealed/
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s12
     title: What are foundation apprenticeships and who are they for?
     publisher: Association of Employment and Learning Providers (AELP)
     url: https://www.aelp.org.uk/policy-and-research-topics/what-are-foundation-apprenticeships-and-who-are-they-for/
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s13
     title: What happens after applying for an apprenticeship?
     publisher: Higherin
     url: https://higherin.com/careers-advice/interview-tips/after-applying-apprenticeship
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s14
     title: Find an apprenticeship
     publisher: GOV.UK
     url: https://www.gov.uk/apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s15
     title: Results day 2026 - what's next after picking up your A level, T Level and VTQ results?
     publisher: DfE Education Hub blog
     url: https://educationhub.blog.gov.uk/2026/08/results-day-2026-next-after-picking-up-a-level-t-level-vtq-results/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s16
     title: Degree apprenticeships - guide for apprentices
     publisher: Office for Students
     url: https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s17
     title: Apprenticeships in England - entry requirements
     publisher: UCAS
     url: https://www.ucas.com/entry-requirements-apprenticeships-england
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s18
     title: Apprenticeships, academic year 2025/26
     publisher: Explore education statistics (DfE)
     url: https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s19
     title: What you need to know about foundation apprenticeships - a young person's guide
     publisher: Youth Employment UK
     url: https://www.youthemployment.org.uk/what-you-need-to-know-about-foundation-apprenticeships/
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s20
     title: Apprenticeship statistics for England
     publisher: House of Commons Library
     url: https://commonslibrary.parliament.uk/research-briefings/sn06113/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line

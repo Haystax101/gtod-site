@@ -13,7 +13,9 @@ region: uk
 audience: [school-leaver, sixth-former, graduate, career-changer, parent]
 topics: [assessment, psychometrics, aptitude-tests, situational-judgement, accessibility, applying]
 volatility: medium
-last_verified: 2026-09-02
+last_verified: never            # NEVER VERIFIED - no cited URL was opened
+verification: none
+evidence_quality: search-extracts-only
 maintainer: gtod
 sources:
   - id: s1

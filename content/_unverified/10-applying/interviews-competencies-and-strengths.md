@@ -14,7 +14,9 @@ region: uk
 audience: [school-leaver, sixth-former, graduate, career-changer, parent]
 topics: [interviews, star, competency, strengths, values, commercial-awareness, applying]
 volatility: low
-last_verified: 2026-09-02
+last_verified: never            # NEVER VERIFIED - no cited URL was opened
+verification: none
+evidence_quality: search-extracts-only
 maintainer: gtod
 sources:
   - id: i1

@@ -17,123 +17,127 @@ region: england
 audience: [school-leaver, sixth-former, parent]
 topics: [university, student-loans, earnings, decision-making, evidence]
 volatility: high
-last_verified: 2026-09-02
+last_verified: never            # NEVER VERIFIED - no cited URL was opened
+verification: none
+evidence_quality: search-extracts-only
 maintainer: gtod
+evidence_quality: websearch-extracts-only
+verified_by_fetch: false
 sources:
   - id: u1
     title: Changes to tuition fees - 2026 to 2027 and 2027 to 2028 academic years
     publisher: GOV.UK / Department for Education
     url: https://www.gov.uk/government/publications/tuition-fees-and-student-support-2026-to-2027-academic-year/changes-to-tuition-fees-2026-to-2027-academic-year-and-2027-to-2028-academic-year
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u2
     title: Student loans - a guide to terms and conditions 2026 to 2027
     publisher: GOV.UK
     url: https://www.gov.uk/government/publications/student-loans-a-guide-to-terms-and-conditions/student-loans-a-guide-to-terms-and-conditions-2026-to-2027
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u3
     title: Repaying your student loan - how much you repay
     publisher: GOV.UK
     url: https://www.gov.uk/repaying-your-student-loan/what-you-pay
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u4
     title: How interest is calculated - Plan 5
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/how-interest-is-calculated-plan-5
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u5
     title: Student loans - interest rates and repayment thresholds FAQs
     publisher: House of Commons Library
     url: https://commonslibrary.parliament.uk/research-briefings/cbp-10654/
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u6
     title: The impact of undergraduate degrees on lifetime earnings
     publisher: Institute for Fiscal Studies
     url: https://ifs.org.uk/publications/impact-undergraduate-degrees-lifetime-earnings
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u7
     title: Most students get a big pay-off from going to university - but some would be better off financially if they hadn't done a degree
     publisher: Institute for Fiscal Studies
     url: https://ifs.org.uk/news/most-students-get-big-pay-going-university-some-would-be-better-financially-if-they-hadnt-done
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u8
     title: Graduate labour market outcomes (LEO), 2023-24
     publisher: DfE, Explore Education Statistics
     url: https://explore-education-statistics.service.gov.uk/find-statistics/graduate-labour-market-outcomes-leo/2023-24
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u9
     title: Further education outcomes, academic year 2022/23
     publisher: DfE, Explore Education Statistics
     url: https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcomes/2022-23
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u10
     title: Apprenticeships, academic year 2024/25
     publisher: DfE, Explore Education Statistics
     url: https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2024-25
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u11
     title: National apprenticeship achievement rate hits 60.5%
     publisher: FE Week
     url: https://feweek.co.uk/national-apprenticeship-achievement-rate-hits-60-5/
     accessed: 2026-09-02
-    type: press
+    type: unverified-press
   - id: u12
     title: How are apprenticeships funded and what is the apprenticeship levy?
     publisher: GOV.UK Education Hub
     url: https://educationhub.blog.gov.uk/2025/08/how-are-apprenticeships-funded-and-what-is-the-apprenticeship-levy/
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u13
     title: Apprenticeship funding and finance
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/money-funding-and-finance-for-apprenticeships
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u14
     title: Graduate labour market statistics, 2024
     publisher: DfE, Explore Education Statistics
     url: https://explore-education-statistics.service.gov.uk/find-statistics/graduate-labour-markets/2024
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u15
     title: Degree Apprenticeships - Levelling Up?
     publisher: The Sutton Trust
     url: https://www.suttontrust.com/our-research/levelling-up/
     accessed: 2026-09-02
-    type: secondary
+    type: unverified-secondary
   - id: u16
     title: Competition for degree apprenticeships quadruples as university costs rise
     publisher: Press syndication of Telegraph reporting on Find an Apprenticeship FOI data
     url: https://www.yahoo.com/news/us/articles/demand-degree-apprenticeships-quadruples-three-050017143.html
     accessed: 2026-09-02
-    type: press
+    type: unverified-press
   - id: u17
     title: Apprenticeship statistics for England
     publisher: House of Commons Library
     url: https://commonslibrary.parliament.uk/research-briefings/sn06113/
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u18
     title: Graduate Outcomes 2022/23 summary statistics
     publisher: HESA
     url: https://www.hesa.ac.uk/news/17-07-2025/sb272-higher-education-graduate-outcomes-statistics/study
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: u19
     title: Student loan forecasts for England
     publisher: DfE, Explore Education Statistics
     url: https://explore-education-statistics.service.gov.uk/find-statistics/student-loan-forecasts-for-england/2024-25
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
 ---
 
 ## In one line
@@ -187,7 +191,7 @@ These are the Plan 5 terms that apply to English undergraduates who started, or 
 
 **For graduates.** Institute for Fiscal Studies research commissioned by the Department for Education estimates that the average undergraduate degree raises net lifetime earnings by roughly £130,000 for men and £100,000 for women in discounted present-value terms, about a 20% gain.[^u6][^u7] That is an average that hides an enormous spread. The same research finds net returns close to zero for women taking creative arts and languages, negative for men taking creative arts, and above £250,000 for law and economics and above half a million for men in medicine or economics.[^u6][^u7]
 
-The headline finding that matters for a 17-year-old is that around one in five undergraduates would have been financially better off not going.[^u6][^u7] Which fifth you are in depends heavily on subject, institution and prior attainment.
+The headline finding that matters for a 17-year-old is that around one in five undergraduates would have been financially better off not going.[^u6][^u7] Which fifth you are in depends heavily on subject, institution and prior attainment; Department for Education Longitudinal Education Outcomes data tracks that earnings spread by subject and by provider.[^u8]
 
 **For apprentices.** Department for Education further education outcomes data, built on the Longitudinal Education Outcomes study, shows earnings rising with level and with time since completion: median earnings of about £18,050 one year after an intermediate (level 2) apprenticeship rising to about £26,810 at five years, and about £20,700 one year after an advanced (level 3) apprenticeship rising to about £29,330 at five years.[^u9] At every level, apprenticeships showed higher earnings one year after study than classroom-based education and training at the same level.[^u9]
 
@@ -218,7 +222,7 @@ The practical constraint is funding rather than eligibility, and it cuts in a sp
 Be honest about these before applying.
 
 - **It is very hard to get in.** Applications per level 6 apprenticeship vacancy advertised on the government's Find an Apprenticeship service rose to 11.3, from 2.8 two years earlier, with level 4 to 6 apprenticeships overall at 10.6 applications per position.[^u16] Degree apprenticeship places are a small fraction of the number of undergraduate places.[^u15]
-- **A lot of people do not finish.** The national apprenticeship achievement rate stands at about 60.5%, and around 38% of apprentices withdrew before completing in 2023-24 — an improvement on 44% the year before, but still high.[^u10][^u11]
+- **A lot of people do not finish.** The national apprenticeship achievement rate stands at about 60.5%, and around 38% of apprentices withdrew before completing in 2023-24 — an improvement on 44% the year before, but still high.[^u10][^u11][^u17]
 - **You are tied to one employer.** Losing the job normally ends the apprenticeship, subject to the redundancy protections described in our rights document. There is no equivalent of transferring course.
 - **Geography constrains you.** Apprenticeship vacancies are where the employers are. Applicants outside major employment centres have far less choice than a university applicant, who can apply anywhere.
 - **Less academic breadth and less slack.** A degree apprenticeship is a full-time job plus a degree. Holiday is annual leave, not university vacations. There is less room to change your mind about the subject.

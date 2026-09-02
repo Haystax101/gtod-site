@@ -16,141 +16,145 @@ region: england
 audience: [school-leaver, sixth-former, graduate, career-changer, parent]
 topics: [employment-rights, contracts, holiday, sick-pay, off-the-job-training, complaints]
 volatility: medium
-last_verified: 2026-09-02
+last_verified: never            # NEVER VERIFIED - no cited URL was opened
+verification: none
+evidence_quality: search-extracts-only
 maintainer: gtod
+evidence_quality: websearch-extracts-only
+verified_by_fetch: false
 sources:
   - id: r1
     title: Employment rights - Apprentices
     publisher: Acas
     url: https://www.acas.org.uk/apprentices
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r2
     title: Dismissal and redundancy - Apprentices
     publisher: Acas
     url: https://www.acas.org.uk/apprentices/dismissal-and-redundancy
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r3
     title: Pay - Apprentices
     publisher: Acas
     url: https://www.acas.org.uk/apprentices/pay
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r4
     title: Apprenticeships, Skills, Children and Learning Act 2009
     publisher: legislation.gov.uk
     url: https://www.legislation.gov.uk/ukpga/2009/22/contents
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r5
     title: Training your apprentice
     publisher: apprenticeships.gov.uk
     url: https://www.apprenticeships.gov.uk/employers/training-your-apprentice
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r6
     title: Apprenticeship off-the-job training guidance
     publisher: GOV.UK / Department for Education
     url: https://www.gov.uk/government/publications/apprenticeships-off-the-job-training/apprenticeship-off-the-job-training-guidance--2
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r7
     title: Apprenticeship funding rules, 2025 to 2026
     publisher: GOV.UK / Department for Education
     url: https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r8
     title: Holiday entitlement
     publisher: GOV.UK
     url: https://www.gov.uk/holiday-entitlement-rights
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r9
     title: How much holiday someone gets - Holiday entitlement
     publisher: Acas
     url: https://www.acas.org.uk/checking-holiday-entitlement
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r10
     title: Statutory sick pay
     publisher: Acas
     url: https://www.acas.org.uk/checking-sick-pay/statutory-sick-pay-ssp
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r11
     title: Statutory sick pay changes 2026
     publisher: Acas
     url: https://www.acas.org.uk/statutory-sick-pay-changes-2026
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r12
     title: Rest breaks at work - young workers
     publisher: GOV.UK
     url: https://www.gov.uk/rest-breaks-work/young-workers
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r13
     title: People under 18 - pay and hours for young workers
     publisher: Acas
     url: https://www.acas.org.uk/young-workers-and-work-experience
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r14
     title: Employment and redundancy in apprenticeships
     publisher: Department for Education customer help centre
     url: https://customerhelp.education.gov.uk/hc/en-gb/articles/18228373250322-Employment-and-redundancy-in-apprenticeships
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r15
     title: Support for apprentices with a learning difficulty or disability
     publisher: apprenticeships.gov.uk
     url: https://www.apprenticeships.gov.uk/apprentices/learning-difficulties-disabilities-support
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r16
     title: English and maths flexibilities for apprentices with learning difficulties and disabilities
     publisher: GOV.UK / Department for Education
     url: https://www.gov.uk/government/publications/support-for-apprentices-with-a-learning-difficulty-or-disability/english-and-maths-flexibilities-for-apprentices-with-learning-difficulties-and-disabilities
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r17
     title: Changes to English and maths requirements
     publisher: Department for Education apprenticeship service help centre
     url: https://help.apprenticeships.education.gov.uk/hc/en-gb/articles/24562861869586-Changes-to-English-and-maths-requirements
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r18
     title: Complain about a further education college or apprenticeship
     publisher: GOV.UK
     url: https://www.gov.uk/complain-further-education-apprenticeship
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r19
     title: Complaints about post-16 education and training provision funded by ESFA
     publisher: GOV.UK
     url: https://www.gov.uk/government/publications/complaints-about-post-16-education-and-training-provision-funded-by-esfa/complaints-about-post-16-education-and-training-provision-funded-by-esfa
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r20
     title: If an employer does not pay minimum wage
     publisher: Acas
     url: https://www.acas.org.uk/national-minimum-wage-entitlement/if-an-employer-does-not-pay-minimum-wage
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
   - id: r21
     title: Adjustments for disabled students and apprentices
     publisher: Disability Rights UK
     url: https://www.disabilityrightsuk.org/resources/adjustments-disabled-students-and-apprentices
     accessed: 2026-09-02
-    type: secondary
+    type: unverified-secondary
   - id: r22
     title: Statutory sick pay changes for employers
     publisher: business.gov.uk
     url: https://www.business.gov.uk/campaign/employment-changes/employers/statutory-sick-pay/
     accessed: 2026-09-02
-    type: primary
+    type: unverified-primary
 ---
 
 ## In one line

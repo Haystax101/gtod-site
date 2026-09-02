@@ -16,129 +16,139 @@ region: uk
 audience: [school-leaver, sixth-former, parent, career-changer]
 topics: [entry-requirements, ucas-tariff, gcse, btec, t-levels, scottish-highers, predicted-grades]
 volatility: medium
-last_verified: 2026-09-02
+last_verified: never  # never verified against a source; see evidence_quality
 maintainer: gtod
+evidence_quality: search-extracts-only
+verification_note: >
+  NOT VERIFIED. No URL in this document was opened. Outbound egress to every
+  research domain was denied by network policy on 2026-09-02 (see
+  ../../_meta/RESEARCH_BLOCKED.md). Every source below was seen only as a
+  web-search result. In the sources list, `accessed` records the date of that
+  search and NOT a page visit, and `type` records what kind of publisher the
+  source is and NOT that the cited claim was confirmed there. Do not seed this
+  document into the Convex knowledge table. Promotion requires a human to open
+  each URL per ../README.md.
 sources:
   - id: s1
     title: English and maths requirements in apprenticeships guidance
     publisher: GOV.UK (Department for Education)
     url: https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/english-and-maths-requirements-in-apprenticeships-guidance
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s2
     title: Maths qualifications for apprenticeships
     publisher: GOV.UK (Department for Education)
     url: https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/maths-qualifications-for-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s3
     title: Confirmed - English and maths pass rule for adult apprentices scrapped
     publisher: FE Week
     url: https://feweek.co.uk/english-and-maths-rule-scrapped-for-adult-apprentices-dfe-confirms/
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s4
     title: Apprenticeship funding rules August 2025 to July 2026 (version 3, January 2026)
     publisher: GOV.UK (Department for Education)
     url: https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s5
     title: UCAS Tariff points - what are they and how do they work?
     publisher: UCAS
     url: https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/ucas-tariff-points
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s6
     title: Calculate your UCAS Tariff points
     publisher: UCAS
     url: https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/calculate-your-ucas-tariff-points
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s7
     title: UCAS Tariff - all you need to know
     publisher: UCAS
     url: https://www.ucas.com/advisers/help-and-training/guides-resources-and-training/information-new-ucas-tariff-advisers
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s8
     title: BTEC and UCAS points
     publisher: Pearson
     url: https://qualifications.pearson.com/en/support/support-topics/understanding-our-qualifications/comparing-btec-to-other-qualifications/btec-ucas-points.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s9
     title: Scottish Advanced Highers - UCAS Tariff
     publisher: UCAS
     url: https://www.ucas.com/providers/services/qualifications/ucas-tariff/scottish-advanced-highers
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s10
     title: Scottish Highers and Advanced Highers
     publisher: UCAS
     url: https://www.ucas.com/sites/default/files/ScottishQs.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s11
     title: Allocating Tariff points to Level 3 and SCQF Level 6 apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/about-us/news-and-insights/allocating-tariff-points-to-level-3-and-scqf-level-6-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s12
     title: UCAS announces Tariff points rollout for apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/corporate/news-and-key-documents/news/ucas-announces-tariff-points-rollout-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s13
     title: Understanding UCAS Tariff points for apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/understanding-ucas-tariff-points
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s14
     title: Overview of UCAS Tariff points for apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/providers/overview-ucas-tariff-points-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s15
     title: Start date for apprenticeship UCAS points revealed
     publisher: FE Week
     url: https://feweek.co.uk/start-date-for-apprenticeship-ucas-points-revealed/
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s16
     title: Apprenticeships - results day guide
     publisher: Ulster University
     url: https://www.ulster.ac.uk/apprenticeships/results-day-guide
-    accessed: 2026-09-02
-    type: university
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: university-UNVERIFIED
   - id: s17
     title: Entry requirements and eligibility - degree apprenticeships
     publisher: University of Portsmouth
     url: https://www.port.ac.uk/study/professional-and-flexible-learning/degree-apprenticeships/entry-requirements-and-eligibility
-    accessed: 2026-09-02
-    type: university
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: university-UNVERIFIED
   - id: s18
     title: A-level results - what to do if your grades aren't enough
     publisher: AllAboutSchoolLeavers
     url: https://www.allaboutschoolleavers.co.uk/school-leaver-options/apprenticeships/a-level-results-what-to-do-if-your-grades-aren-t-enough
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s19
     title: Apprenticeship FAQs
     publisher: BAE Systems
     url: https://www.baesystems.com/en/careers/careers-in-the-uk/apprenticeships/faqs
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s20
     title: Degree apprenticeships - guide for apprentices
     publisher: Office for Students
     url: https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line

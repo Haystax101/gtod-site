@@ -17,177 +17,187 @@ region: uk
 audience: [school-leaver, sixth-former, parent, career-changer]
 topics: [applying, vacancies, job-boards, search, degree-apprenticeships]
 volatility: medium
-last_verified: 2026-09-02
+last_verified: never  # never verified against a source; see evidence_quality
 maintainer: gtod
+evidence_quality: search-extracts-only
+verification_note: >
+  NOT VERIFIED. No URL in this document was opened. Outbound egress to every
+  research domain was denied by network policy on 2026-09-02 (see
+  ../../_meta/RESEARCH_BLOCKED.md). Every source below was seen only as a
+  web-search result. In the sources list, `accessed` records the date of that
+  search and NOT a page visit, and `type` records what kind of publisher the
+  source is and NOT that the cited claim was confirmed there. Do not seed this
+  document into the Convex knowledge table. Promotion requires a human to open
+  each URL per ../README.md.
 sources:
   - id: s1
     title: Find an apprenticeship
     publisher: GOV.UK
     url: https://www.gov.uk/apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s2
     title: Search apprenticeship - Find an apprenticeship
     publisher: GOV.UK
     url: https://www.findapprenticeship.service.gov.uk/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s3
     title: Getting an apprenticeship
     publisher: apprenticeships.gov.uk
     url: https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s4
     title: Apprenticeships, academic year 2025/26
     publisher: Explore education statistics (DfE)
     url: https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s5
     title: Search and apply for apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/search-apply
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s6
     title: Search apprenticeships
     publisher: UCAS
     url: https://www.ucas.com/explore/search/apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s7
     title: Career Finder
     publisher: UCAS
     url: https://www.ucas.com/business/career-finder
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s8
     title: RateMyPlacement and RateMyApprenticeship are now Higherin
     publisher: Higherin
     url: https://higherin.com/ratemyplacement-and-ratemyapprenticeship-have-rebranded-to-higherin
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s9
     title: Higherin - student jobs, careers advice and job reviews
     publisher: Higherin
     url: https://higherin.com/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s10
     title: Browse reviews of apprenticeship schemes
     publisher: RateMyApprenticeship (Higherin)
     url: https://www.ratemyapprenticeship.co.uk/search-reviews
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s11
     title: UK apprenticeships, graduate schemes and work experience
     publisher: GetMyFirstJob
     url: https://www.getmyfirstjob.co.uk/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s12
     title: UK apprenticeships
     publisher: Notgoingtouni
     url: https://notgoingtouni.co.uk/opportunity-type/apprenticeship
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s13
     title: Jobs
     publisher: Success at School
     url: https://successatschool.org/jobs
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s14
     title: Gain virtual work experience
     publisher: Springpod
     url: https://www.springpod.com/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s15
     title: Apprenticeships and school leaver jobs
     publisher: AllAboutSchoolLeavers
     url: https://www.allaboutschoolleavers.co.uk/jobs
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s16
     title: Higher and degree apprenticeship vacancy listing
     publisher: Amazing Apprenticeships
     url: https://www.amazingapprenticeships.com/higher-degree-listing/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s17
     title: Find and apply for apprenticeship jobs in Scotland
     publisher: Skills Development Scotland (apprenticeships.scot)
     url: https://www.apprenticeships.scot/find-a-vacancy/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s18
     title: Graduate Apprenticeships
     publisher: Skills Development Scotland
     url: https://www.skillsdevelopmentscotland.co.uk/what-we-do/apprenticeships/graduate-apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s19
     title: Find an apprenticeship
     publisher: Welsh Government (GOV.WALES)
     url: https://www.gov.wales/find-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s20
     title: Apprenticeship search
     publisher: Careers Wales
     url: https://careerswales.gov.wales/apprenticeship-search
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s21
     title: Apprenticeships
     publisher: nidirect (Northern Ireland Executive)
     url: https://www.nidirect.gov.uk/campaigns/apprenticeships
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s22
     title: Find a degree apprenticeship
     publisher: Office for Students
     url: https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/find-a-degree-apprenticeship/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s23
     title: Apprentice jobs in United Kingdom
     publisher: LinkedIn
     url: https://uk.linkedin.com/jobs/apprentice-jobs
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s24
     title: Apprenticeships jobs
     publisher: Indeed UK
     url: https://uk.indeed.com/q-apprenticeships-jobs.html
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s25
     title: How can I find an apprenticeship?
     publisher: Loughborough University
     url: https://www.lboro.ac.uk/degree-apprenticeships/apprentices/find-apprenticeship/
-    accessed: 2026-09-02
-    type: university
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: university-UNVERIFIED
   - id: s26
     title: About us - Top 100 Apprenticeship Employers
     publisher: Top Apprenticeship Employers
     url: https://www.top-apprenticeshipemployers.co.uk/about-us
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s27
     title: Find apprenticeship opportunities in the UK
     publisher: Association of Apprentices
     url: https://associationofapprentices.org.uk/need-support/find-apprenticeship-opportunities-uk/
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: s28
     title: How to find and apply for an apprenticeship
     publisher: DfE Education Hub blog
     url: https://educationhub.blog.gov.uk/2024/02/how-to-find-apply-apprenticeship/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line

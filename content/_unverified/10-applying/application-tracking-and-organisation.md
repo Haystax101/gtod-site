@@ -17,105 +17,115 @@ region: uk
 audience: [school-leaver, sixth-former, parent, career-changer]
 topics: [applying, organisation, tracking, deadlines, references, assessment-centres]
 volatility: low
-last_verified: 2026-09-02
+last_verified: never  # never verified against a source; see evidence_quality
 maintainer: gtod
+evidence_quality: search-extracts-only
+verification_note: >
+  NOT VERIFIED. No URL in this document was opened. Outbound egress to every
+  research domain was denied by network policy on 2026-09-02 (see
+  ../../_meta/RESEARCH_BLOCKED.md). Every source below was seen only as a
+  web-search result. In the sources list, `accessed` records the date of that
+  search and NOT a page visit, and `type` records what kind of publisher the
+  source is and NOT that the cited claim was confirmed there. Do not seed this
+  document into the Convex knowledge table. Promotion requires a human to open
+  each URL per ../README.md.
 sources:
   - id: s1
     title: Getting an apprenticeship
     publisher: apprenticeships.gov.uk
     url: https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s2
     title: Create an account to search and apply for apprenticeships
     publisher: apprenticeships.gov.uk
     url: https://www.apprenticeships.gov.uk/apprentices/create-account
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s3
     title: Find an apprenticeship
     publisher: GOV.UK
     url: https://www.gov.uk/apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s4
     title: Apprenticeship recruitment processes
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/how-apply-apprenticeship/apprenticeship-recruitment-processes
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s5
     title: Apprenticeship application guides
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/application-guides
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s6
     title: How to apply for an apprenticeship
     publisher: UCAS
     url: https://www.ucas.com/apprenticeships/how-apply-apprenticeship
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s7
     title: The best job application tracker for students
     publisher: Higherin
     url: https://higherin.com/careers-advice/application-tips/career-application-tracker
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s8
     title: What to expect at an apprenticeship assessment centre
     publisher: Higherin
     url: https://higherin.com/careers-advice/interview-tips/apprenticeship-assessment-centres
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s9
     title: Our application process
     publisher: KPMG UK careers
     url: https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s10
     title: The different stages of a degree apprenticeship application process
     publisher: Notgoingtouni
     url: https://notgoingtouni.co.uk/blogs/the-different-stages-of-a-degree-apprenticeship-application-process-2488
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s11
     title: Apprenticeship application form
     publisher: Derbyshire County Council
     url: https://www.derbyshire.gov.uk/site-elements/documents/pdf/working-for-us/jobs/apprenticeship-application-form.pdf
-    accessed: 2026-09-02
-    type: employer
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: employer-UNVERIFIED
   - id: s12
     title: DBS check requests - guidance for employers, voluntary organisations and third parties
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/dbs-check-requests-guidance-for-employers
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s13
     title: Degree apprenticeships draw 11 applicants per place
     publisher: Insurance Business UK
     url: https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx
-    accessed: 2026-09-02
-    type: press
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: press-UNVERIFIED
   - id: s14
     title: Higher and degree apprenticeship vacancy listing
     publisher: Amazing Apprenticeships
     url: https://www.amazingapprenticeships.com/higher-degree-listing/
-    accessed: 2026-09-02
-    type: aggregator
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: aggregator-UNVERIFIED
   - id: s15
     title: 2027 entry deadline for all undergraduate courses, except those with a 15 October deadline
     publisher: UCAS
     url: https://www.ucas.com/events/2027-entry-deadline-for-all-undergraduate-courses-except-those-with-a-15-october-deadline-475546
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s16
     title: When to apply for apprenticeships - 2027 deadlines
     publisher: CV-Library
     url: https://www.cv-library.co.uk/career-advice/apprenticeships/when-to-apply-for-apprenticeships
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
 ---
 
 ## In one line
