@@ -391,7 +391,7 @@ function ApplicationCard({ application: a, onError }) {
   )
 }
 
-function SchemePicker({ trackedIds, autoFocus = false }) {
+function SchemePicker({ trackedIds }) {
   const [q, setQ] = useState('')
   const schemes = useQuery(api.timeline.listSchemes, { q: q.trim() || undefined, limit: 12 })
   const trackScheme = useMutation(api.timeline.trackScheme)
@@ -418,7 +418,6 @@ function SchemePicker({ trackedIds, autoFocus = false }) {
         <input
           type="search"
           value={q}
-          autoFocus={autoFocus}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search employers and schemes…"
           aria-label="Search employers and schemes"
@@ -550,7 +549,7 @@ function FirstRun() {
             <h2>Start here</h2>
             <span className="n">One click</span>
           </div>
-          <SchemePicker trackedIds={new Set()} autoFocus />
+          <SchemePicker trackedIds={new Set()} />
         </div>
 
         <p className="muted" style={{ fontSize: '0.9rem' }}>

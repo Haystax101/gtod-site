@@ -204,16 +204,17 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
     }
   }
 
+  // The card is a container, not a control: nesting Join/Leave inside a
+  // clickable card would put a button inside a button.
   return (
-    <div
-      className={`cohort${c.joined ? ' selectable' : ''}`}
-      aria-current={selected}
-      onClick={c.joined ? onSelect : undefined}
-      role={c.joined ? 'button' : undefined}
-      tabIndex={c.joined ? 0 : undefined}
-      onKeyDown={c.joined ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect() } } : undefined}
-    >
-      <span className="c-name">{c.name}</span>
+    <div className={`cohort${c.joined ? ' selectable' : ''}`} aria-current={selected || undefined}>
+      {c.joined ? (
+        <button type="button" className="c-name as-select" onClick={onSelect} aria-label={`Open ${c.name}`}>
+          {c.name}
+        </button>
+      ) : (
+        <span className="c-name">{c.name}</span>
+      )}
       <span className="c-meta">
         <span>Intake {c.intakeYear}</span>
         <span className="member"><Users size={11} style={{ verticalAlign: '-1px', marginRight: 3 }} />{c.memberCount ?? 0}</span>
@@ -224,11 +225,11 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
             <span className="joined-tag"><Check aria-hidden="true" /> Joined</span>
             <span style={{ flex: 1 }} />
             {confirmLeave ? (
-              <button type="button" className="link-btn danger" disabled={busy} onClick={(e) => { e.stopPropagation(); run(leave, 'cohort_left') }}>
+              <button type="button" className="link-btn danger" disabled={busy} onClick={() => run(leave, 'cohort_left')}>
                 Leave for good?
               </button>
             ) : (
-              <button type="button" className="link-btn" onClick={(e) => { e.stopPropagation(); setConfirmLeave(true) }}>Leave</button>
+              <button type="button" className="link-btn" onClick={() => setConfirmLeave(true)}>Leave</button>
             )}
           </>
         ) : (
@@ -349,6 +350,10 @@ function Post({ post, onError }) {
 
   const pending = post.status === 'pending'
   const removed = post.status === 'removed' || post.status === 'hidden'
+
+  // Belt and braces: unpublished posts belong to their author and nobody else.
+  // The backend filters these out, and if it ever stops, this still holds.
+  if ((pending || removed) && !post.isMine) return null
 
   const submitReport = async () => {
     if (!reason || busy) return
