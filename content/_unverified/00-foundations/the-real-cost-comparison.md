@@ -263,20 +263,20 @@ Four honest caveats. All four are material.
 
 ## Sources
 
-[^c1]: GOV.UK / Department for Education, "Changes to tuition fees: 2026 to 2027 academic year and 2027 to 2028 academic year", https://www.gov.uk/government/publications/tuition-fees-and-student-support-2026-to-2027-academic-year/changes-to-tuition-fees-2026-to-2027-academic-year-and-2027-to-2028-academic-year (accessed 2026-09-02)
-[^c2]: GOV.UK / Department for Education, "Support with living and other costs: 2026 to 2027 academic year", https://www.gov.uk/government/publications/tuition-fees-and-student-support-2026-to-2027-academic-year/support-with-living-and-other-costs-2026-to-2027-academic-year (accessed 2026-09-02)
-[^c3]: GOV.UK, "Student loans: a guide to terms and conditions 2026 to 2027", https://www.gov.uk/government/publications/student-loans-a-guide-to-terms-and-conditions/student-loans-a-guide-to-terms-and-conditions-2026-to-2027 (accessed 2026-09-02)
-[^c4]: GOV.UK, "How interest is calculated - Plan 5", https://www.gov.uk/guidance/how-interest-is-calculated-plan-5 (accessed 2026-09-02)
-[^c5]: House of Commons Library, "Student loans: interest rates and repayment thresholds FAQs", https://commonslibrary.parliament.uk/research-briefings/cbp-10654/ (accessed 2026-09-02)
-[^c6]: GOV.UK / Low Pay Commission, "The National Minimum Wage in 2026", https://www.gov.uk/government/publications/the-national-minimum-wage-in-2026/the-national-minimum-wage-in-2026 (accessed 2026-09-02)
-[^c7]: House of Commons Library, "Direct taxes: rates and allowances for 2026/27", https://commonslibrary.parliament.uk/research-briefings/cbp-10618/ (accessed 2026-09-02)
-[^c8]: GOV.UK / HMRC, "Rates and thresholds for employers 2026 to 2027", https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027 (accessed 2026-09-02)
-[^c9]: Save the Student, "Student living costs in the UK 2026", https://www.savethestudent.org/money/student-budgeting/what-do-students-spend-their-money-on.html (accessed 2026-09-02)
-[^c10]: Save the Student, "National Student Accommodation Survey 2026 - results", https://www.savethestudent.org/money/surveys/national-student-accommodation-survey-2026.html (accessed 2026-09-02)
-[^c11]: House of Commons Library, "Student support for undergraduates across the UK in 2026/27", https://commonslibrary.parliament.uk/research-briefings/cbp-10960/ (accessed 2026-09-02)
-[^c12]: UCAS, "Apprenticeship funding and finance", https://www.ucas.com/apprenticeships/money-funding-and-finance-for-apprenticeships (accessed 2026-09-02)
-[^c13]: Institute for Fiscal Studies, "The impact of undergraduate degrees on lifetime earnings", https://ifs.org.uk/publications/impact-undergraduate-degrees-lifetime-earnings (accessed 2026-09-02)
-[^c14]: GOV.UK, "Repaying your student loan: how much you repay", https://www.gov.uk/repaying-your-student-loan/what-you-pay (accessed 2026-09-02)
+[^c1]: GOV.UK / Department for Education, "Changes to tuition fees: 2026 to 2027 academic year and 2027 to 2028 academic year", https://www.gov.uk/government/publications/tuition-fees-and-student-support-2026-to-2027-academic-year/changes-to-tuition-fees-2026-to-2027-academic-year-and-2027-to-2028-academic-year (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c2]: GOV.UK / Department for Education, "Support with living and other costs: 2026 to 2027 academic year", https://www.gov.uk/government/publications/tuition-fees-and-student-support-2026-to-2027-academic-year/support-with-living-and-other-costs-2026-to-2027-academic-year (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c3]: GOV.UK, "Student loans: a guide to terms and conditions 2026 to 2027", https://www.gov.uk/government/publications/student-loans-a-guide-to-terms-and-conditions/student-loans-a-guide-to-terms-and-conditions-2026-to-2027 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c4]: GOV.UK, "How interest is calculated - Plan 5", https://www.gov.uk/guidance/how-interest-is-calculated-plan-5 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c5]: House of Commons Library, "Student loans: interest rates and repayment thresholds FAQs", https://commonslibrary.parliament.uk/research-briefings/cbp-10654/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c6]: GOV.UK / Low Pay Commission, "The National Minimum Wage in 2026", https://www.gov.uk/government/publications/the-national-minimum-wage-in-2026/the-national-minimum-wage-in-2026 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c7]: House of Commons Library, "Direct taxes: rates and allowances for 2026/27", https://commonslibrary.parliament.uk/research-briefings/cbp-10618/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c8]: GOV.UK / HMRC, "Rates and thresholds for employers 2026 to 2027", https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c9]: Save the Student, "Student living costs in the UK 2026", https://www.savethestudent.org/money/student-budgeting/what-do-students-spend-their-money-on.html (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c10]: Save the Student, "National Student Accommodation Survey 2026 - results", https://www.savethestudent.org/money/surveys/national-student-accommodation-survey-2026.html (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c11]: House of Commons Library, "Student support for undergraduates across the UK in 2026/27", https://commonslibrary.parliament.uk/research-briefings/cbp-10960/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c12]: UCAS, "Apprenticeship funding and finance", https://www.ucas.com/apprenticeships/money-funding-and-finance-for-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c13]: Institute for Fiscal Studies, "The impact of undergraduate degrees on lifetime earnings", https://ifs.org.uk/publications/impact-undergraduate-degrees-lifetime-earnings (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^c14]: GOV.UK, "Repaying your student loan: how much you repay", https://www.gov.uk/repaying-your-student-loan/what-you-pay (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

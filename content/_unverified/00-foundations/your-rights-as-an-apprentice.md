@@ -307,28 +307,28 @@ The GOV.UK complaints route directs escalated complaints about ESFA-funded post-
 
 ## Sources
 
-[^r1]: Acas, "Employment rights - Apprentices", https://www.acas.org.uk/apprentices (accessed 2026-09-02)
-[^r2]: Acas, "Dismissal and redundancy - Apprentices", https://www.acas.org.uk/apprentices/dismissal-and-redundancy (accessed 2026-09-02)
-[^r3]: Acas, "Pay - Apprentices", https://www.acas.org.uk/apprentices/pay (accessed 2026-09-02)
-[^r4]: legislation.gov.uk, "Apprenticeships, Skills, Children and Learning Act 2009", https://www.legislation.gov.uk/ukpga/2009/22/contents (accessed 2026-09-02)
-[^r5]: apprenticeships.gov.uk, "Training your apprentice", https://www.apprenticeships.gov.uk/employers/training-your-apprentice (accessed 2026-09-02)
-[^r6]: GOV.UK / Department for Education, "Apprenticeship off-the-job training guidance", https://www.gov.uk/government/publications/apprenticeships-off-the-job-training/apprenticeship-off-the-job-training-guidance--2 (accessed 2026-09-02)
-[^r7]: GOV.UK / Department for Education, "Apprenticeship funding rules, 2025 to 2026", https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf (accessed 2026-09-02)
-[^r8]: GOV.UK, "Holiday entitlement", https://www.gov.uk/holiday-entitlement-rights (accessed 2026-09-02)
-[^r9]: Acas, "How much holiday someone gets - Holiday entitlement", https://www.acas.org.uk/checking-holiday-entitlement (accessed 2026-09-02)
-[^r10]: Acas, "Statutory sick pay", https://www.acas.org.uk/checking-sick-pay/statutory-sick-pay-ssp (accessed 2026-09-02)
-[^r11]: Acas, "Statutory sick pay changes 2026", https://www.acas.org.uk/statutory-sick-pay-changes-2026 (accessed 2026-09-02)
-[^r12]: GOV.UK, "Rest breaks at work - young workers", https://www.gov.uk/rest-breaks-work/young-workers (accessed 2026-09-02)
-[^r13]: Acas, "People under 18 - pay and hours for young workers", https://www.acas.org.uk/young-workers-and-work-experience (accessed 2026-09-02)
-[^r14]: Department for Education customer help centre, "Employment and redundancy in apprenticeships", https://customerhelp.education.gov.uk/hc/en-gb/articles/18228373250322-Employment-and-redundancy-in-apprenticeships (accessed 2026-09-02)
-[^r15]: apprenticeships.gov.uk, "Support for apprentices with a learning difficulty or disability", https://www.apprenticeships.gov.uk/apprentices/learning-difficulties-disabilities-support (accessed 2026-09-02)
-[^r16]: GOV.UK / Department for Education, "English and maths flexibilities for apprentices with learning difficulties and disabilities", https://www.gov.uk/government/publications/support-for-apprentices-with-a-learning-difficulty-or-disability/english-and-maths-flexibilities-for-apprentices-with-learning-difficulties-and-disabilities (accessed 2026-09-02)
-[^r17]: Department for Education apprenticeship service help centre, "Changes to English and maths requirements", https://help.apprenticeships.education.gov.uk/hc/en-gb/articles/24562861869586-Changes-to-English-and-maths-requirements (accessed 2026-09-02)
-[^r18]: GOV.UK, "Complain about a further education college or apprenticeship", https://www.gov.uk/complain-further-education-apprenticeship (accessed 2026-09-02)
-[^r19]: GOV.UK, "Complaints about post-16 education and training provision funded by ESFA", https://www.gov.uk/government/publications/complaints-about-post-16-education-and-training-provision-funded-by-esfa/complaints-about-post-16-education-and-training-provision-funded-by-esfa (accessed 2026-09-02)
-[^r20]: Acas, "If an employer does not pay minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement/if-an-employer-does-not-pay-minimum-wage (accessed 2026-09-02)
-[^r21]: Disability Rights UK, "Adjustments for disabled students and apprentices", https://www.disabilityrightsuk.org/resources/adjustments-disabled-students-and-apprentices (accessed 2026-09-02)
-[^r22]: business.gov.uk, "Statutory sick pay changes", https://www.business.gov.uk/campaign/employment-changes/employers/statutory-sick-pay/ (accessed 2026-09-02)
+[^r1]: Acas, "Employment rights - Apprentices", https://www.acas.org.uk/apprentices (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r2]: Acas, "Dismissal and redundancy - Apprentices", https://www.acas.org.uk/apprentices/dismissal-and-redundancy (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r3]: Acas, "Pay - Apprentices", https://www.acas.org.uk/apprentices/pay (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r4]: legislation.gov.uk, "Apprenticeships, Skills, Children and Learning Act 2009", https://www.legislation.gov.uk/ukpga/2009/22/contents (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r5]: apprenticeships.gov.uk, "Training your apprentice", https://www.apprenticeships.gov.uk/employers/training-your-apprentice (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r6]: GOV.UK / Department for Education, "Apprenticeship off-the-job training guidance", https://www.gov.uk/government/publications/apprenticeships-off-the-job-training/apprenticeship-off-the-job-training-guidance--2 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r7]: GOV.UK / Department for Education, "Apprenticeship funding rules, 2025 to 2026", https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r8]: GOV.UK, "Holiday entitlement", https://www.gov.uk/holiday-entitlement-rights (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r9]: Acas, "How much holiday someone gets - Holiday entitlement", https://www.acas.org.uk/checking-holiday-entitlement (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r10]: Acas, "Statutory sick pay", https://www.acas.org.uk/checking-sick-pay/statutory-sick-pay-ssp (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r11]: Acas, "Statutory sick pay changes 2026", https://www.acas.org.uk/statutory-sick-pay-changes-2026 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r12]: GOV.UK, "Rest breaks at work - young workers", https://www.gov.uk/rest-breaks-work/young-workers (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r13]: Acas, "People under 18 - pay and hours for young workers", https://www.acas.org.uk/young-workers-and-work-experience (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r14]: Department for Education customer help centre, "Employment and redundancy in apprenticeships", https://customerhelp.education.gov.uk/hc/en-gb/articles/18228373250322-Employment-and-redundancy-in-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r15]: apprenticeships.gov.uk, "Support for apprentices with a learning difficulty or disability", https://www.apprenticeships.gov.uk/apprentices/learning-difficulties-disabilities-support (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r16]: GOV.UK / Department for Education, "English and maths flexibilities for apprentices with learning difficulties and disabilities", https://www.gov.uk/government/publications/support-for-apprentices-with-a-learning-difficulty-or-disability/english-and-maths-flexibilities-for-apprentices-with-learning-difficulties-and-disabilities (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r17]: Department for Education apprenticeship service help centre, "Changes to English and maths requirements", https://help.apprenticeships.education.gov.uk/hc/en-gb/articles/24562861869586-Changes-to-English-and-maths-requirements (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r18]: GOV.UK, "Complain about a further education college or apprenticeship", https://www.gov.uk/complain-further-education-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r19]: GOV.UK, "Complaints about post-16 education and training provision funded by ESFA", https://www.gov.uk/government/publications/complaints-about-post-16-education-and-training-provision-funded-by-esfa/complaints-about-post-16-education-and-training-provision-funded-by-esfa (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r20]: Acas, "If an employer does not pay minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement/if-an-employer-does-not-pay-minimum-wage (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r21]: Disability Rights UK, "Adjustments for disabled students and apprentices", https://www.disabilityrightsuk.org/resources/adjustments-disabled-students-and-apprentices (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^r22]: business.gov.uk, "Statutory sick pay changes", https://www.business.gov.uk/campaign/employment-changes/employers/statutory-sick-pay/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

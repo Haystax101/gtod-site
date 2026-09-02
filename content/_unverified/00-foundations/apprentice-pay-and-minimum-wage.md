@@ -232,18 +232,18 @@ You are legally protected from being dismissed or treated badly for asserting yo
 
 ## Sources
 
-[^s1]: GOV.UK / Low Pay Commission, "The National Minimum Wage in 2026", https://www.gov.uk/government/publications/the-national-minimum-wage-in-2026/the-national-minimum-wage-in-2026 (accessed 2026-09-02)
-[^s2]: GOV.UK / Low Pay Commission, "LPC advice to Government on 2026 minimum wage rates", https://www.gov.uk/government/publications/minimum-wage-rates-for-2026/lpc-advice-to-government-on-2026-minimum-wage-rates (accessed 2026-09-02)
-[^s3]: Acas, "Pay - Apprentices", https://www.acas.org.uk/apprentices/pay (accessed 2026-09-02)
-[^s4]: Acas, "What is the minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement (accessed 2026-09-02)
-[^s5]: GOV.UK / HMRC, "Are you an apprentice?" (Check Your Pay campaign), https://checkyourpay.campaign.gov.uk/are-you-an-apprentice/ (accessed 2026-09-02)
-[^s6]: Low Pay Commission blog, GOV.UK, "Four facts about apprentice pay from the latest data", https://minimumwage.blog.gov.uk/2024/05/03/four-facts-about-apprentice-pay-from-the-latest-data (accessed 2026-09-02)
-[^s7]: GOV.UK / Low Pay Commission, "Low Pay Commission Report 2025", https://www.gov.uk/government/publications/low-pay-commission-report-2025/low-pay-commission-report-2025-html (accessed 2026-09-02)
-[^s8]: Acas, "If an employer does not pay minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement/if-an-employer-does-not-pay-minimum-wage (accessed 2026-09-02)
-[^s9]: Citizens Advice, "Getting paid less than minimum wage or living wage", https://www.citizensadvice.org.uk/work/pay/getting-paid-less-than-minimum-wage-or-living-wage/ (accessed 2026-09-02)
-[^s10]: Department for Education, Explore Education Statistics, "Further education outcomes, academic year 2022/23", https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcomes/2022-23 (accessed 2026-09-02)
-[^s11]: RateMyApprenticeship / Higherin, "Highest-paid apprenticeships UK", https://www.ratemyapprenticeship.co.uk/advice/highest-paid-apprenticeships-uk/ (accessed 2026-09-02)
-[^s12]: Indeed UK, "Apprentice salary in England", https://uk.indeed.com/career/apprentice/salaries/England (accessed 2026-09-02)
+[^s1]: GOV.UK / Low Pay Commission, "The National Minimum Wage in 2026", https://www.gov.uk/government/publications/the-national-minimum-wage-in-2026/the-national-minimum-wage-in-2026 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s2]: GOV.UK / Low Pay Commission, "LPC advice to Government on 2026 minimum wage rates", https://www.gov.uk/government/publications/minimum-wage-rates-for-2026/lpc-advice-to-government-on-2026-minimum-wage-rates (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s3]: Acas, "Pay - Apprentices", https://www.acas.org.uk/apprentices/pay (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s4]: Acas, "What is the minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s5]: GOV.UK / HMRC, "Are you an apprentice?" (Check Your Pay campaign), https://checkyourpay.campaign.gov.uk/are-you-an-apprentice/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s6]: Low Pay Commission blog, GOV.UK, "Four facts about apprentice pay from the latest data", https://minimumwage.blog.gov.uk/2024/05/03/four-facts-about-apprentice-pay-from-the-latest-data (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s7]: GOV.UK / Low Pay Commission, "Low Pay Commission Report 2025", https://www.gov.uk/government/publications/low-pay-commission-report-2025/low-pay-commission-report-2025-html (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s8]: Acas, "If an employer does not pay minimum wage", https://www.acas.org.uk/national-minimum-wage-entitlement/if-an-employer-does-not-pay-minimum-wage (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s9]: Citizens Advice, "Getting paid less than minimum wage or living wage", https://www.citizensadvice.org.uk/work/pay/getting-paid-less-than-minimum-wage-or-living-wage/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s10]: Department for Education, Explore Education Statistics, "Further education outcomes, academic year 2022/23", https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcomes/2022-23 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s11]: RateMyApprenticeship / Higherin, "Highest-paid apprenticeships UK", https://www.ratemyapprenticeship.co.uk/advice/highest-paid-apprenticeships-uk/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s12]: Indeed UK, "Apprentice salary in England", https://uk.indeed.com/career/apprentice/salaries/England (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

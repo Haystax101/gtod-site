@@ -394,22 +394,22 @@ the pattern that produces rejections at the first sift.
 
 ## Sources
 
-[^s1]: apprenticeships.gov.uk, "Getting an apprenticeship", https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship (accessed 2026-09-02)
-[^s2]: apprenticeships.gov.uk, "Create an account to search and apply for apprenticeships", https://www.apprenticeships.gov.uk/apprentices/create-account (accessed 2026-09-02)
-[^s3]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)
-[^s4]: UCAS, "Apprenticeship recruitment processes", https://www.ucas.com/apprenticeships/how-apply-apprenticeship/apprenticeship-recruitment-processes (accessed 2026-09-02)
-[^s5]: UCAS, "Apprenticeship application guides", https://www.ucas.com/apprenticeships/application-guides (accessed 2026-09-02)
-[^s6]: UCAS, "How to apply for an apprenticeship", https://www.ucas.com/apprenticeships/how-apply-apprenticeship (accessed 2026-09-02)
-[^s7]: Higherin, "The best job application tracker for students", https://higherin.com/careers-advice/application-tips/career-application-tracker (accessed 2026-09-02)
-[^s8]: Higherin, "What to expect at an apprenticeship assessment centre", https://higherin.com/careers-advice/interview-tips/apprenticeship-assessment-centres (accessed 2026-09-02)
-[^s9]: KPMG UK careers, "Our application process", https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/ (accessed 2026-09-02)
-[^s10]: Notgoingtouni, "The different stages of a degree apprenticeship application process", https://notgoingtouni.co.uk/blogs/the-different-stages-of-a-degree-apprenticeship-application-process-2488 (accessed 2026-09-02)
-[^s11]: Derbyshire County Council, "Apprenticeship application form", https://www.derbyshire.gov.uk/site-elements/documents/pdf/working-for-us/jobs/apprenticeship-application-form.pdf (accessed 2026-09-02)
-[^s12]: GOV.UK, "DBS check requests - guidance for employers, voluntary organisations and third parties", https://www.gov.uk/guidance/dbs-check-requests-guidance-for-employers (accessed 2026-09-02)
-[^s13]: Insurance Business UK, "Degree apprenticeships draw 11 applicants per place", https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx (accessed 2026-09-02)
-[^s14]: Amazing Apprenticeships, "Higher and degree apprenticeship vacancy listing", https://www.amazingapprenticeships.com/higher-degree-listing/ (accessed 2026-09-02)
-[^s15]: UCAS, "2027 entry deadline for all undergraduate courses, except those with a 15 October deadline", https://www.ucas.com/events/2027-entry-deadline-for-all-undergraduate-courses-except-those-with-a-15-october-deadline-475546 (accessed 2026-09-02)
-[^s16]: CV-Library, "When to apply for apprenticeships - 2027 deadlines", https://www.cv-library.co.uk/career-advice/apprenticeships/when-to-apply-for-apprenticeships (accessed 2026-09-02)
+[^s1]: apprenticeships.gov.uk, "Getting an apprenticeship", https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s2]: apprenticeships.gov.uk, "Create an account to search and apply for apprenticeships", https://www.apprenticeships.gov.uk/apprentices/create-account (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s3]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s4]: UCAS, "Apprenticeship recruitment processes", https://www.ucas.com/apprenticeships/how-apply-apprenticeship/apprenticeship-recruitment-processes (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s5]: UCAS, "Apprenticeship application guides", https://www.ucas.com/apprenticeships/application-guides (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s6]: UCAS, "How to apply for an apprenticeship", https://www.ucas.com/apprenticeships/how-apply-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s7]: Higherin, "The best job application tracker for students", https://higherin.com/careers-advice/application-tips/career-application-tracker (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s8]: Higherin, "What to expect at an apprenticeship assessment centre", https://higherin.com/careers-advice/interview-tips/apprenticeship-assessment-centres (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s9]: KPMG UK careers, "Our application process", https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s10]: Notgoingtouni, "The different stages of a degree apprenticeship application process", https://notgoingtouni.co.uk/blogs/the-different-stages-of-a-degree-apprenticeship-application-process-2488 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s11]: Derbyshire County Council, "Apprenticeship application form", https://www.derbyshire.gov.uk/site-elements/documents/pdf/working-for-us/jobs/apprenticeship-application-form.pdf (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s12]: GOV.UK, "DBS check requests - guidance for employers, voluntary organisations and third parties", https://www.gov.uk/guidance/dbs-check-requests-guidance-for-employers (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s13]: Insurance Business UK, "Degree apprenticeships draw 11 applicants per place", https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s14]: Amazing Apprenticeships, "Higher and degree apprenticeship vacancy listing", https://www.amazingapprenticeships.com/higher-degree-listing/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s15]: UCAS, "2027 entry deadline for all undergraduate courses, except those with a 15 October deadline", https://www.ucas.com/events/2027-entry-deadline-for-all-undergraduate-courses-except-those-with-a-15-october-deadline-475546 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s16]: CV-Library, "When to apply for apprenticeships - 2027 deadlines", https://www.cv-library.co.uk/career-advice/apprenticeships/when-to-apply-for-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

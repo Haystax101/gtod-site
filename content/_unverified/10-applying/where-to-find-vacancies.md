@@ -523,34 +523,34 @@ searching badly, it is searching once in November and again in March.
 
 ## Sources
 
-[^s1]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)
-[^s2]: GOV.UK, "Search apprenticeship - Find an apprenticeship", https://www.findapprenticeship.service.gov.uk/ (accessed 2026-09-02)
-[^s3]: apprenticeships.gov.uk, "Getting an apprenticeship", https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship (accessed 2026-09-02)
-[^s4]: Department for Education, "Apprenticeships, academic year 2025/26", Explore education statistics, https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26 (accessed 2026-09-02)
-[^s5]: UCAS, "Search and apply for apprenticeships", https://www.ucas.com/apprenticeships/search-apply (accessed 2026-09-02)
-[^s6]: UCAS, "Search apprenticeships", https://www.ucas.com/explore/search/apprenticeships (accessed 2026-09-02)
-[^s7]: UCAS, "Career Finder", https://www.ucas.com/business/career-finder (accessed 2026-09-02)
-[^s8]: Higherin, "RateMyPlacement and RateMyApprenticeship are now Higherin", https://higherin.com/ratemyplacement-and-ratemyapprenticeship-have-rebranded-to-higherin (accessed 2026-09-02)
-[^s9]: Higherin, "Student jobs, careers advice and job reviews", https://higherin.com/ (accessed 2026-09-02)
-[^s10]: RateMyApprenticeship (Higherin), "Browse reviews of apprenticeship schemes", https://www.ratemyapprenticeship.co.uk/search-reviews (accessed 2026-09-02)
-[^s11]: GetMyFirstJob, "UK apprenticeships, graduate schemes and work experience", https://www.getmyfirstjob.co.uk/ (accessed 2026-09-02)
-[^s12]: Notgoingtouni, "UK apprenticeships", https://notgoingtouni.co.uk/opportunity-type/apprenticeship (accessed 2026-09-02)
-[^s13]: Success at School, "Jobs", https://successatschool.org/jobs (accessed 2026-09-02)
-[^s14]: Springpod, "Gain virtual work experience", https://www.springpod.com/ (accessed 2026-09-02)
-[^s15]: AllAboutSchoolLeavers, "Apprenticeships and school leaver jobs", https://www.allaboutschoolleavers.co.uk/jobs (accessed 2026-09-02)
-[^s16]: Amazing Apprenticeships, "Higher and degree apprenticeship vacancy listing", https://www.amazingapprenticeships.com/higher-degree-listing/ (accessed 2026-09-02)
-[^s17]: Skills Development Scotland, "Find and apply for apprenticeship jobs in Scotland", https://www.apprenticeships.scot/find-a-vacancy/ (accessed 2026-09-02)
-[^s18]: Skills Development Scotland, "Graduate Apprenticeships", https://www.skillsdevelopmentscotland.co.uk/what-we-do/apprenticeships/graduate-apprenticeships (accessed 2026-09-02)
-[^s19]: Welsh Government, "Find an apprenticeship", https://www.gov.wales/find-apprenticeship (accessed 2026-09-02)
-[^s20]: Careers Wales, "Apprenticeship search", https://careerswales.gov.wales/apprenticeship-search (accessed 2026-09-02)
-[^s21]: nidirect, "Apprenticeships", https://www.nidirect.gov.uk/campaigns/apprenticeships (accessed 2026-09-02)
-[^s22]: Office for Students, "Find a degree apprenticeship", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/find-a-degree-apprenticeship/ (accessed 2026-09-02)
-[^s23]: LinkedIn, "Apprentice jobs in United Kingdom", https://uk.linkedin.com/jobs/apprentice-jobs (accessed 2026-09-02)
-[^s24]: Indeed UK, "Apprenticeships jobs", https://uk.indeed.com/q-apprenticeships-jobs.html (accessed 2026-09-02)
-[^s25]: Loughborough University, "How can I find an apprenticeship?", https://www.lboro.ac.uk/degree-apprenticeships/apprentices/find-apprenticeship/ (accessed 2026-09-02)
-[^s26]: Top Apprenticeship Employers, "About us", https://www.top-apprenticeshipemployers.co.uk/about-us (accessed 2026-09-02)
-[^s27]: Association of Apprentices, "Find apprenticeship opportunities in the UK", https://associationofapprentices.org.uk/need-support/find-apprenticeship-opportunities-uk/ (accessed 2026-09-02)
-[^s28]: Department for Education, "How to find and apply for an apprenticeship", Education Hub blog, https://educationhub.blog.gov.uk/2024/02/how-to-find-apply-apprenticeship/ (accessed 2026-09-02)
+[^s1]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s2]: GOV.UK, "Search apprenticeship - Find an apprenticeship", https://www.findapprenticeship.service.gov.uk/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s3]: apprenticeships.gov.uk, "Getting an apprenticeship", https://www.apprenticeships.gov.uk/apprentices/getting-an-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s4]: Department for Education, "Apprenticeships, academic year 2025/26", Explore education statistics, https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s5]: UCAS, "Search and apply for apprenticeships", https://www.ucas.com/apprenticeships/search-apply (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s6]: UCAS, "Search apprenticeships", https://www.ucas.com/explore/search/apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s7]: UCAS, "Career Finder", https://www.ucas.com/business/career-finder (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s8]: Higherin, "RateMyPlacement and RateMyApprenticeship are now Higherin", https://higherin.com/ratemyplacement-and-ratemyapprenticeship-have-rebranded-to-higherin (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s9]: Higherin, "Student jobs, careers advice and job reviews", https://higherin.com/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s10]: RateMyApprenticeship (Higherin), "Browse reviews of apprenticeship schemes", https://www.ratemyapprenticeship.co.uk/search-reviews (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s11]: GetMyFirstJob, "UK apprenticeships, graduate schemes and work experience", https://www.getmyfirstjob.co.uk/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s12]: Notgoingtouni, "UK apprenticeships", https://notgoingtouni.co.uk/opportunity-type/apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s13]: Success at School, "Jobs", https://successatschool.org/jobs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s14]: Springpod, "Gain virtual work experience", https://www.springpod.com/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s15]: AllAboutSchoolLeavers, "Apprenticeships and school leaver jobs", https://www.allaboutschoolleavers.co.uk/jobs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s16]: Amazing Apprenticeships, "Higher and degree apprenticeship vacancy listing", https://www.amazingapprenticeships.com/higher-degree-listing/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s17]: Skills Development Scotland, "Find and apply for apprenticeship jobs in Scotland", https://www.apprenticeships.scot/find-a-vacancy/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s18]: Skills Development Scotland, "Graduate Apprenticeships", https://www.skillsdevelopmentscotland.co.uk/what-we-do/apprenticeships/graduate-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s19]: Welsh Government, "Find an apprenticeship", https://www.gov.wales/find-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s20]: Careers Wales, "Apprenticeship search", https://careerswales.gov.wales/apprenticeship-search (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s21]: nidirect, "Apprenticeships", https://www.nidirect.gov.uk/campaigns/apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s22]: Office for Students, "Find a degree apprenticeship", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/find-a-degree-apprenticeship/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s23]: LinkedIn, "Apprentice jobs in United Kingdom", https://uk.linkedin.com/jobs/apprentice-jobs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s24]: Indeed UK, "Apprenticeships jobs", https://uk.indeed.com/q-apprenticeships-jobs.html (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s25]: Loughborough University, "How can I find an apprenticeship?", https://www.lboro.ac.uk/degree-apprenticeships/apprentices/find-apprenticeship/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s26]: Top Apprenticeship Employers, "About us", https://www.top-apprenticeshipemployers.co.uk/about-us (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s27]: Association of Apprentices, "Find apprenticeship opportunities in the UK", https://associationofapprentices.org.uk/need-support/find-apprenticeship-opportunities-uk/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s28]: Department for Education, "How to find and apply for an apprenticeship", Education Hub blog, https://educationhub.blog.gov.uk/2024/02/how-to-find-apply-apprenticeship/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

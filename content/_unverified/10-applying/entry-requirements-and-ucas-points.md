@@ -463,26 +463,26 @@ is a no you already had.
 
 ## Sources
 
-[^s1]: GOV.UK, "English and maths requirements in apprenticeships guidance", https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/english-and-maths-requirements-in-apprenticeships-guidance (accessed 2026-09-02)
-[^s2]: GOV.UK, "Maths qualifications for apprenticeships", https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/maths-qualifications-for-apprenticeships (accessed 2026-09-02)
-[^s3]: FE Week, "Confirmed: English and maths pass rule for adult apprentices scrapped", https://feweek.co.uk/english-and-maths-rule-scrapped-for-adult-apprentices-dfe-confirms/ (accessed 2026-09-02)
-[^s4]: Department for Education, "Apprenticeship funding rules August 2025 to July 2026", https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf (accessed 2026-09-02)
-[^s5]: UCAS, "UCAS Tariff points - what are they and how do they work?", https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/ucas-tariff-points (accessed 2026-09-02)
-[^s6]: UCAS, "Calculate your UCAS Tariff points", https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/calculate-your-ucas-tariff-points (accessed 2026-09-02)
-[^s7]: UCAS, "UCAS Tariff - all you need to know", https://www.ucas.com/advisers/help-and-training/guides-resources-and-training/information-new-ucas-tariff-advisers (accessed 2026-09-02)
-[^s8]: Pearson, "BTEC and UCAS points", https://qualifications.pearson.com/en/support/support-topics/understanding-our-qualifications/comparing-btec-to-other-qualifications/btec-ucas-points.html (accessed 2026-09-02)
-[^s9]: UCAS, "Scottish Advanced Highers - UCAS Tariff", https://www.ucas.com/providers/services/qualifications/ucas-tariff/scottish-advanced-highers (accessed 2026-09-02)
-[^s10]: UCAS, "Scottish Highers and Advanced Highers", https://www.ucas.com/sites/default/files/ScottishQs.pdf (accessed 2026-09-02)
-[^s11]: UCAS, "Allocating Tariff points to Level 3 and SCQF Level 6 apprenticeships", https://www.ucas.com/about-us/news-and-insights/allocating-tariff-points-to-level-3-and-scqf-level-6-apprenticeships (accessed 2026-09-02)
-[^s12]: UCAS, "UCAS announces Tariff points rollout for apprenticeships", https://www.ucas.com/corporate/news-and-key-documents/news/ucas-announces-tariff-points-rollout-apprenticeships (accessed 2026-09-02)
-[^s13]: UCAS, "Understanding UCAS Tariff points for apprenticeships", https://www.ucas.com/apprenticeships/understanding-ucas-tariff-points (accessed 2026-09-02)
-[^s14]: UCAS, "Overview of UCAS Tariff points for apprenticeships", https://www.ucas.com/providers/overview-ucas-tariff-points-apprenticeships (accessed 2026-09-02)
-[^s15]: FE Week, "Start date for apprenticeship UCAS points revealed", https://feweek.co.uk/start-date-for-apprenticeship-ucas-points-revealed/ (accessed 2026-09-02)
-[^s16]: Ulster University, "Apprenticeships - results day guide", https://www.ulster.ac.uk/apprenticeships/results-day-guide (accessed 2026-09-02)
-[^s17]: University of Portsmouth, "Entry requirements and eligibility - degree apprenticeships", https://www.port.ac.uk/study/professional-and-flexible-learning/degree-apprenticeships/entry-requirements-and-eligibility (accessed 2026-09-02)
-[^s18]: AllAboutSchoolLeavers, "A-level results - what to do if your grades aren't enough", https://www.allaboutschoolleavers.co.uk/school-leaver-options/apprenticeships/a-level-results-what-to-do-if-your-grades-aren-t-enough (accessed 2026-09-02)
-[^s19]: BAE Systems, "Apprenticeship FAQs", https://www.baesystems.com/en/careers/careers-in-the-uk/apprenticeships/faqs (accessed 2026-09-02)
-[^s20]: Office for Students, "Degree apprenticeships - guide for apprentices", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/ (accessed 2026-09-02)
+[^s1]: GOV.UK, "English and maths requirements in apprenticeships guidance", https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/english-and-maths-requirements-in-apprenticeships-guidance (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s2]: GOV.UK, "Maths qualifications for apprenticeships", https://www.gov.uk/government/publications/english-and-maths-requirements-in-apprenticeship-standards-at-level-2-and-above/maths-qualifications-for-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s3]: FE Week, "Confirmed: English and maths pass rule for adult apprentices scrapped", https://feweek.co.uk/english-and-maths-rule-scrapped-for-adult-apprentices-dfe-confirms/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s4]: Department for Education, "Apprenticeship funding rules August 2025 to July 2026", https://assets.publishing.service.gov.uk/media/6936acd76a167b6884b7360e/Funding_Rules_2025_to_2026.pdf (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s5]: UCAS, "UCAS Tariff points - what are they and how do they work?", https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/ucas-tariff-points (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s6]: UCAS, "Calculate your UCAS Tariff points", https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/calculate-your-ucas-tariff-points (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s7]: UCAS, "UCAS Tariff - all you need to know", https://www.ucas.com/advisers/help-and-training/guides-resources-and-training/information-new-ucas-tariff-advisers (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s8]: Pearson, "BTEC and UCAS points", https://qualifications.pearson.com/en/support/support-topics/understanding-our-qualifications/comparing-btec-to-other-qualifications/btec-ucas-points.html (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s9]: UCAS, "Scottish Advanced Highers - UCAS Tariff", https://www.ucas.com/providers/services/qualifications/ucas-tariff/scottish-advanced-highers (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s10]: UCAS, "Scottish Highers and Advanced Highers", https://www.ucas.com/sites/default/files/ScottishQs.pdf (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s11]: UCAS, "Allocating Tariff points to Level 3 and SCQF Level 6 apprenticeships", https://www.ucas.com/about-us/news-and-insights/allocating-tariff-points-to-level-3-and-scqf-level-6-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s12]: UCAS, "UCAS announces Tariff points rollout for apprenticeships", https://www.ucas.com/corporate/news-and-key-documents/news/ucas-announces-tariff-points-rollout-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s13]: UCAS, "Understanding UCAS Tariff points for apprenticeships", https://www.ucas.com/apprenticeships/understanding-ucas-tariff-points (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s14]: UCAS, "Overview of UCAS Tariff points for apprenticeships", https://www.ucas.com/providers/overview-ucas-tariff-points-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s15]: FE Week, "Start date for apprenticeship UCAS points revealed", https://feweek.co.uk/start-date-for-apprenticeship-ucas-points-revealed/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s16]: Ulster University, "Apprenticeships - results day guide", https://www.ulster.ac.uk/apprenticeships/results-day-guide (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s17]: University of Portsmouth, "Entry requirements and eligibility - degree apprenticeships", https://www.port.ac.uk/study/professional-and-flexible-learning/degree-apprenticeships/entry-requirements-and-eligibility (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s18]: AllAboutSchoolLeavers, "A-level results - what to do if your grades aren't enough", https://www.allaboutschoolleavers.co.uk/school-leaver-options/apprenticeships/a-level-results-what-to-do-if-your-grades-aren-t-enough (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s19]: BAE Systems, "Apprenticeship FAQs", https://www.baesystems.com/en/careers/careers-in-the-uk/apprenticeships/faqs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s20]: Office for Students, "Degree apprenticeships - guide for apprentices", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

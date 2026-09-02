@@ -232,18 +232,18 @@ These are the questions we set out to answer and could not, because the search b
 
 ## Sources
 
-[^f1]: UCAS, "Apprenticeship funding and finance", https://www.ucas.com/apprenticeships/money-funding-and-finance-for-apprenticeships (accessed 2026-09-02)
-[^f2]: GOV.UK Education Hub, "How are apprenticeships funded and what is the apprenticeship levy?", https://educationhub.blog.gov.uk/2025/08/how-are-apprenticeships-funded-and-what-is-the-apprenticeship-levy/ (accessed 2026-09-02)
-[^f3]: apprenticeships.gov.uk, "Get £3,000 if you've been in care", https://www.apprenticeships.gov.uk/apprentices/support-care-experienced-apprentices (accessed 2026-09-02)
-[^f4]: Department for Education customer help centre, "Care Leavers Bursary", https://customerhelp.education.gov.uk/hc/en-gb/articles/19791863337746-Care-Leavers-Bursary (accessed 2026-09-02)
-[^f5]: FE Week, "Care leaver apprentice bursary to triple to £3000", https://feweek.co.uk/care-leaver-apprentice-bursary-to-triple-to-3000/ (accessed 2026-09-02)
-[^f6]: GOV.UK, "How Council Tax works: who has to pay", https://www.gov.uk/council-tax/who-has-to-pay (accessed 2026-09-02)
-[^f7]: legislation.gov.uk, "The Council Tax (Discount Disregards) Order 1992", https://www.legislation.gov.uk/uksi/1992/548/schedules/2016-05-01/data.xht?view=snippet&wrap=true (accessed 2026-09-02)
-[^f8]: Trades Union Congress, "Get a move on! Developing a national travel discount for apprentices", https://www.tuc.org.uk/sites/default/files/2019-08/TravelDiscountForApprentices.pdf (accessed 2026-09-02)
-[^f9]: apprenticeships.gov.uk, "Support for apprentices with a learning difficulty or disability", https://www.apprenticeships.gov.uk/apprentices/learning-difficulties-disabilities-support (accessed 2026-09-02)
-[^f10]: GOV.UK, "Employing an apprentice: get funding for apprenticeship training", https://www.gov.uk/employing-an-apprentice/get-funding (accessed 2026-09-02)
-[^f11]: Department for Education apprenticeship service help centre, "Telling employees about the apprenticeships care leavers' bursary", https://help.apprenticeships.education.gov.uk/hc/en-gb/articles/33800148959890-Telling-employees-about-the-apprenticeships-care-leavers-bursary (accessed 2026-09-02)
-[^f12]: Chelmsford City Council, "Apprentice council tax disregard", https://www.chelmsford.gov.uk/council-tax/problems-paying-your-council-tax/discounts-and-exemptions/disregard-discounts/apprentices/ (accessed 2026-09-02)
+[^f1]: UCAS, "Apprenticeship funding and finance", https://www.ucas.com/apprenticeships/money-funding-and-finance-for-apprenticeships (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f2]: GOV.UK Education Hub, "How are apprenticeships funded and what is the apprenticeship levy?", https://educationhub.blog.gov.uk/2025/08/how-are-apprenticeships-funded-and-what-is-the-apprenticeship-levy/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f3]: apprenticeships.gov.uk, "Get £3,000 if you've been in care", https://www.apprenticeships.gov.uk/apprentices/support-care-experienced-apprentices (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f4]: Department for Education customer help centre, "Care Leavers Bursary", https://customerhelp.education.gov.uk/hc/en-gb/articles/19791863337746-Care-Leavers-Bursary (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f5]: FE Week, "Care leaver apprentice bursary to triple to £3000", https://feweek.co.uk/care-leaver-apprentice-bursary-to-triple-to-3000/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f6]: GOV.UK, "How Council Tax works: who has to pay", https://www.gov.uk/council-tax/who-has-to-pay (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f7]: legislation.gov.uk, "The Council Tax (Discount Disregards) Order 1992", https://www.legislation.gov.uk/uksi/1992/548/schedules/2016-05-01/data.xht?view=snippet&wrap=true (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f8]: Trades Union Congress, "Get a move on! Developing a national travel discount for apprentices", https://www.tuc.org.uk/sites/default/files/2019-08/TravelDiscountForApprentices.pdf (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f9]: apprenticeships.gov.uk, "Support for apprentices with a learning difficulty or disability", https://www.apprenticeships.gov.uk/apprentices/learning-difficulties-disabilities-support (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f10]: GOV.UK, "Employing an apprentice: get funding for apprenticeship training", https://www.gov.uk/employing-an-apprentice/get-funding (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f11]: Department for Education apprenticeship service help centre, "Telling employees about the apprenticeships care leavers' bursary", https://help.apprenticeships.education.gov.uk/hc/en-gb/articles/33800148959890-Telling-employees-about-the-apprenticeships-care-leavers-bursary (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^f12]: Chelmsford City Council, "Apprentice council tax disregard", https://www.chelmsford.gov.uk/council-tax/problems-paying-your-council-tax/discounts-and-exemptions/disregard-discounts/apprentices/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 

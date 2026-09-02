@@ -435,26 +435,26 @@ if you wrote it down.
 
 ## Sources
 
-[^s1]: EY UK, "Early Careers FAQs", https://www.ey.com/en_uk/careers/students/faqs (accessed 2026-09-02)
-[^s2]: EY UK candidate Q&A, "Can I re-apply to an Apprenticeship Programme after 3 months?", https://ey-uk.careerpages.rec-marketing.dc3.pageuppeople.com/discussions/can-i-re-apply-to-an-apprenticeship-programme-after-3-months (accessed 2026-09-02)
-[^s3]: EY UK candidate Q&A, "If I fail part of the recruitment process when can I apply again?", https://ey-uk.career-inspiration.com/discussion/21513/if-i-fail-part-of-the-recruitment-process-when-can-i-apply-again (accessed 2026-09-02)
-[^s4]: EY UK, "How to apply", https://www.ey.com/en_uk/careers/students/application-process (accessed 2026-09-02)
-[^s5]: UCAS, "Apprenticeship FAQs", https://www.ucas.com/apprenticeships/apprenticeship-faqs (accessed 2026-09-02)
-[^s6]: TARGETjobs, "Dealing with job rejection as a graduate", https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/dealing-job-rejection-graduate (accessed 2026-09-02)
-[^s7]: TARGETjobs, "Been rejected after a graduate job interview? Here's how to get feedback", https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/been-rejected-after-graduate-job-interview-heres-how-get-feedback (accessed 2026-09-02)
-[^s8]: Insurance Business UK, "Degree apprenticeships draw 11 applicants per place", https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx (accessed 2026-09-02)
-[^s9]: Personnel Today, "Triple rise in the number of degree apprenticeship applications", https://www.personneltoday.com/hr/triple-rise-in-the-number-of-degree-apprenticeship-applications/ (accessed 2026-09-02)
-[^s10]: UCAS, "Level 2 apprenticeships (foundation apprenticeships)", https://www.ucas.com/apprenticeships/england/level-2-foundation-apprenticeship (accessed 2026-09-02)
-[^s11]: FE Week, "English and maths rules for foundation apprentices revealed", https://feweek.co.uk/english-and-maths-rules-for-foundation-apprentices-revealed/ (accessed 2026-09-02)
-[^s12]: AELP, "What are foundation apprenticeships and who are they for?", https://www.aelp.org.uk/policy-and-research-topics/what-are-foundation-apprenticeships-and-who-are-they-for/ (accessed 2026-09-02)
-[^s13]: Higherin, "What happens after applying for an apprenticeship?", https://higherin.com/careers-advice/interview-tips/after-applying-apprenticeship (accessed 2026-09-02)
-[^s14]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)
-[^s15]: Department for Education, "Results day 2026: what's next after picking up your A level, T Level and VTQ results?", Education Hub blog, https://educationhub.blog.gov.uk/2026/08/results-day-2026-next-after-picking-up-a-level-t-level-vtq-results/ (accessed 2026-09-02)
-[^s16]: Office for Students, "Degree apprenticeships - guide for apprentices", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/ (accessed 2026-09-02)
-[^s17]: UCAS, "Apprenticeships in England - entry requirements", https://www.ucas.com/entry-requirements-apprenticeships-england (accessed 2026-09-02)
-[^s18]: Department for Education, "Apprenticeships, academic year 2025/26", Explore education statistics, https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26 (accessed 2026-09-02)
-[^s19]: Youth Employment UK, "What you need to know about foundation apprenticeships - a young person's guide", https://www.youthemployment.org.uk/what-you-need-to-know-about-foundation-apprenticeships/ (accessed 2026-09-02)
-[^s20]: House of Commons Library, "Apprenticeship statistics for England", https://commonslibrary.parliament.uk/research-briefings/sn06113/ (accessed 2026-09-02)
+[^s1]: EY UK, "Early Careers FAQs", https://www.ey.com/en_uk/careers/students/faqs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s2]: EY UK candidate Q&A, "Can I re-apply to an Apprenticeship Programme after 3 months?", https://ey-uk.careerpages.rec-marketing.dc3.pageuppeople.com/discussions/can-i-re-apply-to-an-apprenticeship-programme-after-3-months (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s3]: EY UK candidate Q&A, "If I fail part of the recruitment process when can I apply again?", https://ey-uk.career-inspiration.com/discussion/21513/if-i-fail-part-of-the-recruitment-process-when-can-i-apply-again (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s4]: EY UK, "How to apply", https://www.ey.com/en_uk/careers/students/application-process (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s5]: UCAS, "Apprenticeship FAQs", https://www.ucas.com/apprenticeships/apprenticeship-faqs (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s6]: TARGETjobs, "Dealing with job rejection as a graduate", https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/dealing-job-rejection-graduate (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s7]: TARGETjobs, "Been rejected after a graduate job interview? Here's how to get feedback", https://targetjobs.co.uk/careers-advice/job-offers-and-working-life/been-rejected-after-graduate-job-interview-heres-how-get-feedback (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s8]: Insurance Business UK, "Degree apprenticeships draw 11 applicants per place", https://www.insurancebusinessmag.com/uk/news/breaking-news/degree-apprenticeships-draw-11-applicants-per-place--and-insurance-legal-careers-are-in-the-mix-586785.aspx (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s9]: Personnel Today, "Triple rise in the number of degree apprenticeship applications", https://www.personneltoday.com/hr/triple-rise-in-the-number-of-degree-apprenticeship-applications/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s10]: UCAS, "Level 2 apprenticeships (foundation apprenticeships)", https://www.ucas.com/apprenticeships/england/level-2-foundation-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s11]: FE Week, "English and maths rules for foundation apprentices revealed", https://feweek.co.uk/english-and-maths-rules-for-foundation-apprentices-revealed/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s12]: AELP, "What are foundation apprenticeships and who are they for?", https://www.aelp.org.uk/policy-and-research-topics/what-are-foundation-apprenticeships-and-who-are-they-for/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s13]: Higherin, "What happens after applying for an apprenticeship?", https://higherin.com/careers-advice/interview-tips/after-applying-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s14]: GOV.UK, "Find an apprenticeship", https://www.gov.uk/apply-apprenticeship (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s15]: Department for Education, "Results day 2026: what's next after picking up your A level, T Level and VTQ results?", Education Hub blog, https://educationhub.blog.gov.uk/2026/08/results-day-2026-next-after-picking-up-a-level-t-level-vtq-results/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s16]: Office for Students, "Degree apprenticeships - guide for apprentices", https://www.officeforstudents.org.uk/for-students/teaching-and-studying/degree-apprenticeships-guide-for-apprentices/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s17]: UCAS, "Apprenticeships in England - entry requirements", https://www.ucas.com/entry-requirements-apprenticeships-england (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s18]: Department for Education, "Apprenticeships, academic year 2025/26", Explore education statistics, https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2025-26 (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s19]: Youth Employment UK, "What you need to know about foundation apprenticeships - a young person's guide", https://www.youthemployment.org.uk/what-you-need-to-know-about-foundation-apprenticeships/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
+[^s20]: House of Commons Library, "Apprenticeship statistics for England", https://commonslibrary.parliament.uk/research-briefings/sn06113/ (accessed 2026-09-02)  [NOT OPENED - seen in web search 2026-09-02, page never fetched]
 
 ## Related
 
