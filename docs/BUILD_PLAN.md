@@ -64,6 +64,34 @@ until answered.
 4. **Gemini Live model and rate.** Unverified from this environment; the cost
    model is parameterised so a real rate is a one-line change.
 
+## Decisions taken during the build
+
+Recorded because they came up as genuine forks and someone will otherwise
+re-litigate them.
+
+**`timeline.ts` is the sole owner of `applications.stage`.** Logging a rejection
+does NOT automatically move the linked application to `rejected`. Stage
+transitions generate tasks, and two modules writing the same field is how a
+stage ends up flapping between values with tasks regenerating each time. The UI
+prompts the user to update the stage instead, which also means the change is
+something they chose rather than something that happened to them.
+
+**Every coaching run writes a `coachRuns` row.** Previously only critiques and
+rejection debriefs left a trace, so competitiveness checks and interview turns
+were invisible to the daily cap - a user could take a second day's allowance by
+switching feature. Rows are written at reservation, not on success, so a failed
+call is not a free retry.
+
+**`timeline.css` carries the shared app shell** (`.app-page`, `.app-gate`,
+skeletons, focus ring) which the other pages import first. One copy rather than
+three; the filename undersells what it holds.
+
+**Coaching metering is currently self-contained** rather than using
+`convex/budget.ts`, because the two were written concurrently. They enforce the
+same caps by the same method. Folding coaching's `beginRun`/`settleRun` into
+`budget.ts` is a tidy-up, not a fix, and should happen when someone next touches
+either.
+
 ## Compliance, which is a real cost not a footnote
 
 The audience is 16-19. That puts community squarely in scope for the UK

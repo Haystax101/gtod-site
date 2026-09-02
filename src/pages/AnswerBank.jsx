@@ -40,18 +40,36 @@ const RESULT_STEP = {
   eg: '“Closing dropped from 40 minutes to 25, and my manager rolled it out to the other store.”',
 }
 
-// A quick self-check, not a grade. It tells you what's missing, which is almost
-// always the Result.
+// A live mirror of the server's `starSignals` (convex/coach.ts), so the meter
+// under the box says the same thing the backend will. It is a structural check,
+// not a grade — Charge is the judgement.
 function starCheck(body = '') {
   const text = body.trim()
   const lower = text.toLowerCase()
+  const words = (text.match(/\S+/g) ?? []).length
+  const singular = (lower.match(/\b(?:i|me|my|mine)\b/g) ?? []).length
+  const plural = (lower.match(/\b(?:we|us|our|ours)\b/g) ?? []).length
+  const total = singular + plural
+  const hasResult = /\b(as a result|resulted in|meant that|ended up|which meant|so that|increased|reduced|saved|improved|grew|cut|went from|raised|delivered|won|achieved|learned|learnt|feedback)\b/.test(lower)
+  const hasNumbers = /\d/.test(text)
+  const ownership = total === 0 ? 0 : singular / total
   return {
-    s: text.length > 80,
-    t: /\b(i had to|my job|my role|responsible|asked me|i needed to|it was on me|i was the)\b/.test(lower),
-    a: (lower.match(/\bi\s+\w+/g) || []).length >= 3,
-    r: /\d/.test(text) || /\b(as a result|resulted in|meant that|ended up|we won|increased|reduced|saved|improved|grew|cut|went from|learned|learnt|feedback)\b/.test(lower),
+    hasResult,
+    hasNumbers,
+    ownership,
+    words,
+    ownsIt: ownership >= 0.5,
+    longEnough: words >= 80,
+    complete: hasResult && hasNumbers && ownership >= 0.5 && words >= 80,
   }
 }
+
+const SIGNALS = [
+  { key: 'longEnough', label: 'Long enough', short: 'Len', fix: 'Too short — an employer’s box will take more than this.' },
+  { key: 'ownsIt', label: 'Yours, not the team’s', short: 'I', fix: 'Too many “we”s. Say what you did.' },
+  { key: 'hasResult', label: 'Has a result', short: 'R', fix: 'No result yet. What changed because of you?' },
+  { key: 'hasNumbers', label: 'Has a number', short: '#', fix: 'Put a number on it if you honestly can.' },
+]
 
 export default function AnswerBank() {
   useEffect(() => {
@@ -191,8 +209,7 @@ function Workspace() {
                 <div className="bank-group" key={competency}>
                   <div className="g-head">{competency} <span className="n">{list.length}</span></div>
                   {list.map((a) => {
-                    const check = starCheck(a.body)
-                    const complete = a.starComplete ?? (check.s && check.a && check.r)
+                    const complete = a.starComplete ?? starCheck(a.body).complete
                     return (
                       <button
                         type="button" key={a._id} className="answer-chip"
@@ -202,7 +219,7 @@ function Workspace() {
                         <span className="a-prompt">{a.prompt || 'Untitled answer'}</span>
                         <span className="a-meta">
                           <span>{a.body ? `${a.body.trim().split(/\s+/).length} words` : 'Empty'}</span>
-                          {complete ? <span className="ok">STAR complete</span> : <span className="flag">No result yet</span>}
+                          {complete ? <span className="ok">Ready to reuse</span> : <span className="flag">Needs a result</span>}
                         </span>
                       </button>
                     )
@@ -419,15 +436,22 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
           />
         </div>
 
-        <div className="star-meter" aria-label="Quick STAR check">
-          <span className={`pip${check.s ? ' on' : ''}`} title="Situation">S</span>
-          <span className={`pip${check.t ? ' on' : ''}`} title="Task">T</span>
-          <span className={`pip${check.a ? ' on' : ''}`} title="Action">A</span>
-          <span className={`pip${check.r ? ' on' : ' missing-result'}`} title="Result">R</span>
+        <div className="star-meter" aria-label="Structure check">
+          {SIGNALS.map((sig) => (
+            <span
+              key={sig.key}
+              className={`pip${check[sig.key] ? ' on' : sig.key === 'hasResult' ? ' missing-result' : ''}`}
+              title={check[sig.key] ? sig.label : sig.fix}
+            >
+              {sig.short}
+            </span>
+          ))}
           <span>
-            {check.r
-              ? `${words} words. Quick check only — Charge will be harder on it.`
-              : 'No result yet. What actually changed because of you?'}
+            {!check.hasResult
+              ? 'No result yet. What actually changed because of you?'
+              : check.complete
+                ? `${words} words, and it holds together. Charge will be harder on it than this.`
+                : (SIGNALS.find((sig) => !check[sig.key])?.fix ?? '')}
           </span>
         </div>
 
@@ -465,7 +489,7 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
 
 function StarGuide({ check }) {
   return (
-    <details className="star-guide" open={!check.r}>
+    <details className="star-guide" open={!check.hasResult}>
       <summary>STAR structure — what a good answer actually contains</summary>
       <ul className="star-steps">
         {STAR_STEPS.map((s) => (

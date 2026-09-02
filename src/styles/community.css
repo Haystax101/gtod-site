@@ -71,6 +71,12 @@
 .mod-note svg { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; margin-top: 3px; }
 
 .feed { display: grid; gap: 10px; margin-top: 14px; }
+.thread-block { display: grid; gap: 8px; }
+.replies { display: grid; gap: 8px; padding-left: 16px; border-left: 2px solid var(--line); margin-left: 6px; }
+.post.is-reply { background: var(--bg); }
+.post .reply-arrow { width: 13px; height: 13px; color: var(--muted); }
+.composer-card.compact { padding: 10px; }
+.composer-card.compact textarea { min-height: 54px; font-size: 0.95rem; }
 .post {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 14px; display: grid; gap: 8px;
@@ -95,9 +101,8 @@
 .post-banner.waiting { background: var(--teal-soft); color: var(--teal); }
 .post-banner.waiting strong { color: var(--ink); display: block; font-weight: 700; }
 .post-banner.waiting span { color: var(--ink-2); }
-.post-banner.removed { background: var(--surface-2); color: var(--ink-2); }
-.post-banner.removed svg { color: var(--muted); }
-.post.removed .post-body { opacity: 0.55; }
+/* Hidden and removed posts never reach a client, so there is no removed state
+   to style here - the feed simply stops returning them. */
 
 .report-form { display: grid; gap: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 11px; }
 .report-form .r-title { font-size: 0.85rem; font-weight: 600; }

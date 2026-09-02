@@ -20,10 +20,6 @@ export function startOfWeek(ts = Date.now()) {
   return d.getTime()
 }
 
-export function endOfWeek(ts = Date.now()) {
-  return startOfWeek(ts) + 7 * DAY - 1
-}
-
 export function isOverdue(dueAt, now = Date.now()) {
   return typeof dueAt === 'number' && dueAt < startOfDay(now)
 }
@@ -43,12 +39,6 @@ export function formatDue(dueAt, now = Date.now()) {
 export function formatDate(ts) {
   if (typeof ts !== 'number') return null
   return new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-}
-
-// Days until a deadline, for the "closes in 9 days" copy on application cards.
-export function daysUntil(ts, now = Date.now()) {
-  if (typeof ts !== 'number') return null
-  return Math.round((startOfDay(ts) - startOfDay(now)) / DAY)
 }
 
 // ---------------------------------------------------------------------- list

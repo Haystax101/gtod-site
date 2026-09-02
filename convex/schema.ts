@@ -206,6 +206,19 @@ export default defineSchema({
     createdAt: v.number(),
   }).index('by_user', ['userId', 'createdAt']),
 
+  // One row per coaching model call, whatever the mode.
+  //
+  // Without this, only critiques and rejection debriefs left a trace, so
+  // competitiveness checks and interview turns were invisible to the daily cap
+  // - a user could take a second day's allowance by switching feature. Counting
+  // them through the answers table also meant up to 200 sub-queries per call.
+  coachRuns: defineTable({
+    userId: v.id('users'),
+    mode: v.string(),
+    costMicros: v.number(),
+    createdAt: v.number(),
+  }).index('by_user', ['userId', 'createdAt']),
+
   // --------------------------------------------------------------- community
 
   // A cohort is scoped to a scheme and intake year, so it is never a general

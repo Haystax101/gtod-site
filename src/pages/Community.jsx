@@ -2,7 +2,7 @@ import { Component, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SignInButton, SignUpButton } from '@clerk/clerk-react'
 import { useConvexAuth, useMutation, useQuery } from 'convex/react'
-import { ArrowLeft, Check, Clock, EyeOff, Flag, Send, ShieldCheck, Users } from 'lucide-react'
+import { ArrowLeft, Check, Clock, CornerDownRight, Flag, Send, ShieldCheck, Users } from 'lucide-react'
 import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { track } from '../lib/analytics.js'
@@ -11,9 +11,12 @@ import '../styles/timeline.css'
 import '../styles/community.css'
 
 const errorText = (err) => err?.data?.message ?? err?.data ?? err?.message ?? 'Something went wrong'
-const MAX_POST = 1000
 
-const REPORT_REASONS = ['Bullying or harassment', 'Sexual or inappropriate', 'Spam or scam', 'Personal details shared', 'Something else']
+// Mirrors MAX_POST_CHARS in convex/moderation.ts. The server is the authority;
+// this only stops someone typing 3,000 characters before being told.
+const MAX_POST = 2000
+
+const REPORT_REASONS = ['Bullying or harassment', 'Sexual or inappropriate', 'Spam or a scam', 'Personal details shared', 'Something else']
 
 function relative(ts) {
   if (typeof ts !== 'number') return ''
@@ -48,15 +51,19 @@ function NotConfigured() {
   )
 }
 
+function LoadingPage({ label }) {
+  return (
+    <div className="app-page">
+      <div className="wrap skel-stack" aria-busy="true" aria-label={label}>
+        <div className="skel w-40" /><div className="skel tall" /><div className="skel tall" />
+      </div>
+    </div>
+  )
+}
+
 function Gate() {
   const { isAuthenticated, isLoading } = useConvexAuth()
-  if (isLoading) {
-    return (
-      <div className="app-page"><div className="wrap skel-stack" aria-busy="true" aria-label="Loading cohorts">
-        <div className="skel w-40" /><div className="skel tall" /><div className="skel tall" />
-      </div></div>
-    )
-  }
+  if (isLoading) return <LoadingPage label="Loading cohorts" />
   if (!isAuthenticated) {
     return (
       <div className="app-gate">
@@ -107,11 +114,12 @@ function Workspace() {
   const ensure = useMutation(api.users.ensure)
   useEffect(() => { ensure() }, [ensure])
 
+  // listCohorts already returns only enabled cohorts.
   const cohorts = useQuery(api.community.listCohorts, {})
   const [selectedId, setSelectedId] = useState(null)
   const [error, setError] = useState(null)
 
-  const open = useMemo(() => (cohorts ?? []).filter((c) => c.enabled !== false), [cohorts])
+  const open = useMemo(() => cohorts ?? [], [cohorts])
 
   // Land people straight in a cohort they've already joined.
   useEffect(() => {
@@ -120,14 +128,7 @@ function Workspace() {
     if (joined) setSelectedId(joined._id)
   }, [open, selectedId])
 
-  if (cohorts === undefined) {
-    return (
-      <div className="app-page"><div className="wrap skel-stack" aria-busy="true" aria-label="Loading cohorts">
-        <div className="skel w-40" /><div className="skel tall" /><div className="skel tall" />
-      </div></div>
-    )
-  }
-
+  if (cohorts === undefined) return <LoadingPage label="Loading cohorts" />
   if (open.length === 0) return <OpeningSoon />
 
   const selected = open.find((c) => c._id === selectedId) ?? null
@@ -157,6 +158,8 @@ function Workspace() {
                 cohort={c}
                 selected={c._id === selectedId}
                 onSelect={() => setSelectedId(c._id)}
+                onJoined={() => setSelectedId(c._id)}
+                onLeft={() => setSelectedId((id) => (id === c._id ? null : id))}
                 onError={setError}
               />
             ))}
@@ -184,18 +187,19 @@ function Workspace() {
   )
 }
 
-function CohortCard({ cohort: c, selected, onSelect, onError }) {
-  const join = useMutation(api.community.join)
-  const leave = useMutation(api.community.leave)
+function CohortCard({ cohort: c, selected, onSelect, onJoined, onLeft, onError }) {
+  const joinCohort = useMutation(api.community.joinCohort)
+  const leaveCohort = useMutation(api.community.leaveCohort)
   const [busy, setBusy] = useState(false)
   const [confirmLeave, setConfirmLeave] = useState(false)
 
-  const run = async (fn, event) => {
+  const run = async (fn, event, after) => {
     setBusy(true)
     onError(null)
     try {
       await fn({ cohortId: c._id })
       track(event, { slug: c.slug })
+      after?.()
     } catch (e) {
       onError(errorText(e))
     } finally {
@@ -209,9 +213,7 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
   return (
     <div className={`cohort${c.joined ? ' selectable' : ''}`} aria-current={selected || undefined}>
       {c.joined ? (
-        <button type="button" className="c-name as-select" onClick={onSelect} aria-label={`Open ${c.name}`}>
-          {c.name}
-        </button>
+        <button type="button" className="c-name as-select" onClick={onSelect} aria-label={`Open ${c.name}`}>{c.name}</button>
       ) : (
         <span className="c-name">{c.name}</span>
       )}
@@ -225,7 +227,7 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
             <span className="joined-tag"><Check aria-hidden="true" /> Joined</span>
             <span style={{ flex: 1 }} />
             {confirmLeave ? (
-              <button type="button" className="link-btn danger" disabled={busy} onClick={() => run(leave, 'cohort_left')}>
+              <button type="button" className="link-btn danger" disabled={busy} onClick={() => run(leaveCohort, 'cohort_left', onLeft)}>
                 Leave for good?
               </button>
             ) : (
@@ -233,7 +235,7 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
             )}
           </>
         ) : (
-          <button type="button" className="btn btn-primary btn-sm" disabled={busy} onClick={() => run(join, 'cohort_joined')}>
+          <button type="button" className="btn btn-primary btn-sm" disabled={busy} onClick={() => run(joinCohort, 'cohort_joined', onJoined)}>
             {busy ? 'Joining…' : 'Join'}
           </button>
         )}
@@ -243,7 +245,8 @@ function CohortCard({ cohort: c, selected, onSelect, onError }) {
 }
 
 function CohortFeed({ cohort, onBack, onError }) {
-  const posts = useQuery(api.community.feed, { cohortId: cohort._id })
+  const feed = useQuery(api.community.cohortFeed, { cohortId: cohort._id })
+  const posts = feed?.posts ?? []
 
   return (
     <>
@@ -254,43 +257,42 @@ function CohortFeed({ cohort, onBack, onError }) {
         <span className="stage-badge tone-live sm"><i aria-hidden="true" />Intake {cohort.intakeYear}</span>
       </div>
 
-      <Composer cohort={cohort} onError={onError} />
-
-      {posts === undefined ? (
+      {feed === undefined ? (
         <div className="feed skel-stack" aria-busy="true" aria-label="Loading posts">
           <div className="skel tall" /><div className="skel tall" />
         </div>
-      ) : posts.length === 0 ? (
-        <div className="feed-empty" style={{ marginTop: 14 }}>
-          <h3>Nobody's posted yet</h3>
-          <p>
-            Someone has to go first. A good opener: where you're up to with the application, and the
-            bit you're least sure about.
-          </p>
+      ) : !feed.joined ? (
+        <div className="feed-empty">
+          <h3>Join {cohort.name} to read along</h3>
+          <p>Everyone in a cohort is a joined member — there's no lurking, in either direction.</p>
         </div>
       ) : (
-        <div className="feed">
-          {posts.map((p) => <Post key={p._id} post={p} onError={onError} />)}
-        </div>
+        <>
+          <Composer cohort={cohort} onError={onError} />
+          {posts.length === 0 ? (
+            <div className="feed-empty" style={{ marginTop: 14 }}>
+              <h3>Nobody's posted yet</h3>
+              <p>
+                Someone has to go first. A good opener: where you're up to with the application, and
+                the bit you're least sure about.
+              </p>
+            </div>
+          ) : (
+            <div className="feed">
+              {posts.map((p) => <Thread key={p._id} post={p} cohort={cohort} onError={onError} />)}
+            </div>
+          )}
+        </>
       )}
     </>
   )
 }
 
-function Composer({ cohort, onError }) {
-  const createPost = useMutation(api.community.post)
+function Composer({ cohort, onError, replyToId, onDone, compact }) {
+  const createPost = useMutation(api.community.createPost)
   const [body, setBody] = useState('')
   const [busy, setBusy] = useState(false)
   const [sent, setSent] = useState(false)
-
-  if (!cohort.joined) {
-    return (
-      <div className="feed-empty">
-        <h3>Join {cohort.name} to post</h3>
-        <p>You can read along either way, but posting means joining the cohort.</p>
-      </div>
-    )
-  }
 
   const over = body.length > MAX_POST
   const submit = async (e) => {
@@ -300,11 +302,11 @@ function Composer({ cohort, onError }) {
     setBusy(true)
     onError(null)
     try {
-      await createPost({ cohortId: cohort._id, body: text })
-      track('cohort_post_created', { slug: cohort.slug })
+      const res = await createPost({ cohortId: cohort._id, body: text, replyToId })
+      track('cohort_post_created', { slug: cohort.slug, reply: Boolean(replyToId), status: res?.status })
       setBody('')
       setSent(true)
-      setTimeout(() => setSent(false), 8000)
+      setTimeout(() => { setSent(false); onDone?.() }, 6000)
     } catch (err) {
       onError(errorText(err))
     } finally {
@@ -312,58 +314,80 @@ function Composer({ cohort, onError }) {
     }
   }
 
+  const id = replyToId ? `reply-${replyToId}` : 'post-body'
+
   return (
-    <form className="composer-card" onSubmit={submit}>
-      <label htmlFor="post-body" className="field-label">Post to {cohort.name}</label>
+    <form className={`composer-card${compact ? ' compact' : ''}`} onSubmit={submit}>
+      <label htmlFor={id} className={compact ? 'sr-only' : 'field-label'}>
+        {replyToId ? 'Write a reply' : `Post to ${cohort.name}`}
+      </label>
       <textarea
-        id="post-body"
+        id={id}
         value={body}
         onChange={(e) => setBody(e.target.value)}
-        placeholder="Where are you up to? What's the bit you're stuck on?"
+        placeholder={replyToId ? 'Reply…' : "Where are you up to? What's the bit you're stuck on?"}
       />
       <div className="composer-row">
         <span className={`count${over ? ' over' : ''}`}>{body.length} / {MAX_POST}</span>
         <span className="grow" />
         {sent && <span className="joined-tag" role="status"><Check aria-hidden="true" /> Sent to a moderator</span>}
+        {replyToId && <button type="button" className="link-btn" onClick={onDone}>Cancel</button>}
         <button type="submit" className="btn btn-primary btn-sm" disabled={!body.trim() || over || busy}>
-          <Send size={14} /> {busy ? 'Sending…' : 'Post'}
+          <Send size={14} /> {busy ? 'Sending…' : replyToId ? 'Reply' : 'Post'}
         </button>
       </div>
-      <p className="mod-note">
-        <ShieldCheck aria-hidden="true" />
-        <span>
-          A moderator reads every post before it goes up. It's usually quick, and you'll see yours
-          here while it waits. Don't post your full name, school or contact details.
-        </span>
-      </p>
+      {!compact && (
+        <p className="mod-note">
+          <ShieldCheck aria-hidden="true" />
+          <span>
+            A moderator reads every post before it goes up. It's usually quick, and you'll see yours
+            here while it waits. Don't post your full name, school or contact details.
+          </span>
+        </p>
+      )}
     </form>
   )
 }
 
-function Post({ post, onError }) {
-  const report = useMutation(api.community.report)
-  const blockAuthor = useMutation(api.community.blockAuthor)
+function Thread({ post, cohort, onError }) {
+  const [replying, setReplying] = useState(false)
+  const replies = post.replies ?? []
+  return (
+    <div className="thread-block">
+      <Post post={post} onError={onError} onReply={() => setReplying(true)} canReply={!post.awaitingReview} />
+      {replies.length > 0 && (
+        <div className="replies">
+          {replies.map((r) => <Post key={r._id} post={r} onError={onError} isReply />)}
+        </div>
+      )}
+      {replying && (
+        <div className="replies">
+          <Composer cohort={cohort} onError={onError} replyToId={post._id} onDone={() => setReplying(false)} compact />
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Post({ post, onError, onReply, canReply, isReply }) {
+  const reportPost = useMutation(api.community.reportPost)
+  const blockUser = useMutation(api.community.blockUser)
   const [reporting, setReporting] = useState(false)
   const [reason, setReason] = useState(null)
-  const [done, setDone] = useState(false)
+  const [reported, setReported] = useState(false)
   const [busy, setBusy] = useState(false)
 
-  const pending = post.status === 'pending'
-  const removed = post.status === 'removed' || post.status === 'hidden'
-
-  // Belt and braces: unpublished posts belong to their author and nobody else.
-  // The backend filters these out, and if it ever stops, this still holds.
-  if ((pending || removed) && !post.isMine) return null
+  const pending = post.awaitingReview ?? post.status === 'pending'
 
   const submitReport = async () => {
     if (!reason || busy) return
     setBusy(true)
     onError(null)
     try {
-      await report({ postId: post._id, reason })
+      await reportPost({ postId: post._id, reason })
       track('cohort_post_reported')
       setReporting(false)
-      setDone(true)
+      setReported(true)
     } catch (e) {
       onError(errorText(e))
     } finally {
@@ -371,57 +395,61 @@ function Post({ post, onError }) {
     }
   }
 
+  const block = async () => {
+    if (!post.author?.id) return
+    if (!window.confirm(`Block ${post.author.name || 'this person'}? You won't see their posts, and they won't see yours.`)) return
+    onError(null)
+    try {
+      await blockUser({ userId: post.author.id })
+      track('cohort_user_blocked')
+    } catch (e) {
+      onError(errorText(e))
+    }
+  }
+
   return (
-    <article className={`post${pending ? ' pending' : ''}${removed ? ' removed' : ''}`}>
+    <article className={`post${pending ? ' pending' : ''}${isReply ? ' is-reply' : ''}`}>
       <div className="post-top">
-        <span className="who">{post.isMine ? 'You' : post.authorName || 'A member'}</span>
+        {isReply && <CornerDownRight className="reply-arrow" aria-hidden="true" />}
+        <span className="who">{post.isMine ? 'You' : post.author?.name || 'A member'}</span>
         <span className="when">{relative(post.createdAt)}</span>
       </div>
 
-      {pending && post.isMine && (
+      {pending && (
         <p className="post-banner waiting">
           <Clock aria-hidden="true" />
           <span>
             <strong>Your post is with a moderator — it'll appear shortly.</strong>
-            <span>Nothing has gone wrong. Every post is read by a person before it goes up, and only you can see this one for now.</span>
-          </span>
-        </p>
-      )}
-
-      {removed && post.isMine && (
-        <p className="post-banner removed">
-          <EyeOff aria-hidden="true" />
-          <span>
-            A moderator took this one down{post.moderationNote ? `: ${post.moderationNote}` : '.'} You can post again — this
-            isn't a strike against you.
+            <span>
+              Nothing has gone wrong and you haven't done anything wrong. Every post is read by a
+              person before it goes up, and until then only you can see this one.
+            </span>
           </span>
         </p>
       )}
 
       <div className="post-body">{post.body}</div>
 
-      {!post.isMine && !removed && (
-        <div className="post-actions">
-          {done ? (
+      <div className="post-actions">
+        {canReply && !post.isMine && (
+          <button type="button" className="link-btn" onClick={onReply}>Reply</button>
+        )}
+        {canReply && post.isMine && (
+          <button type="button" className="link-btn" onClick={onReply}>Add to this</button>
+        )}
+        {!post.isMine && !pending && (
+          reported ? (
             <span className="inline-note" role="status">Thanks — a moderator will look at this.</span>
           ) : reporting ? null : (
             <>
               <button type="button" className="link-btn" onClick={() => setReporting(true)}>
                 <Flag size={12} style={{ verticalAlign: '-1px', marginRight: 4 }} />Report
               </button>
-              <button
-                type="button" className="link-btn"
-                onClick={async () => {
-                  if (!window.confirm('Block this person? You won\'t see their posts again.')) return
-                  try { await blockAuthor({ postId: post._id }); track('cohort_user_blocked') } catch (e) { onError(errorText(e)) }
-                }}
-              >
-                Block
-              </button>
+              <button type="button" className="link-btn" onClick={block}>Block</button>
             </>
-          )}
-        </div>
-      )}
+          )
+        )}
+      </div>
 
       {reporting && (
         <div className="report-form">

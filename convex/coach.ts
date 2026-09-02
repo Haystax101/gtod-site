@@ -78,15 +78,20 @@ const RESULT_MARKERS = [
   /\bas a result\b/,
   /\bresult(?:ed|ing) in\b/,
   /\bresult:\s/,
-  /\bwhich (?:meant|led|helped|allowed|saved|raised|increased|reduced)\b/,
+  /\bmeant (?:that|we|i|it|they|the|a|an)\b/,
+  /\bwhich (?:meant|led|helped|allowed|saved|raised|increased|reduced|cut|improved)\b/,
   /\b(?:led|leading) to\b/,
-  /\bmeant that\b/,
   /\bthe outcome\b/,
   /\b(?:in|by) the end\b/,
-  /\bwe (?:went on to|ended up|finished|won|raised|increased|reduced|cut|saved|beat)\b/,
-  /\bi (?:went on to|ended up|won|raised|increased|reduced|cut|saved|beat|improved|delivered)\b/,
-  /\bwent from\b.{0,40}\bto\b/,
-  /\bfeedback (?:was|from)\b/,
+  /\bwent (?:from\b.{0,40}\bto|up|down)\b/,
+  // Outcome verbs in the first or second person. "got" is deliberately absent:
+  // "we got the result we wanted" states no outcome at all, and it is one of
+  // the most common ways an answer pretends to have one.
+  /\b(?:we|i) (?:went on to|ended up|finished|came|won|raised|increased|reduced|cut|saved|beat|improved|delivered|scored|hit|reached|completed)\b/,
+  /\bahead of (?:schedule|plan|target|time|our|the)\b/,
+  // Feedback from a named person is a legitimate Result when no number exists.
+  /\bfeedback (?:was|from|said)\b/,
+  /\bthe (?:assessor|manager|teacher|client|customer|employer|owner|supervisor|examiner) (?:said|told|picked|noted|fed back)\b/,
 ]
 
 /** A number, a percentage, a money amount or a time span. */
@@ -399,10 +404,20 @@ export function matchAnswersForCompetency(
     else if (signals.ownership < 0.5) caution = 'Mostly written as "we" - rewrite it as what you did'
     else if (family < 1) caution = 'Rework the Action and Result to point at the new competency'
 
+    // An answer with no measured result is never "reuse", however well it
+    // matches the competency. Labelling a half-finished answer as ready to go
+    // is the one failure this feature cannot have: the student pastes it,
+    // submits it, and we have actively made the application worse. A perfect
+    // topic match with no Result in it is an adaptation, and it is honest to
+    // say so.
+    const band: ReuseFit =
+      score >= REUSE_THRESHOLD ? 'reuse' : score >= ADAPT_THRESHOLD ? 'adapt' : 'stretch'
+    const fit: ReuseFit = band === 'reuse' && !starReady ? 'adapt' : band
+
     matches.push({
       answerId: candidate._id,
       score: Math.round(score * 1000) / 1000,
-      fit: score >= REUSE_THRESHOLD ? 'reuse' : score >= ADAPT_THRESHOLD ? 'adapt' : 'stretch',
+      fit,
       reasons,
       caution,
     })
@@ -539,31 +554,20 @@ async function applySpend(
 }
 
 /**
- * Coaching runs today that left a countable row.
+ * Coaching runs today.
  *
- * `critiques` has no by_user index, so it is counted through the user's own
- * answers - which is indexed, bounded by how many answers one person banks, and
- * therefore fine. `rejections` is indexed by user and time directly.
+ * Every mode writes a `coachRuns` row, so this is one indexed read regardless
+ * of how many answers the user has banked. It also closes the gap where
+ * competitiveness checks and interview turns - which leave no critique or
+ * rejection row - were invisible to the daily cap, letting a user take a second
+ * day's allowance by switching feature.
  */
 async function coachRunsSince(ctx: { db: any }, userId: Id<'users'>, since: number) {
-  const answers = await ctx.db
-    .query('answers')
-    .withIndex('by_user', (q: any) => q.eq('userId', userId))
-    .take(200)
-  let count = 0
-  for (const answer of answers) {
-    const critiques = await ctx.db
-      .query('critiques')
-      .withIndex('by_answer', (q: any) => q.eq('answerId', answer._id).gte('createdAt', since))
-      .collect()
-    count += critiques.length
-  }
-  const rejections = await ctx.db
-    .query('rejections')
+  const runs = await ctx.db
+    .query('coachRuns')
     .withIndex('by_user', (q: any) => q.eq('userId', userId).gte('createdAt', since))
     .collect()
-  count += rejections.filter((r: any) => r.debrief).length
-  return count
+  return runs.length
 }
 
 /**
@@ -627,6 +631,15 @@ export const beginRun = internalMutation({
         costMicros: reservedMicros,
       })
     }
+    // Recorded here rather than on success, so an abandoned or failed run still
+    // counts against the daily cap. Otherwise a failing call is a free retry.
+    await ctx.db.insert('coachRuns', {
+      userId: user._id,
+      mode: kind,
+      costMicros: reservedMicros,
+      createdAt: Date.now(),
+    })
+
     console.log(`coach run reserved: ${kind}, ${reservedMicros} micros, plan ${user.plan}`)
     return {
       tier: user.plan,
@@ -786,12 +799,18 @@ async function runCoach(
     return { ...reply, tier: run.tier, reservedMicros: run.reservedMicros }
   } catch (err) {
     // Refund: no tokens were billed to us, so none should be billed to them.
-    await ctx.runMutation(refs.settleRun, {
-      tier: run.tier,
-      reservedMicros: run.reservedMicros,
-      inputTokens: 0,
-      outputTokens: 0,
-    })
+    // A failed refund must not mask the failure that caused it - the user needs
+    // to see why their coaching call broke, not why the bookkeeping did.
+    try {
+      await ctx.runMutation(refs.settleRun, {
+        tier: run.tier,
+        reservedMicros: run.reservedMicros,
+        inputTokens: 0,
+        outputTokens: 0,
+      })
+    } catch (refundErr) {
+      console.error('failed to refund a coaching reservation', refundErr)
+    }
     throw err
   }
 }
