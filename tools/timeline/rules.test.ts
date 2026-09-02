@@ -2,6 +2,7 @@
  * Tests for the weekly task rules in convex/timeline.ts.
  *
  *   node --experimental-strip-types tools/timeline/rules.test.ts
+ *   tools/test.sh tools/timeline/rules.test.ts   (bundles instead; same result)
  *
  * `tasksFor` is pure by design, so these run against the real rules with no
  * Convex database, no auth and no network. If a rule changes, this file is
@@ -11,7 +12,8 @@
  * ('./users', './_generated/server'), which Node's ESM resolver will not
  * resolve on its own. The hook below adds the extension back so the module can
  * be loaded as written, rather than making production code awkward to suit a
- * test runner.
+ * test runner. tools/test.sh solves the same problem by bundling, so this file
+ * passes under either.
  */
 import { registerHooks } from 'node:module'
 import { existsSync } from 'node:fs'

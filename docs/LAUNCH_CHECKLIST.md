@@ -54,6 +54,7 @@ npm install
 npx convex dev          # regenerates convex/_generated - REQUIRED
 npx convex run knowledge:seed
 npx convex run knowledge:reindex
+npx convex run timeline:seedSchemes   # 40 employers, all unverified, no dates
 npm run build
 ```
 

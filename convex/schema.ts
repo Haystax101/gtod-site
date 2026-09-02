@@ -139,6 +139,9 @@ export default defineSchema({
     notes: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
+    // Distinct from updatedAt so "how long stuck at this stage" stays accurate
+    // when something else patches the row (a note, a deadline correction).
+    stageChangedAt: v.optional(v.number()),
   })
     .index('by_user', ['userId', 'updatedAt'])
     .index('by_user_stage', ['userId', 'stage']),
@@ -153,11 +156,16 @@ export default defineSchema({
     dueAt: v.optional(v.number()),
     weekOf: v.string(), // ISO date of the Monday, so a week can be queried whole
     source: v.union(v.literal('generated'), v.literal('user')),
+    // Stable identity for a generated task, independent of its wording.
+    // Deduplicating on the title alone means rephrasing a one-off task
+    // re-issues it to everyone who already dismissed it.
+    ruleKey: v.optional(v.string()),
     doneAt: v.optional(v.number()),
     createdAt: v.number(),
   })
     .index('by_user_week', ['userId', 'weekOf'])
-    .index('by_user_done', ['userId', 'doneAt']),
+    .index('by_user_done', ['userId', 'doneAt'])
+    .index('by_user_rule', ['userId', 'ruleKey']),
 
   // ---------------------------------------------------------------- coaching
 
