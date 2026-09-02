@@ -1,7 +1,11 @@
 ---
 title: "UK apprenticeship discovery landscape — secondary competitors and who funds them"
 summary: "Eleven secondary players mapped, with the money flow behind each. Almost every consumer-facing site in this market is free to students because employers, training providers or the DfE pay — which explains why they all optimise for employer reach rather than student outcomes."
-last_verified: 2026-09-02
+last_verified: null            # NEVER VERIFIED - the sources below were not opened
+drafted: 2026-09-02
+verification: none
+status: quarantined            # see ../README.md before repeating any figure here
+source_type: websearch-extracts-only
 evidence_quality: "MEDIUM — direct page fetches were blocked; claims come from search-engine extracts of the listed pages."
 sources:
   - https://www.ratemyapprenticeship.co.uk/

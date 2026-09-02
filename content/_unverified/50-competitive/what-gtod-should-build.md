@@ -1,7 +1,11 @@
 ---
 title: "What GTOD should build"
 summary: "Ranked build recommendations for the free apprenticeship section and Charge, scored on value to a 16-19 year old against cost for a tiny team on Convex. Includes legal and practical hazards and an explicit do-not-build list."
-last_verified: 2026-09-02
+last_verified: null            # NEVER VERIFIED - the sources below were not opened
+drafted: 2026-09-02
+verification: none
+status: quarantined            # see ../README.md before repeating any figure here
+source_type: websearch-extracts-only
 evidence_quality: "Recommendations are GTOD's own strategy. Competitor claims underpinning them inherit the MEDIUM confidence of the other files in this folder."
 sources:
   - https://apprentago.co.uk/

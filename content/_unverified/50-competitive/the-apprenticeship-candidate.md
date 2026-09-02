@@ -1,7 +1,11 @@
 ---
 title: "\"The Apprenticeship Candidate\" — identification and the coach-led / creator-led segment"
 summary: "No UK entity trades under the exact name 'The Apprenticeship Candidate'. The brief's description — coach-led, course, book or social-first rather than classic software — maps onto three real, verifiable brands: The Apprentice Coach (Miles Allibone-Dover), Apprentice Coach (apprenticecoach.co.uk) and The Apprentice Guide. All three are profiled here."
-last_verified: 2026-09-02
+last_verified: null            # NEVER VERIFIED - the sources below were not opened
+drafted: 2026-09-02
+verification: none
+status: quarantined            # see ../README.md before repeating any figure here
+source_type: websearch-extracts-only
 evidence_quality: "MEDIUM-LOW — see Verification status. Direct page fetches were blocked; claims come from search-engine extracts. No pricing could be verified for any brand in this segment."
 sources:
   - https://theapprenticecoach.com/

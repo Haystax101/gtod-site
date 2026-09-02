@@ -1,7 +1,11 @@
 ---
 title: "Apprentago — competitor profile"
 summary: "AI-powered UK early-careers platform (free to students, ~£1,000/yr to schools, paid/sponsored for employers) covering apprenticeship search, AI CV building, application tracking and Gatsby reporting. Closest direct competitor to GTOD's planned apprenticeship section."
-last_verified: 2026-09-02
+last_verified: null            # NEVER VERIFIED - the sources below were not opened
+drafted: 2026-09-02
+verification: none
+status: quarantined            # see ../README.md before repeating any figure here
+source_type: websearch-extracts-only
 evidence_quality: "MEDIUM — see Verification status. Direct page fetches were blocked in this environment; all claims come from search-engine extracts of the named pages."
 sources:
   - https://apprentago.co.uk/

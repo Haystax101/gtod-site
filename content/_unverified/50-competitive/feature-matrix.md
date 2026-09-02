@@ -1,7 +1,11 @@
 ---
 title: "Feature matrix — UK apprenticeship landscape"
 summary: "Every distinct feature found anywhere in the market, mapped across 14 competitors, plus the features nobody has built."
-last_verified: 2026-09-02
+last_verified: null            # NEVER VERIFIED - the sources below were not opened
+drafted: 2026-09-02
+verification: none
+status: quarantined            # see ../README.md before repeating any figure here
+source_type: websearch-extracts-only
 evidence_quality: "MEDIUM — direct page fetches were blocked; cells derive from search-engine extracts. Blank/unknown cells are marked '?' and are genuinely unknown, not 'no'."
 sources:
   - https://apprentago.co.uk/
