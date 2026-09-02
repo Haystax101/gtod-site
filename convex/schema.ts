@@ -254,11 +254,17 @@ export default defineSchema({
     .index('by_post', ['postId'])
     .index('by_unresolved', ['resolvedAt', 'createdAt']),
 
+  // Indexed both ways on purpose. A block has to hide content in BOTH
+  // directions - if A blocks B, neither should see the other - and answering
+  // "who blocked me" without the second index means scanning the table on
+  // every feed render.
   blocks: defineTable({
     userId: v.id('users'),
     blockedUserId: v.id('users'),
     createdAt: v.number(),
-  }).index('by_user', ['userId']),
+  })
+    .index('by_user', ['userId'])
+    .index('by_blockedUser', ['blockedUserId']),
 
   // ------------------------------------------------------------------- voice
 

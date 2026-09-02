@@ -290,9 +290,7 @@ function AddTask({ onError }) {
   }
   return (
     <form className="add-task" onSubmit={submit}>
-      <label className="sr-only" htmlFor="add-task-input" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>
-        Add a task to this week
-      </label>
+      <label className="sr-only" htmlFor="add-task-input">Add a task to this week</label>
       <input
         id="add-task-input"
         value={title}
@@ -365,9 +363,6 @@ function ApplicationCard({ application: a, onError }) {
       </div>
 
       <div className="ac-actions">
-        <label className="sr-only" htmlFor={`stage-${a._id}`} style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>
-          Stage for {employer}
-        </label>
         <select
           id={`stage-${a._id}`}
           value={a.stage}

@@ -10,6 +10,12 @@ import { trackPageview } from './lib/analytics.js'
 // The chat app pulls in the markdown renderer and file parsers, so it loads on demand.
 const Charge = lazy(() => import('./pages/Charge.jsx'))
 
+// The signed-in app surfaces. Each one pulls its own stylesheet and Convex
+// hooks, so they stay out of the marketing bundle.
+const Timeline = lazy(() => import('./pages/Timeline.jsx'))
+const AnswerBank = lazy(() => import('./pages/AnswerBank.jsx'))
+const Community = lazy(() => import('./pages/Community.jsx'))
+
 // Handles two things a plain HTML page got for free:
 //  - jumping to #anchors after a route change (e.g. /apprenticeships -> /#ask)
 //  - scrolling to the top when moving between pages with no anchor
@@ -42,6 +48,9 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/apprenticeships" element={<Apprenticeships />} />
         <Route path="/charge" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Charge /></Suspense>} />
+        <Route path="/timeline" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Timeline /></Suspense>} />
+        <Route path="/answers" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><AnswerBank /></Suspense>} />
+        <Route path="/community" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Community /></Suspense>} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="*" element={<Home />} />
