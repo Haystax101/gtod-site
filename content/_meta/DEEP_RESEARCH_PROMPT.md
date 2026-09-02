@@ -192,6 +192,16 @@ One document per sector. For these, add this instruction to the prompt:
 20. Rejection and reapplying: employer reapplication policies, asking for
     feedback, and realistic alternative routes.
 
+### Competitor research
+
+21. **The Apprentice Guide** (`theapprenticeguide.net`) - confirmed by GTOD as
+    the competitor to study, and the most product-like brand in the segment.
+    What the product actually does, what it costs, what is behind the free
+    trial, and how the AI-marked interview practice works. Note: there is no
+    UK entity trading as "The Apprenticeship Candidate"; do not search for it.
+22. **Apprentago** (`apprentago.co.uk`) - confirm the pricing and feature
+    claims in the quarantined profile against their own pages.
+
 ## Sending results back
 
 Paste the code block straight into this repo's session. I will run

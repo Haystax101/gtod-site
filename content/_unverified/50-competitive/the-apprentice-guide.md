@@ -1,6 +1,6 @@
 ---
-title: "\"The Apprenticeship Candidate\" — identification and the coach-led / creator-led segment"
-summary: "No UK entity trades under the exact name 'The Apprenticeship Candidate'. The brief's description — coach-led, course, book or social-first rather than classic software — maps onto three real, verifiable brands: The Apprentice Coach (Miles Allibone-Dover), Apprentice Coach (apprenticecoach.co.uk) and The Apprentice Guide. All three are profiled here."
+title: "The Apprentice Guide - competitor profile, with the adjacent coach-led brands"
+summary: "The Apprentice Guide (theapprenticeguide.net) is the competitor GTOD named, confirmed by GTOD directly. It is the most product-like brand in the UK coach-and-creator segment: reported to offer AI-marked video interview practice, psychometric practice and a video course on a free-trial-plus-subscription model. Two adjacent brands with confusingly similar names, The Apprentice Coach and Apprentice Coach, are profiled alongside it because they compete for the same attention. No claim here has been verified against a source page."
 last_verified: null            # NEVER VERIFIED - the sources below were not opened
 drafted: 2026-09-02
 verification: none
@@ -22,7 +22,20 @@ sources:
   - https://www.tiktok.com/@theapprenticeguide
 ---
 
-# "The Apprenticeship Candidate" — what it actually is
+# The Apprentice Guide, and the coach-led segment around it
+
+> [!NOTE]
+> **Identification corrected by GTOD.** This file was originally written to
+> identify a competitor referred to as "The Apprenticeship Candidate", a name
+> under which the researcher could find no trading UK entity. GTOD has since
+> confirmed the intended target is **The Apprentice Guide**
+> (`theapprenticeguide.net`), profiled below. That confirmation is
+> first-party and supersedes the researcher's guesswork.
+>
+> The file still leads with two adjacent brands because that is the order it
+> was drafted in, and nothing here has been verified. When this is redone
+> against live pages, The Apprentice Guide should be the primary subject and
+> the other two should be a short adjacent-competitors section.
 
 ## Verification status — read this first
 
