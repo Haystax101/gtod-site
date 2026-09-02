@@ -149,7 +149,9 @@ const FAMILY_KEYWORDS: Record<string, string[]> = {
   resilience: ['resilience', 'resilient', 'setback', 'pressure', 'difficult', 'failure', 'failed', 'perseverance', 'persevered', 'overcome', 'overcame', 'stress'],
   adaptability: ['adaptability', 'adaptable', 'adapt', 'flexibility', 'flexible', 'change', 'changing', 'ambiguity', 'uncertainty', 'unexpected'],
   initiative: ['initiative', 'proactive', 'self', 'starter', 'drive', 'motivation', 'motivated', 'ownership', 'volunteered', 'spotted'],
-  planning: ['planning', 'plan', 'organisation', 'organising', 'organised', 'prioritise', 'prioritising', 'deadline', 'deadlines', 'time', 'management', 'juggling', 'workload', 'schedule'],
+  // "time" is deliberately absent: nearly every competency question opens
+  // "tell us about a time when...", so it would vote for planning constantly.
+  planning: ['planning', 'plan', 'organisation', 'organising', 'organised', 'prioritise', 'prioritising', 'deadline', 'deadlines', 'management', 'juggling', 'workload', 'schedule'],
   detail: ['detail', 'accuracy', 'accurate', 'thorough', 'checking', 'quality', 'meticulous', 'error', 'errors', 'precise'],
   customer: ['customer', 'customers', 'client', 'clients', 'service', 'user', 'users', 'members', 'public'],
   commercial: ['commercial', 'awareness', 'business', 'industry', 'sector', 'market', 'competitor', 'profit', 'cost', 'why'],
