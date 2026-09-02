@@ -134,7 +134,7 @@ function Workspace() {
   const ensure = useMutation(api.users.ensure)
   useEffect(() => { ensure() }, [ensure])
 
-  const answers = useQuery(api.coach.myAnswers, {})
+  const answers = useQuery(api.coach.myAnswers, {})  // [{ _id, competency, prompt, body, starComplete, signals, family, ... }]
   const [selected, setSelected] = useState(null) // answer _id, or 'new'
   const [seed, setSeed] = useState(null) // { competency, prompt } for a new answer
 
@@ -264,8 +264,9 @@ function EmptyBank({ onStart }) {
 
 function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
   const saveAnswer = useMutation(api.coach.saveAnswer)
+  const updateAnswer = useMutation(api.coach.updateAnswer)
   const deleteAnswer = useMutation(api.coach.deleteAnswer)
-  const requestCritique = useAction(api.coach.requestCritique)
+  const critiqueAnswer = useAction(api.coach.critiqueAnswer)
 
   const [competency, setCompetency] = useState(answer?.competency ?? seed?.competency ?? '')
   const [prompt, setPrompt] = useState(answer?.prompt ?? seed?.prompt ?? '')
@@ -277,15 +278,18 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
   const [critiquing, setCritiquing] = useState(false)
 
   const answerId = answer?._id ?? null
-  const critiques = useQuery(api.coach.critiquesFor, answerId ? { answerId } : 'skip')
+  const critiques = useQuery(api.coach.answerCritiques, answerId ? { answerId } : 'skip')
 
   // Answers already banked that this one could be adapted from. Only worth
   // showing while the page is still blank.
   const showAdapt = isNew && competency.trim().length > 0 && body.trim().length < 40
-  const similar = useQuery(
-    api.coach.similarAnswers,
-    showAdapt ? { competency: competency.trim(), prompt: prompt.trim() || undefined, limit: 3 } : 'skip',
+  const reuse = useQuery(
+    api.coach.suggestAnswerReuse,
+    showAdapt
+      ? { competency: competency.trim(), prompt: prompt.trim() || undefined, limit: 3, ...(answerId ? { excludeAnswerId: answerId } : {}) }
+      : 'skip',
   )
+  const matches = reuse?.matches ?? []
 
   const check = starCheck(body)
   const words = body.trim() ? body.trim().split(/\s+/).length : 0
@@ -295,12 +299,10 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
     setBusy(true)
     setError(null)
     try {
-      const id = await saveAnswer({
-        answerId: answerId ?? undefined,
-        competency: competency.trim() || 'Uncategorised',
-        prompt: prompt.trim(),
-        body,
-      })
+      const fields = { competency: competency.trim(), prompt: prompt.trim(), body }
+      const id = answerId
+        ? await updateAnswer({ answerId, ...fields })
+        : await saveAnswer(fields)
       setDirty(false)
       setSavedAt(Date.now())
       track('answer_saved', { competency: competency.trim() || null, words })
@@ -321,7 +323,7 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
     if (!id) return
     setCritiquing(true)
     try {
-      await requestCritique({ answerId: id })
+      await critiqueAnswer({ answerId: id })
       track('answer_critique_requested')
     } catch (e) {
       setError(errorText(e))
@@ -375,28 +377,34 @@ function Editor({ answer, seed, isNew, onClose, onCreated, onDeleted }) {
           </div>
         </div>
 
-        {showAdapt && Array.isArray(similar) && similar.length > 0 && (
+        {showAdapt && matches.length > 0 && (
           <div className="adapt-panel">
             <h4>You've written something close to this already</h4>
             <p>Adapting beats starting again. Pull one in and rework it for this question.</p>
             <div className="adapt-list">
-              {similar.map((s) => (
-                <div className="adapt-item" key={s._id}>
-                  <span className="a-prompt">{s.prompt || 'Untitled answer'}</span>
-                  <span className="a-snip">{s.body}</span>
+              {matches.map((m) => (
+                <div className="adapt-item" key={m.answerId}>
+                  <span className="a-prompt">{m.prompt || 'Untitled answer'}</span>
+                  <span className="a-snip">{m.excerpt}</span>
+                  {m.reasons?.length > 0 && <span className="a-reasons">{m.reasons.join(' · ')}</span>}
+                  {m.caution && <span className="a-caution">{m.caution}</span>}
                   <div className="row">
-                    <span className="tag">{s.competency}</span>
+                    <span className="tag">{m.fit ? `${m.fit} fit` : m.competency}</span>
                     <span className="grow" />
                     <button
                       type="button" className="btn btn-secondary btn-sm"
-                      onClick={() => { setBody(s.body); setDirty(true); track('answer_adapted') }}
+                      onClick={() => { setBody(m.excerpt); setDirty(true); track('answer_adapted', { fit: m.fit }) }}
                     >
-                      <Copy size={13} /> Adapt this
+                      <Copy size={13} /> Start from this
                     </button>
                   </div>
                 </div>
               ))}
             </div>
+            <p className="inline-note">
+              We drop in the opening of that answer as a starting point — rewrite it for this question
+              rather than sending it as-is.
+            </p>
           </div>
         )}
 

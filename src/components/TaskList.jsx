@@ -71,7 +71,7 @@ function TaskRow({ task, onToggle, pending }) {
 
   const due = formatDue(task.dueAt)
   const late = !done && isOverdue(task.dueAt)
-  const context = task.application?.label ?? task.applicationLabel ?? null
+  const context = task.employer ?? null
 
   return (
     <li className={`task${done ? ' is-done' : ''}${celebrate ? ' just-done' : ''}${pending ? ' is-pending' : ''}`}>

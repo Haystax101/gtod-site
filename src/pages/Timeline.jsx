@@ -1,4 +1,4 @@
-import { Component, useEffect, useMemo, useState } from 'react'
+import { Component, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SignInButton, SignUpButton } from '@clerk/clerk-react'
 import { useConvexAuth, useMutation, useQuery } from 'convex/react'
@@ -7,19 +7,11 @@ import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { track } from '../lib/analytics.js'
 import { Wordmark } from '../components/Wordmark.jsx'
-import TaskList, { daysUntil, formatDate, isOverdue, startOfWeek, DAY } from '../components/TaskList.jsx'
+import TaskList, { formatDate, startOfWeek, DAY } from '../components/TaskList.jsx'
 import StageBadge, { STAGES, stageProgress } from '../components/StageBadge.jsx'
 import '../styles/timeline.css'
 
 const errorText = (err) => err?.data?.message ?? err?.data ?? err?.message ?? 'Something went wrong'
-
-// The backend may hand back either a bare array of tasks or a { weekOf, tasks }
-// envelope. Both are fine here; the page only needs the tasks.
-function tasksOf(week) {
-  if (!week) return []
-  if (Array.isArray(week)) return week
-  return Array.isArray(week.tasks) ? week.tasks : []
-}
 
 function weekRangeLabel(now = Date.now()) {
   const start = startOfWeek(now)
@@ -50,19 +42,22 @@ function NotConfigured() {
   )
 }
 
+function LoadingPage({ label }) {
+  return (
+    <div className="app-page">
+      <div className="wrap skel-stack" aria-busy="true" aria-label={label}>
+        <div className="skel w-40" />
+        <div className="skel tall" />
+        <div className="skel w-60" />
+        <div className="skel tall" />
+      </div>
+    </div>
+  )
+}
+
 function Gate() {
   const { isAuthenticated, isLoading } = useConvexAuth()
-  if (isLoading) {
-    return (
-      <div className="app-page">
-        <div className="wrap skel-stack" aria-busy="true" aria-label="Loading your timeline">
-          <div className="skel w-40" />
-          <div className="skel tall" />
-          <div className="skel tall" />
-        </div>
-      </div>
-    )
-  }
+  if (isLoading) return <LoadingPage label="Loading your timeline" />
   if (!isAuthenticated) {
     return (
       <div className="app-gate">
@@ -75,7 +70,7 @@ function Gate() {
         <ul className="feature-list">
           <li>Every application you're running, with the stage you're at</li>
           <li>A handful of tasks each week, not a wall of them</li>
-          <li>Deadlines from schemes we've checked by hand</li>
+          <li>Deadlines from schemes a human has checked by hand</li>
         </ul>
         <div className="cta-row">
           <SignUpButton mode="modal"><button type="button" className="btn btn-primary">Create a free account</button></SignUpButton>
@@ -90,8 +85,8 @@ function Gate() {
   return <Boundary><Workspace /></Boundary>
 }
 
-// Convex throws from useQuery when a function is missing or a query fails, so a
-// boundary is the difference between "we couldn't load this" and a white screen.
+// Convex throws from useQuery when a query fails, so a boundary is the
+// difference between "we couldn't load this" and a white screen.
 class Boundary extends Component {
   constructor(props) { super(props); this.state = { error: null, key: 0 } }
   static getDerivedStateFromError(error) { return { error } }
@@ -126,58 +121,49 @@ function Workspace() {
   const applications = useQuery(api.timeline.myApplications, {})
   const [error, setError] = useState(null)
 
-  const setTaskDone = useMutation(api.timeline.setTaskDone).withOptimisticUpdate((store, args) => {
+  // The tick has to land before the round trip: the reward for doing the thing
+  // is seeing it move, and a 300ms wait is long enough to feel like a bug.
+  const completeTask = useMutation(api.timeline.completeTask).withOptimisticUpdate((store, { taskId, done }) => {
     const cur = store.getQuery(api.timeline.myWeek, {})
-    if (cur === undefined) return
-    const patch = (t) => (t._id === args.taskId ? { ...t, doneAt: args.done ? Date.now() : undefined } : t)
-    if (Array.isArray(cur)) store.setQuery(api.timeline.myWeek, {}, cur.map(patch))
-    else store.setQuery(api.timeline.myWeek, {}, { ...cur, tasks: tasksOf(cur).map(patch) })
+    if (!cur) return
+    const found = [...cur.overdue, ...cur.dueThisWeek, ...cur.done].find((t) => t._id === taskId)
+    if (!found) return
+    const drop = (list) => list.filter((t) => t._id !== taskId)
+    const next = { ...cur, overdue: drop(cur.overdue), dueThisWeek: drop(cur.dueThisWeek), done: drop(cur.done) }
+    if (done) {
+      next.done = [{ ...found, doneAt: Date.now() }, ...next.done]
+    } else {
+      const revived = { ...found, doneAt: undefined }
+      if (revived.dueAt !== undefined && revived.dueAt < Date.now()) next.overdue = [...next.overdue, revived]
+      else next.dueThisWeek = [...next.dueThisWeek, revived]
+    }
+    next.remaining = next.overdue.length + next.dueThisWeek.length
+    store.setQuery(api.timeline.myWeek, {}, next)
   })
 
-  const tasks = useMemo(() => tasksOf(week), [week])
-  const buckets = useMemo(() => {
-    const byDue = (a, b) => (a.dueAt ?? Infinity) - (b.dueAt ?? Infinity)
-    return {
-      overdue: tasks.filter((t) => !t.doneAt && isOverdue(t.dueAt)).sort(byDue),
-      due: tasks.filter((t) => !t.doneAt && !isOverdue(t.dueAt)).sort(byDue),
-      done: tasks.filter((t) => t.doneAt).sort((a, b) => (b.doneAt ?? 0) - (a.doneAt ?? 0)),
-    }
-  }, [tasks])
+  if (week === undefined || applications === undefined) return <LoadingPage label="Loading your timeline" />
 
-  const loading = week === undefined || applications === undefined
   const apps = applications ?? []
-  const isFirstRun = !loading && apps.length === 0 && tasks.length === 0
+  const overdue = week.overdue ?? []
+  const dueThisWeek = week.dueThisWeek ?? []
+  const done = week.done ?? []
+  const total = overdue.length + dueThisWeek.length + done.length
+
+  if (apps.length === 0 && total === 0) return <FirstRun />
 
   const toggle = async (task) => {
     setError(null)
     const done = !task.doneAt
     try {
-      await setTaskDone({ taskId: task._id, done })
+      await completeTask({ taskId: task._id, done })
       if (done) track('timeline_task_completed', { source: task.source })
     } catch (e) {
       setError(errorText(e))
     }
   }
 
-  if (loading) {
-    return (
-      <div className="app-page">
-        <div className="wrap skel-stack" aria-busy="true" aria-label="Loading your timeline">
-          <div className="skel w-40" />
-          <div className="skel tall" />
-          <div className="skel w-60" />
-          <div className="skel tall" />
-        </div>
-      </div>
-    )
-  }
-
-  if (isFirstRun) return <FirstRun />
-
-  const total = tasks.length
-  const doneCount = buckets.done.length
-  const pct = total === 0 ? 0 : Math.round((doneCount / total) * 100)
-  const allDone = total > 0 && doneCount === total
+  const pct = total === 0 ? 0 : Math.round((done.length / total) * 100)
+  const allDone = total > 0 && done.length === total
 
   return (
     <div className="app-page">
@@ -196,45 +182,45 @@ function Workspace() {
           <div className="week-top">
             <div>
               <div className="week-label">{weekRangeLabel()}</div>
-              <h2>{allDone ? 'Week cleared' : buckets.overdue.length > 0 ? 'A couple of things slipped' : 'Here’s the plan'}</h2>
+              <h2>{allDone ? 'Week cleared' : overdue.length > 0 ? 'A couple of things slipped' : 'Here’s the plan'}</h2>
             </div>
             <span className="grow" />
             {total > 0 && (
               <div className="week-progress">
                 <div className="bar"><i className={allDone ? 'full' : ''} style={{ width: `${pct}%` }} /></div>
-                <div className="lbl">{doneCount} of {total} done</div>
+                <div className="lbl">{done.length} of {total} done</div>
               </div>
             )}
           </div>
 
           {total === 0 ? (
-            <div className="tl-hint" style={{ padding: '18px 18px 20px' }}>
+            <p className="tl-hint" style={{ padding: '18px 18px 20px' }}>
               Nothing scheduled this week. Tasks appear here as your deadlines get closer — or add
               your own below.
-            </div>
+            </p>
           ) : (
             <>
               <TaskList
                 id="overdue"
                 title="Slipped from last week"
-                hint="Still worth doing. Move it, or tick it off and forget it."
+                hint="Still worth doing. Tick it off, and it's gone."
                 tone="overdue"
-                tasks={buckets.overdue}
+                tasks={overdue}
                 onToggle={toggle}
               />
               <TaskList
                 id="due"
                 title="Due this week"
                 tone="due"
-                tasks={buckets.due}
+                tasks={dueThisWeek}
                 onToggle={toggle}
-                emptyText={buckets.overdue.length > 0 ? 'Nothing else due this week.' : undefined}
+                emptyText={overdue.length > 0 ? 'Nothing else due this week.' : undefined}
               />
               <TaskList
                 id="done"
                 title="Done"
                 tone="done"
-                tasks={buckets.done}
+                tasks={done}
                 onToggle={toggle}
                 collapsible
                 defaultOpen={false}
@@ -250,19 +236,20 @@ function Workspace() {
           <h2>Your applications</h2>
           <span className="n">{apps.length}</span>
         </div>
-        <div className="app-cards">
-          {apps.map((a) => <ApplicationCard key={a._id} application={a} onError={setError} />)}
-        </div>
-        {apps.length === 0 && (
+        {apps.length === 0 ? (
           <div className="app-panel">
             <p className="muted">You aren't tracking any schemes yet. Pick one below and it'll show up here.</p>
+          </div>
+        ) : (
+          <div className="app-cards">
+            {apps.map((a) => <ApplicationCard key={a._id} application={a} onError={setError} />)}
           </div>
         )}
 
         <div className="app-section-head">
           <h2>Track another scheme</h2>
         </div>
-        <SchemePicker trackedIds={new Set(apps.map((a) => a.schemeId).filter(Boolean))} />
+        <SchemePicker />
       </div>
     </div>
   )
@@ -291,12 +278,7 @@ function AddTask({ onError }) {
   return (
     <form className="add-task" onSubmit={submit}>
       <label className="sr-only" htmlFor="add-task-input">Add a task to this week</label>
-      <input
-        id="add-task-input"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Add something of your own…"
-      />
+      <input id="add-task-input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Add something of your own…" />
       <button type="submit" className="btn btn-secondary btn-sm" disabled={!title.trim() || busy}>
         <Plus size={14} /> Add
       </button>
@@ -304,24 +286,31 @@ function AddTask({ onError }) {
   )
 }
 
+function deadlineCopy(a) {
+  if (a.deadlineAt === undefined) return 'No confirmed deadline'
+  const left = a.daysUntilDeadline
+  if (left === undefined) return formatDate(a.deadlineAt)
+  if (left < 0) return `Closed ${formatDate(a.deadlineAt)}`
+  if (left === 0) return 'Closes today'
+  if (left === 1) return 'Closes tomorrow'
+  return `Closes in ${left} days`
+}
+
 function ApplicationCard({ application: a, onError }) {
-  const setStage = useMutation(api.timeline.setStage)
-  const untrack = useMutation(api.timeline.untrack)
+  const updateStage = useMutation(api.timeline.updateStage)
+  const untrackScheme = useMutation(api.timeline.untrackScheme)
   const [confirm, setConfirm] = useState(false)
   const [busy, setBusy] = useState(false)
 
-  const employer = a.scheme?.employer ?? a.customEmployer ?? 'Employer'
-  const name = a.scheme?.name ?? a.customName ?? null
-  const deadline = a.deadlineAt ?? a.scheme?.closesAt ?? null
-  const left = daysUntil(deadline)
   const progress = stageProgress(a.stage)
   const closed = a.stage === 'rejected' || a.stage === 'withdrawn'
+  const soon = a.daysUntilDeadline !== undefined && a.daysUntilDeadline >= 0 && a.daysUntilDeadline <= 7
 
   const change = async (stage) => {
     setBusy(true)
     onError(null)
     try {
-      await setStage({ applicationId: a._id, stage })
+      await updateStage({ applicationId: a._id, stage })
       track('timeline_stage_changed', { stage })
     } catch (e) {
       onError(errorText(e))
@@ -334,8 +323,8 @@ function ApplicationCard({ application: a, onError }) {
     <article className={`app-card${closed ? ' is-closed' : ''}`}>
       <div className="ac-top">
         <div className="ac-name">
-          <div className="ac-employer">{employer}</div>
-          {name && <div className="ac-scheme">{name}</div>}
+          <div className="ac-employer">{a.employer}</div>
+          {a.name && <div className="ac-scheme">{a.name}</div>}
         </div>
         <StageBadge stage={a.stage} size="sm" />
       </div>
@@ -343,32 +332,20 @@ function ApplicationCard({ application: a, onError }) {
       {progress !== null && <div className="ac-bar"><i style={{ width: `${Math.round(progress * 100)}%` }} /></div>}
 
       <div className="ac-meta">
-        {deadline ? (
-          <span className={left !== null && left <= 7 && left >= 0 ? 'soon' : undefined}>
-            <CalendarDays size={12} style={{ verticalAlign: '-2px', marginRight: 4 }} />
-            {left === null ? formatDate(deadline)
-              : left < 0 ? `Closed ${formatDate(deadline)}`
-              : left === 0 ? 'Closes today'
-              : left === 1 ? 'Closes tomorrow'
-              : `Closes in ${left} days`}
-          </span>
-        ) : a.scheme?.rolling ? (
-          <span>Rolling deadline — apply early</span>
-        ) : (
-          <span>No published deadline</span>
-        )}
-        {a.scheme?.url && (
-          <a href={a.scheme.url} target="_blank" rel="noopener">Employer page <ExternalLink /></a>
-        )}
+        <span className={soon ? 'soon' : undefined}>
+          <CalendarDays size={12} style={{ verticalAlign: '-2px', marginRight: 4 }} />
+          {deadlineCopy(a)}
+        </span>
+        {a.openTasksThisWeek > 0 && <span>{a.openTasksThisWeek} to do this week</span>}
+        {a.url && <a href={a.url} target="_blank" rel="noopener">Employer page <ExternalLink /></a>}
       </div>
 
       <div className="ac-actions">
         <select
-          id={`stage-${a._id}`}
           value={a.stage}
           disabled={busy}
           onChange={(e) => change(e.target.value)}
-          aria-label={`Stage for ${employer}`}
+          aria-label={`Stage for ${a.employer}`}
         >
           {STAGES.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
         </select>
@@ -377,7 +354,7 @@ function ApplicationCard({ application: a, onError }) {
           <button
             type="button" className="link-btn danger"
             onClick={async () => {
-              try { await untrack({ applicationId: a._id }) } catch (e) { onError(errorText(e)) }
+              try { await untrackScheme({ applicationId: a._id }) } catch (e) { onError(errorText(e)) }
               setConfirm(false)
             }}
           >
@@ -391,9 +368,9 @@ function ApplicationCard({ application: a, onError }) {
   )
 }
 
-function SchemePicker({ trackedIds }) {
+function SchemePicker() {
   const [q, setQ] = useState('')
-  const schemes = useQuery(api.timeline.listSchemes, { q: q.trim() || undefined, limit: 12 })
+  const result = useQuery(api.timeline.listSchemes, { search: q.trim() || undefined, limit: 12 })
   const trackScheme = useMutation(api.timeline.trackScheme)
   const [busyId, setBusyId] = useState(null)
   const [error, setError] = useState(null)
@@ -411,6 +388,8 @@ function SchemePicker({ trackedIds }) {
     }
   }
 
+  const schemes = result?.schemes ?? []
+
   return (
     <div className="scheme-picker">
       <div className="scheme-search">
@@ -424,21 +403,20 @@ function SchemePicker({ trackedIds }) {
         />
       </div>
 
-      {schemes === undefined ? (
+      {result === undefined ? (
         <div className="skel-stack" aria-busy="true" aria-label="Loading schemes">
           <div className="skel tall" /><div className="skel tall" />
         </div>
       ) : schemes.length === 0 ? (
         <p className="muted" style={{ fontSize: '0.92rem' }}>
           {q.trim()
-            ? <>Nothing matching “{q.trim()}”. Every scheme here is checked by hand, so the list is deliberately short — add it yourself below.</>
+            ? <>Nothing matching “{q.trim()}”. Every scheme here is checked by hand, so the list is deliberately short — add yours below.</>
             : <>No schemes loaded yet. You can still add one yourself below.</>}
         </p>
       ) : (
         <ul className="scheme-list">
           {schemes.map((s) => {
-            const tracked = trackedIds?.has(s._id)
-            const left = daysUntil(s.closesAt)
+            const tracked = Boolean(s.trackedApplicationId)
             return (
               <li className={`scheme${tracked ? ' tracked' : ''}`} key={s._id}>
                 <div className="s-body">
@@ -447,7 +425,9 @@ function SchemePicker({ trackedIds }) {
                   <span className="s-meta">
                     {s.level ? <span>Level {s.level}</span> : null}
                     {s.sector ? <span>{s.sector}</span> : null}
-                    {s.rolling ? <span>Rolling</span> : left !== null && left >= 0 ? <span className={left <= 14 ? 'closes' : undefined}>Closes in {left} days</span> : null}
+                    {s.rolling
+                      ? <span>Rolling</span>
+                      : s.closesAt ? <span className="closes">Closes {formatDate(s.closesAt)}</span> : <span>Dates not confirmed</span>}
                   </span>
                 </div>
                 {tracked ? (
@@ -461,6 +441,9 @@ function SchemePicker({ trackedIds }) {
             )
           })}
         </ul>
+      )}
+      {result !== undefined && result.total > schemes.length && (
+        <p className="inline-note">Showing {schemes.length} of {result.total}. Search to narrow it down.</p>
       )}
       {error && <p className="inline-error" role="alert">{error}</p>}
       <CustomTrack onError={setError} />
@@ -507,7 +490,7 @@ function CustomTrack({ onError }) {
           </div>
           <div className="field">
             <label htmlFor="ct-name">Scheme (optional)</label>
-            <input id="ct-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Degree Apprenticeship, Engineering" />
+            <input id="ct-name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Engineering Degree Apprenticeship" />
           </div>
         </div>
         <div className="field">
@@ -535,7 +518,8 @@ function FirstRun() {
           <p>
             Most people don't miss out because their answers weren't good enough. They miss out
             because a closing date went past while they were still thinking about it. Track a
-            scheme and we'll break it into a few things to do each week.
+            scheme and we'll turn it into a few things to do each week — starting straight away,
+            not next Monday.
           </p>
           <ol className="first-run-steps">
             <li><span className="n">1</span> Track a scheme you're actually interested in.</li>
@@ -549,7 +533,7 @@ function FirstRun() {
             <h2>Start here</h2>
             <span className="n">One click</span>
           </div>
-          <SchemePicker trackedIds={new Set()} />
+          <SchemePicker />
         </div>
 
         <p className="muted" style={{ fontSize: '0.9rem' }}>
