@@ -56,6 +56,22 @@ def normalise_front_matter(fm: str) -> str:
         slugs = [re.sub(r"[^a-z0-9]+", "-", i.strip().strip('"').lower()).strip("-") for i in items]
         return f"topics: [{', '.join(slugs)}]\n"
     fm = re.sub(r"^(topics:)\s*\n((?:\s+-\s+.+\n)+)", fold_topics, fm, count=1, flags=re.MULTILINE)
+    # A colon-space inside an unquoted scalar breaks YAML, which happens often in
+    # source titles ("... agreements: status"). Quote those values. A URL is safe
+    # because "https://" has no space after its colon.
+    def quote_if_needed(match: re.Match) -> str:
+        indent, key, value = match.group(1), match.group(2), match.group(3).rstrip()
+        if ": " not in value:
+            return match.group(0)
+        if value[:1] in {'"', "'", "|", ">", "[", "{", "&", "*"}:
+            return match.group(0)
+        return f'{indent}{key}: "{value.replace(chr(34), chr(39))}"'
+
+    fm = re.sub(r"^(\s*)(?:- )?(\w+):[ \t]+(.+)$",
+                lambda m: quote_if_needed(m) if not m.group(0).lstrip().startswith("- ")
+                else m.group(0),
+                fm, flags=re.MULTILINE)
+
     if "maintainer:" not in fm:
         fm = re.sub(r"^(last_verified:.*)$", r"\1\nmaintainer: gtod", fm, count=1, flags=re.MULTILINE)
     return fm
