@@ -45,7 +45,11 @@ is a small, contained edit.
    the real Live endpoint carries a full service path, so this will not connect
    as-is. Everything else in that file (capture, resampling, playback,
    teardown, timing) is provider-independent.
-   Also set `VITE_VOICE_MODEL` to a Live-capable model id. The setup frame
+   Also set `VITE_VOICE_MODEL` to a Live-capable model id. Find it with
+   `GEMINI_API_KEY=... tools/voice/list-live-models.sh`, which asks your own key
+   which models support `bidiGenerateContent`. Do not take a model id from
+   documentation, a blog post or an assistant's recollection: the list changes,
+   models get retired, and only a subset of any generation supports Live. The setup frame
    requires it and the client now refuses to open a socket without one, rather
    than connecting and dying on an opaque close.
 5. **The real per-minute audio rate.** Then run
