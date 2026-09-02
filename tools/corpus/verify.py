@@ -184,12 +184,15 @@ def check_prose(rel: str, body: str) -> list[Finding]:
     """Heuristics for uncited numbers and filler phrasing."""
     findings: list[Finding] = []
     in_fence = False
+    in_one_liner = False
 
     for n, line in enumerate(body.splitlines(), start=1):
         stripped = line.strip()
         if stripped.startswith("```"):
             in_fence = not in_fence
             continue
+        if stripped.startswith("##"):
+            in_one_liner = stripped.lower().startswith("## in one line")
         if in_fence or not stripped:
             continue
 
@@ -200,6 +203,13 @@ def check_prose(rel: str, body: str) -> list[Finding]:
                                         f"Filler phrasing: {phrase!r}", n))
 
         if stripped.startswith(SKIP_LINE_PREFIXES):
+            continue
+        # Explicitly-labelled opinion is not a sourced claim by design, and the
+        # one-line summary restates material cited in full further down. Neither
+        # needs a citation, and flagging them buries the real warnings.
+        if stripped.startswith("**GTOD take:**"):
+            continue
+        if in_one_liner:
             continue
         if NUMERIC_CLAIM_RE.search(stripped) and "[^" not in stripped:
             findings.append(Finding(rel, "warn", "uncited-number",

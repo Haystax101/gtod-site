@@ -1,10 +1,12 @@
-import { action, internalQuery, mutation } from './_generated/server'
+import { internalAction, internalQuery, mutation } from './_generated/server'
 import { internal } from './_generated/api'
 import { ConvexError, v } from 'convex/values'
 import type { Doc, Id } from './_generated/dataModel'
 import { requireUser } from './users'
 import { TIERS, estimateTokens, monthKey, startOfDay } from './tiers'
-import { buildSystemPrompt } from './prompt'
+import { buildSystemPrompt, buildUserTurn } from './prompt'
+import { bm25, fuse, selectChunks } from './retrieval'
+import { embed, embeddingConfig } from './embeddings'
 
 const MAX_MESSAGE_CHARS = 6000
 
@@ -121,7 +123,9 @@ export const context = internalQuery({
       if (a) attachments.push(a)
     }
     const nameOf = (id: Id<'attachments'>) => attachments.find((a) => a._id === id)?.name ?? 'document'
-    const docs = (await ctx.db.query('knowledge').collect()).filter((d) => d.enabled)
+    // Only always-on docs (the playbook) go into the cached system prompt.
+    // Everything else is retrieved per question in the generate action.
+    const docs = (await ctx.db.query('knowledge').collect()).filter((d) => d.enabled && d.alwaysOn)
     return {
       tierKey,
       system: buildSystemPrompt(docs, attachments),
@@ -136,25 +140,77 @@ export const context = internalQuery({
   },
 })
 
-function provider(name: 'deepseek' | 'xai') {
-  return name === 'xai'
-    ? { url: 'https://api.x.ai/v1/chat/completions', key: process.env.XAI_API_KEY }
-    : { url: 'https://api.deepseek.com/chat/completions', key: process.env.DEEPSEEK_API_KEY }
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
+
+/** Tokens of retrieved knowledge allowed into a single message. */
+const RETRIEVAL_TOKEN_BUDGET = 2500
+/** Candidates pulled from each retrieval strategy before fusion. */
+const CANDIDATES = 12
+
+/**
+ * Find the knowledge chunks worth putting in front of the model for this
+ * question. Lexical BM25 always runs; vector search joins in when an embedding
+ * provider is configured, and the two rankings are combined with reciprocal
+ * rank fusion. With no embeddings configured this degrades to lexical-only
+ * rather than failing.
+ */
+async function retrieve(ctx: any, question: string) {
+  if (!question.trim()) return []
+
+  const chunks = await ctx.runQuery(internal.knowledge.allChunks, {})
+  if (!chunks.length) return []
+
+  const lexical = bm25(question, chunks)
+    .slice(0, CANDIDATES)
+    .map((r: { chunk: any }) => r.chunk)
+
+  const rankings = [lexical]
+
+  if (embeddingConfig()) {
+    try {
+      const [vector] = (await embed([question])) ?? []
+      if (vector) {
+        const hits = await ctx.vectorSearch('knowledgeChunks', 'by_embedding', {
+          vector,
+          limit: CANDIDATES,
+        })
+        const semantic = await ctx.runQuery(internal.knowledge.chunksByIds, {
+          ids: hits.map((h: { _id: string }) => h._id),
+        })
+        if (semantic.length) rankings.push(semantic)
+      }
+    } catch (err) {
+      // Retrieval must never take the whole reply down with it.
+      console.error('vector retrieval failed, continuing lexically', err)
+    }
+  }
+
+  const fused = fuse(rankings, (c: any) => String(c._id))
+  return selectChunks(fused, { tokenBudget: RETRIEVAL_TOKEN_BUDGET })
 }
 
-export const generate = action({
+export const generate = internalAction({
   args: { assistantId: v.id('messages') },
   handler: async (ctx, { assistantId }) => {
     const { tierKey, system, turns } = await ctx.runQuery(internal.chat.context, { assistantId })
     const tier = TIERS[tierKey]
-    const p = provider(tier.provider)
-    if (!p.key) {
+    const key = process.env.OPENROUTER_API_KEY
+    if (!key) {
       await ctx.runMutation(internal.messages.fail, {
         id: assistantId,
-        error: `Charge isn't configured yet (${tier.provider} API key missing).`,
+        error: "Charge isn't configured yet (OPENROUTER_API_KEY missing).",
       })
       return
     }
+
+    // Retrieve against the newest user message and attach the extracts to it.
+    // They ride on the user turn rather than the system prompt so the cached
+    // prefix survives between messages.
+    const lastUser = [...turns].reverse().find((t) => t.role === 'user')
+    const extracts = await retrieve(ctx, lastUser?.content ?? '')
+    const messages = turns.map((t) =>
+      t === lastUser ? { ...t, content: buildUserTurn(t.content, extracts) } : t,
+    )
 
     let content = ''
     let inputTokens = 0
@@ -168,21 +224,27 @@ export const generate = action({
     }
 
     try {
-      const res = await fetch(p.url, {
+      const res = await fetch(OPENROUTER_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.key}` },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${key}`,
+          // OpenRouter attributes traffic with these; both are optional.
+          'HTTP-Referer': process.env.SITE_URL ?? 'https://getthereoneday.com',
+          'X-Title': 'Charge by Get There One Day',
+        },
         body: JSON.stringify({
           model: tier.model,
           stream: true,
           stream_options: { include_usage: true },
           max_tokens: tier.maxOutputTokens,
           temperature: 0.6,
-          messages: [{ role: 'system', content: system }, ...turns],
+          messages: [{ role: 'system', content: system }, ...messages],
         }),
       })
       if (!res.ok || !res.body) {
         const text = await res.text().catch(() => '')
-        throw new ConvexError(`${tier.provider} returned ${res.status}: ${text.slice(0, 300)}`)
+        throw new ConvexError(`OpenRouter returned ${res.status}: ${text.slice(0, 300)}`)
       }
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
@@ -215,7 +277,7 @@ export const generate = action({
           }
         }
       }
-      if (!inputTokens) inputTokens = estimateTokens(system + turns.map((t) => t.content).join(''))
+      if (!inputTokens) inputTokens = estimateTokens(system + messages.map((t) => t.content).join(''))
       if (!outputTokens) outputTokens = estimateTokens(content)
       await ctx.runMutation(internal.messages.finish, {
         id: assistantId,
