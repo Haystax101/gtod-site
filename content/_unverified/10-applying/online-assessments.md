@@ -22,218 +22,218 @@ sources:
     title: Practice Tests and Assessments - SHL Direct
     publisher: SHL
     url: https://www.shl.com/shldirect/en/practice-tests/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s2
     title: Example Questions - SHL Direct
     publisher: SHL
     url: https://www.shl.com/shldirect/en/example-questions/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s3
     title: SHL Verify Interactive G+ factsheet
     publisher: SHL
     url: https://service.shl.com/docs/Verify%20Interactive%20G%20plus%20Factsheet.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s4
     title: SHL Verify Interactive G+ product page
     publisher: SHL
     url: https://www.shl.com/products/product-catalog/view/shl-verify-interactive-g/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s5
     title: Situational Judgment Tests (SJT)
     publisher: SHL
     url: https://www.shl.com/products/assessments/behavioral-assessments/situation-judgement-tests-sjt/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s6
     title: Accessibility Support - SHL Direct
     publisher: SHL
     url: https://www.shl.com/shldirect/en/accessibility-support/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s7
     title: Reasonable Adjustments - Disability Guidelines (UK)
     publisher: SHL
     url: https://www.shl.com/legal/disability-guidelines-uk/reasonable-adjustments/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s8
     title: Logiks Assessment - Assess Cognitive Ability
     publisher: Talogy
     url: https://talogy.com/en/talent-management-solutions/assessments/logiks-cognitive-ability-test/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s9
     title: P.A.P.I. Assessment / Personality Test
     publisher: Talogy
     url: https://talogy.com/en/talent-management-solutions/assessments/papi-personality-questionnaire/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s10
     title: Dilemmas - situational judgement tests
     publisher: Talogy
     url: https://talogy.com/en/talent-management-solutions/assessments/dilemmas-situational-judgement-tests/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s11
     title: Cappfinity - Talent Assessment and Development
     publisher: Cappfinity
     url: https://cappfinity.com/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s12
     title: Cappfinity cognitive tests
     publisher: Cappfinity
     url: https://cappfinity.com/our-products/cognitive-tests/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s13
     title: What do the tasks in the assessment measure?
     publisher: Arctic Shores (help centre)
     url: https://help.arcticshores.com/hc/en-gb/articles/22491835103761-What-do-the-tasks-in-the-assessment-measure
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s14
     title: What is a Task-Based Assessment?
     publisher: Arctic Shores (help centre)
     url: https://help.arcticshores.com/hc/en-gb/articles/22491842344977-What-is-a-Task-Based-Assessment
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s15
     title: Support for Candidates
     publisher: Arctic Shores
     url: https://www.arcticshores.com/candidate-guidance
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s16
     title: How do I request a reasonable adjustment?
     publisher: Arctic Shores (help centre)
     url: https://help.arcticshores.com/hc/en-gb/articles/48509714949393-How-do-I-request-a-reasonable-adjustment
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s17
     title: Candidate Assessment Solutions
     publisher: Amberjack
     url: https://www.weareamberjack.com/solutions/candidate-assessment/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s18
     title: Assessing Neurodiverse Candidates Q&A
     publisher: Amberjack
     url: https://resources.weareamberjack.com/hubfs/Assessing%20Neurodiverse%20Candidates%20Q&A.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s19
     title: Browse all our assessments
     publisher: Test Partnership
     url: https://www.testpartnership.com/products-select.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s20
     title: Candidate Preparation
     publisher: Test Partnership
     url: https://www.testpartnership.com/preparation-frs.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s21
     title: Gamified assessments - AI-resistant cognitive ability tests (MindmetriQ)
     publisher: Test Partnership
     url: https://www.testpartnership.com/gamified-assessment.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s22
     title: Prepare for your Online Assessment
     publisher: Aon
     url: https://www.aon.com/en/capabilities/talent-and-rewards/prepare-for-your-online-assessment
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s23
     title: Practice Tasks - Deductive Reasoning (gapChallenge)
     publisher: Aon
     url: https://assets.aon.com/-/media/files/aon/capabilities/talent-and-rewards/practice-tasks--deductive-reasoning-gapchallenge.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s24
     title: ADEPT-15 personality assessment
     publisher: Aon
     url: https://www.aon.com/unitedkingdom/trp/talent-tools/adept.jsp
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s25
     title: Candidate Guide to Psychometric Assessments
     publisher: Korn Ferry
     url: https://www.kornferry.com/careers/candidates/candidate-guide-assessments
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s26
     title: Talent Q Aspects brochure
     publisher: Korn Ferry
     url: https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Aspects-Brochure.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s27
     title: Talent Q Elements brochure
     publisher: Korn Ferry
     url: https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Elements-Brochure.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s28
     title: Reasonable adjustments for online tests - a candidate guide
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s29
     title: Civil Service online tests
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/civil-service-online-tests
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s30
     title: Preparing for the Civil Service Verbal and Numerical tests
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/preparing-for-the-civil-service-verbal-and-numerical-tests
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s31
     title: Preparing for the Civil Service Judgement Test
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/preparing-for-the-civil-service-judgement-test
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s32
     title: What reasonable adjustments are
     publisher: Acas
     url: https://www.acas.org.uk/reasonable-adjustments
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s33
     title: Your Rights to Equality at Work - When You Apply for a Job
     publisher: Equality and Human Rights Commission
     url: https://www.equalityhumanrights.com/sites/default/files/your_rights_to_equality_at_work_-_applying_for_a_job.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s34
     title: Game based assessments of cognitive ability in recruitment - validity, fairness and test-taking experience
     publisher: Frontiers in Psychology / PubMed Central (PMC9891208)
     url: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9891208/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s35
     title: Reasonable Adjustments
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/reasonable-adjustments/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: s36
     title: Civil Service Fast Track practice questions (numerical and verbal)
     publisher: GOV.UK / Cabinet Office
     url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/503118/Practice_exercise_numerical_and_verbal_questions.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line
@@ -251,8 +251,14 @@ The online assessment stage of a UK apprenticeship application is almost always 
 - Under the Equality Act 2010 an employer must make reasonable adjustments for a disabled applicant, and that duty applies at the online-test stage, not just at interview.[^s32][^s33]
 - In Civil Service recruitment, extra time on a timed test is offered in bands of 25%, 50%, 75% or 100% depending on assessed need.[^s28]
 
-> [!GAP]
-> The machine that wrote this document could not open publisher pages directly because outbound web access was restricted to indexed search retrieval. Every URL cited here was returned by search against the publisher's own domain and its content confirmed from the indexed page, but exact timings and question counts on vendor factsheets change between test versions. Check the publisher's own page before treating a specific number as current, and treat any timing in an employer's invitation email as authoritative over this document.
+> [!GAP] Verification status: no page cited in this document was opened.
+> Outbound access to every research domain was denied by network policy on
+> 2026-09-02, so each source below was seen only as a web-search result against
+> the publisher's own domain. Timings, question counts, figures and employer
+> process descriptions here are leads to check, not confirmed facts, and
+> employer processes change every recruitment cycle. Open the publisher's own
+> page before relying on any specific number, and treat an employer's own
+> invitation email as authoritative over this document.
 
 ## Why do apprenticeship employers use online assessments at all?
 
@@ -407,42 +413,42 @@ Arctic Shores also states that its research led it to adjust the scoring key its
 
 ## Sources
 
-[^s1]: SHL, "Practice Tests and Assessments - SHL Direct", https://www.shl.com/shldirect/en/practice-tests/ (accessed 2026-09-02)
-[^s2]: SHL, "Example Questions - SHL Direct", https://www.shl.com/shldirect/en/example-questions/ (accessed 2026-09-02)
-[^s3]: SHL, "SHL Verify Interactive G+ factsheet", https://service.shl.com/docs/Verify%20Interactive%20G%20plus%20Factsheet.pdf (accessed 2026-09-02)
-[^s4]: SHL, "SHL Verify Interactive G+", https://www.shl.com/products/product-catalog/view/shl-verify-interactive-g/ (accessed 2026-09-02)
-[^s5]: SHL, "Situational Judgment Tests (SJT)", https://www.shl.com/products/assessments/behavioral-assessments/situation-judgement-tests-sjt/ (accessed 2026-09-02)
-[^s6]: SHL, "Accessibility Support - SHL Direct", https://www.shl.com/shldirect/en/accessibility-support/ (accessed 2026-09-02)
-[^s7]: SHL, "Reasonable Adjustments - Disability Guidelines (UK)", https://www.shl.com/legal/disability-guidelines-uk/reasonable-adjustments/ (accessed 2026-09-02)
-[^s8]: Talogy, "Logiks Assessment - Assess Cognitive Ability", https://talogy.com/en/talent-management-solutions/assessments/logiks-cognitive-ability-test/ (accessed 2026-09-02)
-[^s9]: Talogy, "P.A.P.I. Assessment / Personality Test", https://talogy.com/en/talent-management-solutions/assessments/papi-personality-questionnaire/ (accessed 2026-09-02)
-[^s10]: Talogy, "Dilemmas - situational judgement tests", https://talogy.com/en/talent-management-solutions/assessments/dilemmas-situational-judgement-tests/ (accessed 2026-09-02)
-[^s11]: Cappfinity, "Cappfinity - Talent Assessment and Development", https://cappfinity.com/ (accessed 2026-09-02)
-[^s12]: Cappfinity, "Cognitive tests", https://cappfinity.com/our-products/cognitive-tests/ (accessed 2026-09-02)
-[^s13]: Arctic Shores, "What do the tasks in the assessment measure?", https://help.arcticshores.com/hc/en-gb/articles/22491835103761-What-do-the-tasks-in-the-assessment-measure (accessed 2026-09-02)
-[^s14]: Arctic Shores, "What is a Task-Based Assessment?", https://help.arcticshores.com/hc/en-gb/articles/22491842344977-What-is-a-Task-Based-Assessment (accessed 2026-09-02)
-[^s15]: Arctic Shores, "Support for Candidates", https://www.arcticshores.com/candidate-guidance (accessed 2026-09-02)
-[^s16]: Arctic Shores, "How do I request a reasonable adjustment?", https://help.arcticshores.com/hc/en-gb/articles/48509714949393-How-do-I-request-a-reasonable-adjustment (accessed 2026-09-02)
-[^s17]: Amberjack, "Candidate Assessment Solutions", https://www.weareamberjack.com/solutions/candidate-assessment/ (accessed 2026-09-02)
-[^s18]: Amberjack, "Assessing Neurodiverse Candidates Q&A", https://resources.weareamberjack.com/hubfs/Assessing%20Neurodiverse%20Candidates%20Q&A.pdf (accessed 2026-09-02)
-[^s19]: Test Partnership, "Browse all our assessments", https://www.testpartnership.com/products-select.html (accessed 2026-09-02)
-[^s20]: Test Partnership, "Candidate Preparation", https://www.testpartnership.com/preparation-frs.html (accessed 2026-09-02)
-[^s21]: Test Partnership, "Gamified assessments - AI-resistant cognitive ability tests", https://www.testpartnership.com/gamified-assessment.html (accessed 2026-09-02)
-[^s22]: Aon, "Prepare for your Online Assessment", https://www.aon.com/en/capabilities/talent-and-rewards/prepare-for-your-online-assessment (accessed 2026-09-02)
-[^s23]: Aon, "Practice Tasks - Deductive Reasoning (gapChallenge)", https://assets.aon.com/-/media/files/aon/capabilities/talent-and-rewards/practice-tasks--deductive-reasoning-gapchallenge.pdf (accessed 2026-09-02)
-[^s24]: Aon, "ADEPT-15", https://www.aon.com/unitedkingdom/trp/talent-tools/adept.jsp (accessed 2026-09-02)
-[^s25]: Korn Ferry, "Candidate Guide to Psychometric Assessments", https://www.kornferry.com/careers/candidates/candidate-guide-assessments (accessed 2026-09-02)
-[^s26]: Korn Ferry, "Talent Q Aspects brochure", https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Aspects-Brochure.pdf (accessed 2026-09-02)
-[^s27]: Korn Ferry, "Talent Q Elements brochure", https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Elements-Brochure.pdf (accessed 2026-09-02)
-[^s28]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (accessed 2026-09-02)
-[^s29]: GOV.UK, "Civil Service online tests", https://www.gov.uk/guidance/civil-service-online-tests (accessed 2026-09-02)
-[^s30]: GOV.UK, "Preparing for the Civil Service Verbal and Numerical tests", https://www.gov.uk/guidance/preparing-for-the-civil-service-verbal-and-numerical-tests (accessed 2026-09-02)
-[^s31]: GOV.UK, "Preparing for the Civil Service Judgement Test", https://www.gov.uk/guidance/preparing-for-the-civil-service-judgement-test (accessed 2026-09-02)
-[^s32]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (accessed 2026-09-02)
-[^s33]: Equality and Human Rights Commission, "Your Rights to Equality at Work - When You Apply for a Job", https://www.equalityhumanrights.com/sites/default/files/your_rights_to_equality_at_work_-_applying_for_a_job.pdf (accessed 2026-09-02)
-[^s34]: "Game based assessments of cognitive ability in recruitment: validity, fairness and test-taking experience", PubMed Central PMC9891208, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9891208/ (accessed 2026-09-02)
-[^s35]: Civil Service Careers, "Reasonable Adjustments", https://www.civil-service-careers.gov.uk/reasonable-adjustments/ (accessed 2026-09-02)
-[^s36]: GOV.UK / Cabinet Office, "Civil Service Fast Track practice questions", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/503118/Practice_exercise_numerical_and_verbal_questions.pdf (accessed 2026-09-02)
+[^s1]: SHL, "Practice Tests and Assessments - SHL Direct", https://www.shl.com/shldirect/en/practice-tests/ (seen in web search 2026-09-02; page not opened)
+[^s2]: SHL, "Example Questions - SHL Direct", https://www.shl.com/shldirect/en/example-questions/ (seen in web search 2026-09-02; page not opened)
+[^s3]: SHL, "SHL Verify Interactive G+ factsheet", https://service.shl.com/docs/Verify%20Interactive%20G%20plus%20Factsheet.pdf (seen in web search 2026-09-02; page not opened)
+[^s4]: SHL, "SHL Verify Interactive G+", https://www.shl.com/products/product-catalog/view/shl-verify-interactive-g/ (seen in web search 2026-09-02; page not opened)
+[^s5]: SHL, "Situational Judgment Tests (SJT)", https://www.shl.com/products/assessments/behavioral-assessments/situation-judgement-tests-sjt/ (seen in web search 2026-09-02; page not opened)
+[^s6]: SHL, "Accessibility Support - SHL Direct", https://www.shl.com/shldirect/en/accessibility-support/ (seen in web search 2026-09-02; page not opened)
+[^s7]: SHL, "Reasonable Adjustments - Disability Guidelines (UK)", https://www.shl.com/legal/disability-guidelines-uk/reasonable-adjustments/ (seen in web search 2026-09-02; page not opened)
+[^s8]: Talogy, "Logiks Assessment - Assess Cognitive Ability", https://talogy.com/en/talent-management-solutions/assessments/logiks-cognitive-ability-test/ (seen in web search 2026-09-02; page not opened)
+[^s9]: Talogy, "P.A.P.I. Assessment / Personality Test", https://talogy.com/en/talent-management-solutions/assessments/papi-personality-questionnaire/ (seen in web search 2026-09-02; page not opened)
+[^s10]: Talogy, "Dilemmas - situational judgement tests", https://talogy.com/en/talent-management-solutions/assessments/dilemmas-situational-judgement-tests/ (seen in web search 2026-09-02; page not opened)
+[^s11]: Cappfinity, "Cappfinity - Talent Assessment and Development", https://cappfinity.com/ (seen in web search 2026-09-02; page not opened)
+[^s12]: Cappfinity, "Cognitive tests", https://cappfinity.com/our-products/cognitive-tests/ (seen in web search 2026-09-02; page not opened)
+[^s13]: Arctic Shores, "What do the tasks in the assessment measure?", https://help.arcticshores.com/hc/en-gb/articles/22491835103761-What-do-the-tasks-in-the-assessment-measure (seen in web search 2026-09-02; page not opened)
+[^s14]: Arctic Shores, "What is a Task-Based Assessment?", https://help.arcticshores.com/hc/en-gb/articles/22491842344977-What-is-a-Task-Based-Assessment (seen in web search 2026-09-02; page not opened)
+[^s15]: Arctic Shores, "Support for Candidates", https://www.arcticshores.com/candidate-guidance (seen in web search 2026-09-02; page not opened)
+[^s16]: Arctic Shores, "How do I request a reasonable adjustment?", https://help.arcticshores.com/hc/en-gb/articles/48509714949393-How-do-I-request-a-reasonable-adjustment (seen in web search 2026-09-02; page not opened)
+[^s17]: Amberjack, "Candidate Assessment Solutions", https://www.weareamberjack.com/solutions/candidate-assessment/ (seen in web search 2026-09-02; page not opened)
+[^s18]: Amberjack, "Assessing Neurodiverse Candidates Q&A", https://resources.weareamberjack.com/hubfs/Assessing%20Neurodiverse%20Candidates%20Q&A.pdf (seen in web search 2026-09-02; page not opened)
+[^s19]: Test Partnership, "Browse all our assessments", https://www.testpartnership.com/products-select.html (seen in web search 2026-09-02; page not opened)
+[^s20]: Test Partnership, "Candidate Preparation", https://www.testpartnership.com/preparation-frs.html (seen in web search 2026-09-02; page not opened)
+[^s21]: Test Partnership, "Gamified assessments - AI-resistant cognitive ability tests", https://www.testpartnership.com/gamified-assessment.html (seen in web search 2026-09-02; page not opened)
+[^s22]: Aon, "Prepare for your Online Assessment", https://www.aon.com/en/capabilities/talent-and-rewards/prepare-for-your-online-assessment (seen in web search 2026-09-02; page not opened)
+[^s23]: Aon, "Practice Tasks - Deductive Reasoning (gapChallenge)", https://assets.aon.com/-/media/files/aon/capabilities/talent-and-rewards/practice-tasks--deductive-reasoning-gapchallenge.pdf (seen in web search 2026-09-02; page not opened)
+[^s24]: Aon, "ADEPT-15", https://www.aon.com/unitedkingdom/trp/talent-tools/adept.jsp (seen in web search 2026-09-02; page not opened)
+[^s25]: Korn Ferry, "Candidate Guide to Psychometric Assessments", https://www.kornferry.com/careers/candidates/candidate-guide-assessments (seen in web search 2026-09-02; page not opened)
+[^s26]: Korn Ferry, "Talent Q Aspects brochure", https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Aspects-Brochure.pdf (seen in web search 2026-09-02; page not opened)
+[^s27]: Korn Ferry, "Talent Q Elements brochure", https://focus.kornferry.com/wp-content/uploads/2017/03/KFHG-Talent-Q-Elements-Brochure.pdf (seen in web search 2026-09-02; page not opened)
+[^s28]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (seen in web search 2026-09-02; page not opened)
+[^s29]: GOV.UK, "Civil Service online tests", https://www.gov.uk/guidance/civil-service-online-tests (seen in web search 2026-09-02; page not opened)
+[^s30]: GOV.UK, "Preparing for the Civil Service Verbal and Numerical tests", https://www.gov.uk/guidance/preparing-for-the-civil-service-verbal-and-numerical-tests (seen in web search 2026-09-02; page not opened)
+[^s31]: GOV.UK, "Preparing for the Civil Service Judgement Test", https://www.gov.uk/guidance/preparing-for-the-civil-service-judgement-test (seen in web search 2026-09-02; page not opened)
+[^s32]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (seen in web search 2026-09-02; page not opened)
+[^s33]: Equality and Human Rights Commission, "Your Rights to Equality at Work - When You Apply for a Job", https://www.equalityhumanrights.com/sites/default/files/your_rights_to_equality_at_work_-_applying_for_a_job.pdf (seen in web search 2026-09-02; page not opened)
+[^s34]: "Game based assessments of cognitive ability in recruitment: validity, fairness and test-taking experience", PubMed Central PMC9891208, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9891208/ (seen in web search 2026-09-02; page not opened)
+[^s35]: Civil Service Careers, "Reasonable Adjustments", https://www.civil-service-careers.gov.uk/reasonable-adjustments/ (seen in web search 2026-09-02; page not opened)
+[^s36]: GOV.UK / Cabinet Office, "Civil Service Fast Track practice questions", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/503118/Practice_exercise_numerical_and_verbal_questions.pdf (seen in web search 2026-09-02; page not opened)
 
 ## Related
 

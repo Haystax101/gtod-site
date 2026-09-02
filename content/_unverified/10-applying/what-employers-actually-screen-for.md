@@ -22,182 +22,182 @@ sources:
     title: Student Recruitment Survey 2025 - trends, benchmarks and insights
     publisher: Institute of Student Employers
     url: https://ise.org.uk/_userfiles/pages/files/reports/student_recruitment_survey_2025.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e2
     title: ISE top 10 stats of 2025 you need to know
     publisher: Institute of Student Employers
     url: https://ise.org.uk/knowledge/insights/513/ise_top_10_stats_of_2025_you_need_to_know/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e3
     title: Apprenticeships rise as graduate vacancies drop 8%
     publisher: Institute of Student Employers
     url: https://ise.org.uk/knowledge/insights/492/apprenticeships_rise_as_graduate_vacancies_drop_8/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e4
     title: 5 trends you need to know from ISE's Recruitment Survey 2025
     publisher: Institute of Student Employers
     url: https://ise.org.uk/knowledge/insights/498/5_trends_you_need_to_know_from_ises_recruitment_survey_2025/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e5
     title: The application explosion - key insights for employers
     publisher: Institute of Student Employers
     url: https://ise.org.uk/knowledge/insights/552/the_application_explosion_key_insights_for_employers/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e6
     title: "Cabinet Office: Civil Service Verbal and Numerical Tests - algorithmic transparency record"
     publisher: GOV.UK
     url: https://www.gov.uk/algorithmic-transparency-records/cabinet-office-civil-service-verbal-and-numerical-tests
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e7
     title: Ethics, Transparency and Accountability Framework for Automated Decision-Making
     publisher: GOV.UK
     url: https://www.gov.uk/government/publications/ethics-transparency-and-accountability-framework-for-automated-decision-making/ethics-transparency-and-accountability-framework-for-automated-decision-making
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e8
     title: AI tools in recruitment - audit outcomes report, November 2024
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e9
     title: ICO intervention into AI recruitment tools leads to better data protection for job seekers
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e10
     title: Here's what jobseekers need to know about automated recruitment decisions
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e11
     title: Name-blind recruitment - a commitment to diversity
     publisher: Civil Service (GOV.UK blog)
     url: https://civilservice.blog.gov.uk/2015/11/05/name-blind-recruitment-a-commitment-to-diversity/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e12
     title: "PM: Time to end discrimination and finish the fight for real equality"
     publisher: GOV.UK
     url: https://www.gov.uk/government/news/pm-time-to-end-discrimination-and-finish-the-fight-for-real-equality
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e13
     title: Name-blind recruitment - responding to your comments
     publisher: Civil Service (GOV.UK blog)
     url: https://civilservice.blog.gov.uk/2015/12/01/name-blind-recruitment-responding-to-your-comments/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e14
     title: Rare Contextual Recruitment System
     publisher: Rare Recruitment
     url: https://apply.rarerecruitment.co.uk/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e15
     title: The Rare model
     publisher: Rare Recruitment
     url: https://www.rarerecruitment.co.uk/rare-model.php
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e16
     title: Improving socio-economic inclusion in the workplace
     publisher: Solicitors Regulation Authority
     url: https://news.sra.org.uk/solicitors/resources/equality-diversity/social-mobility/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e17
     title: Recruitment, retention and progression
     publisher: Solicitors Regulation Authority
     url: https://www.sra.org.uk/solicitors/resources/equality-diversity/promote-diversity
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e18
     title: Fair recruitment toolkit
     publisher: The Law Society
     url: https://www.lawsociety.org.uk/en/topics/hr-and-people-management/fair-recruitment-toolkit
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e19
     title: The Social Mobility Employer Index
     publisher: Social Mobility Foundation
     url: https://www.socialmobility.org.uk/employerindex
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e20
     title: Employer Index - find out more
     publisher: Social Mobility Foundation
     url: https://www.socialmobility.org.uk/index-3/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e21
     title: The 2024 Employer Index
     publisher: Social Mobility Foundation
     url: https://www.socialmobility.org.uk/news/the-2024-employer-index
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e22
     title: PwC UK publishes socio-economic background and disability pay gaps for the first time
     publisher: PwC UK
     url: https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-uk-publishes-socio-economic-background-and-disability-pay-gaps-for-the-first-time.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e23
     title: PwC announces new steps to support new joiners and prospective recruits from lower socio-economic backgrounds
     publisher: PwC UK
     url: https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-announces-new-steps-to-support-new-joiners-and-prospective-recruits-from-lower-socio-economic-backgrounds.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e24
     title: Diversity Pay Report
     publisher: PwC UK
     url: https://www.pwc.co.uk/who-we-are/our-performance/diversity-pay-report.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e25
     title: "Social mobility: towards a fairer and more equitable workplace"
     publisher: KPMG UK
     url: https://kpmg.com/uk/en/insights/culture/social-mobility.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e26
     title: Social mobility
     publisher: KPMG UK
     url: https://kpmg.com/uk/en/home/about/our-impact/our-people/inclusion--diversity-and-equity/social-mobility.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e27
     title: Civil Service online tests
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/civil-service-online-tests
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e28
     title: How to apply - Early Careers
     publisher: EY UK
     url: https://www.ey.com/en_uk/careers/students/application-process
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e29
     title: Reducing hiring bias with candidate assessments
     publisher: Amberjack
     url: https://www.weareamberjack.com/reducing-bias-in-hiring/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: e30
     title: Assessment and selection process - Early Careers
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line
@@ -217,8 +217,14 @@ Early-careers screening in the UK is high-volume and largely automated: applicat
 - PwC published socio-economic background and disability pay gaps for the first time in its FY21 annual report, reporting 80% disclosure and 14% of respondents from a lower socio-economic background.[^e22][^e24]
 - Over 400 employers have entered the Social Mobility Foundation's Employer Index, with 150 entrants in 2024; the Index benchmarks employer-led social mobility across eight areas.[^e19][^e21]
 
-> [!GAP]
-> The machine that wrote this document could not open pages directly because outbound web access was restricted to indexed search retrieval, and the research session ran out of search budget before Rare's Contextual Recruitment System documentation and the Social Mobility Foundation's list of the eight assessed areas could be confirmed in detail. Those two sections below are deliberately thin and flagged. Everything else is drawn from content confirmed on the cited publisher's own domain.
+> [!GAP] Verification status: no page cited in this document was opened.
+> Outbound access to every research domain was denied by network policy on
+> 2026-09-02, so each source below was seen only as a web-search result against
+> the publisher's own domain. Timings, question counts, figures and employer
+> process descriptions here are leads to check, not confirmed facts, and
+> employer processes change every recruitment cycle. Open the publisher's own
+> page before relying on any specific number, and treat an employer's own
+> invitation email as authoritative over this document.
 
 ## How competitive is an apprenticeship application, really?
 
@@ -331,36 +337,36 @@ Practical use for an apprenticeship applicant: the Index is one of the few indep
 
 ## Sources
 
-[^e1]: Institute of Student Employers, "Student Recruitment Survey 2025", https://ise.org.uk/_userfiles/pages/files/reports/student_recruitment_survey_2025.pdf (accessed 2026-09-02)
-[^e2]: Institute of Student Employers, "ISE top 10 stats of 2025 you need to know", https://ise.org.uk/knowledge/insights/513/ise_top_10_stats_of_2025_you_need_to_know/ (accessed 2026-09-02)
-[^e3]: Institute of Student Employers, "Apprenticeships rise as graduate vacancies drop 8%", https://ise.org.uk/knowledge/insights/492/apprenticeships_rise_as_graduate_vacancies_drop_8/ (accessed 2026-09-02)
-[^e4]: Institute of Student Employers, "5 trends you need to know from ISE's Recruitment Survey 2025", https://ise.org.uk/knowledge/insights/498/5_trends_you_need_to_know_from_ises_recruitment_survey_2025/ (accessed 2026-09-02)
-[^e5]: Institute of Student Employers, "The application explosion: key insights for employers", https://ise.org.uk/knowledge/insights/552/the_application_explosion_key_insights_for_employers/ (accessed 2026-09-02)
-[^e6]: GOV.UK, "Cabinet Office: Civil Service Verbal and Numerical Tests - algorithmic transparency record", https://www.gov.uk/algorithmic-transparency-records/cabinet-office-civil-service-verbal-and-numerical-tests (accessed 2026-09-02)
-[^e7]: GOV.UK, "Ethics, Transparency and Accountability Framework for Automated Decision-Making", https://www.gov.uk/government/publications/ethics-transparency-and-accountability-framework-for-automated-decision-making/ethics-transparency-and-accountability-framework-for-automated-decision-making (accessed 2026-09-02)
-[^e8]: Information Commissioner's Office, "AI tools in recruitment: audit outcomes report, November 2024", https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf (accessed 2026-09-02)
-[^e9]: Information Commissioner's Office, "ICO intervention into AI recruitment tools leads to better data protection for job seekers", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/ (accessed 2026-09-02)
-[^e10]: Information Commissioner's Office, "Here's what jobseekers need to know about automated recruitment decisions", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/ (accessed 2026-09-02)
-[^e11]: Civil Service (GOV.UK blog), "Name-blind recruitment - a commitment to diversity", https://civilservice.blog.gov.uk/2015/11/05/name-blind-recruitment-a-commitment-to-diversity/ (accessed 2026-09-02)
-[^e12]: GOV.UK, "PM: Time to end discrimination and finish the fight for real equality", https://www.gov.uk/government/news/pm-time-to-end-discrimination-and-finish-the-fight-for-real-equality (accessed 2026-09-02)
-[^e13]: Civil Service (GOV.UK blog), "Name-blind recruitment - responding to your comments", https://civilservice.blog.gov.uk/2015/12/01/name-blind-recruitment-responding-to-your-comments/ (accessed 2026-09-02)
-[^e14]: Rare Recruitment, "Rare Contextual Recruitment System", https://apply.rarerecruitment.co.uk/ (accessed 2026-09-02)
-[^e15]: Rare Recruitment, "The Rare model", https://www.rarerecruitment.co.uk/rare-model.php (accessed 2026-09-02)
-[^e16]: Solicitors Regulation Authority, "Improving socio-economic inclusion in the workplace", https://news.sra.org.uk/solicitors/resources/equality-diversity/social-mobility/ (accessed 2026-09-02)
-[^e17]: Solicitors Regulation Authority, "Recruitment, retention and progression", https://www.sra.org.uk/solicitors/resources/equality-diversity/promote-diversity (accessed 2026-09-02)
-[^e18]: The Law Society, "Fair recruitment toolkit", https://www.lawsociety.org.uk/en/topics/hr-and-people-management/fair-recruitment-toolkit (accessed 2026-09-02)
-[^e19]: Social Mobility Foundation, "The Social Mobility Employer Index", https://www.socialmobility.org.uk/employerindex (accessed 2026-09-02)
-[^e20]: Social Mobility Foundation, "Employer Index - find out more", https://www.socialmobility.org.uk/index-3/ (accessed 2026-09-02)
-[^e21]: Social Mobility Foundation, "The 2024 Employer Index", https://www.socialmobility.org.uk/news/the-2024-employer-index (accessed 2026-09-02)
-[^e22]: PwC UK, "PwC UK publishes socio-economic background and disability pay gaps for the first time", https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-uk-publishes-socio-economic-background-and-disability-pay-gaps-for-the-first-time.html (accessed 2026-09-02)
-[^e23]: PwC UK, "PwC announces new steps to support new joiners and prospective recruits from lower socio-economic backgrounds", https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-announces-new-steps-to-support-new-joiners-and-prospective-recruits-from-lower-socio-economic-backgrounds.html (accessed 2026-09-02)
-[^e24]: PwC UK, "Diversity Pay Report", https://www.pwc.co.uk/who-we-are/our-performance/diversity-pay-report.html (accessed 2026-09-02)
-[^e25]: KPMG UK, "Social mobility: towards a fairer and more equitable workplace", https://kpmg.com/uk/en/insights/culture/social-mobility.html (accessed 2026-09-02)
-[^e26]: KPMG UK, "Social mobility", https://kpmg.com/uk/en/home/about/our-impact/our-people/inclusion--diversity-and-equity/social-mobility.html (accessed 2026-09-02)
-[^e27]: GOV.UK, "Civil Service online tests", https://www.gov.uk/guidance/civil-service-online-tests (accessed 2026-09-02)
-[^e28]: EY UK, "How to apply - Early Careers", https://www.ey.com/en_uk/careers/students/application-process (accessed 2026-09-02)
-[^e29]: Amberjack, "Reducing hiring bias with candidate assessments", https://www.weareamberjack.com/reducing-bias-in-hiring/ (accessed 2026-09-02)
-[^e30]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (accessed 2026-09-02)
+[^e1]: Institute of Student Employers, "Student Recruitment Survey 2025", https://ise.org.uk/_userfiles/pages/files/reports/student_recruitment_survey_2025.pdf (seen in web search 2026-09-02; page not opened)
+[^e2]: Institute of Student Employers, "ISE top 10 stats of 2025 you need to know", https://ise.org.uk/knowledge/insights/513/ise_top_10_stats_of_2025_you_need_to_know/ (seen in web search 2026-09-02; page not opened)
+[^e3]: Institute of Student Employers, "Apprenticeships rise as graduate vacancies drop 8%", https://ise.org.uk/knowledge/insights/492/apprenticeships_rise_as_graduate_vacancies_drop_8/ (seen in web search 2026-09-02; page not opened)
+[^e4]: Institute of Student Employers, "5 trends you need to know from ISE's Recruitment Survey 2025", https://ise.org.uk/knowledge/insights/498/5_trends_you_need_to_know_from_ises_recruitment_survey_2025/ (seen in web search 2026-09-02; page not opened)
+[^e5]: Institute of Student Employers, "The application explosion: key insights for employers", https://ise.org.uk/knowledge/insights/552/the_application_explosion_key_insights_for_employers/ (seen in web search 2026-09-02; page not opened)
+[^e6]: GOV.UK, "Cabinet Office: Civil Service Verbal and Numerical Tests - algorithmic transparency record", https://www.gov.uk/algorithmic-transparency-records/cabinet-office-civil-service-verbal-and-numerical-tests (seen in web search 2026-09-02; page not opened)
+[^e7]: GOV.UK, "Ethics, Transparency and Accountability Framework for Automated Decision-Making", https://www.gov.uk/government/publications/ethics-transparency-and-accountability-framework-for-automated-decision-making/ethics-transparency-and-accountability-framework-for-automated-decision-making (seen in web search 2026-09-02; page not opened)
+[^e8]: Information Commissioner's Office, "AI tools in recruitment: audit outcomes report, November 2024", https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf (seen in web search 2026-09-02; page not opened)
+[^e9]: Information Commissioner's Office, "ICO intervention into AI recruitment tools leads to better data protection for job seekers", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/ (seen in web search 2026-09-02; page not opened)
+[^e10]: Information Commissioner's Office, "Here's what jobseekers need to know about automated recruitment decisions", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/ (seen in web search 2026-09-02; page not opened)
+[^e11]: Civil Service (GOV.UK blog), "Name-blind recruitment - a commitment to diversity", https://civilservice.blog.gov.uk/2015/11/05/name-blind-recruitment-a-commitment-to-diversity/ (seen in web search 2026-09-02; page not opened)
+[^e12]: GOV.UK, "PM: Time to end discrimination and finish the fight for real equality", https://www.gov.uk/government/news/pm-time-to-end-discrimination-and-finish-the-fight-for-real-equality (seen in web search 2026-09-02; page not opened)
+[^e13]: Civil Service (GOV.UK blog), "Name-blind recruitment - responding to your comments", https://civilservice.blog.gov.uk/2015/12/01/name-blind-recruitment-responding-to-your-comments/ (seen in web search 2026-09-02; page not opened)
+[^e14]: Rare Recruitment, "Rare Contextual Recruitment System", https://apply.rarerecruitment.co.uk/ (seen in web search 2026-09-02; page not opened)
+[^e15]: Rare Recruitment, "The Rare model", https://www.rarerecruitment.co.uk/rare-model.php (seen in web search 2026-09-02; page not opened)
+[^e16]: Solicitors Regulation Authority, "Improving socio-economic inclusion in the workplace", https://news.sra.org.uk/solicitors/resources/equality-diversity/social-mobility/ (seen in web search 2026-09-02; page not opened)
+[^e17]: Solicitors Regulation Authority, "Recruitment, retention and progression", https://www.sra.org.uk/solicitors/resources/equality-diversity/promote-diversity (seen in web search 2026-09-02; page not opened)
+[^e18]: The Law Society, "Fair recruitment toolkit", https://www.lawsociety.org.uk/en/topics/hr-and-people-management/fair-recruitment-toolkit (seen in web search 2026-09-02; page not opened)
+[^e19]: Social Mobility Foundation, "The Social Mobility Employer Index", https://www.socialmobility.org.uk/employerindex (seen in web search 2026-09-02; page not opened)
+[^e20]: Social Mobility Foundation, "Employer Index - find out more", https://www.socialmobility.org.uk/index-3/ (seen in web search 2026-09-02; page not opened)
+[^e21]: Social Mobility Foundation, "The 2024 Employer Index", https://www.socialmobility.org.uk/news/the-2024-employer-index (seen in web search 2026-09-02; page not opened)
+[^e22]: PwC UK, "PwC UK publishes socio-economic background and disability pay gaps for the first time", https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-uk-publishes-socio-economic-background-and-disability-pay-gaps-for-the-first-time.html (seen in web search 2026-09-02; page not opened)
+[^e23]: PwC UK, "PwC announces new steps to support new joiners and prospective recruits from lower socio-economic backgrounds", https://www.pwc.co.uk/press-room/press-releases/corporate-news/pwc-announces-new-steps-to-support-new-joiners-and-prospective-recruits-from-lower-socio-economic-backgrounds.html (seen in web search 2026-09-02; page not opened)
+[^e24]: PwC UK, "Diversity Pay Report", https://www.pwc.co.uk/who-we-are/our-performance/diversity-pay-report.html (seen in web search 2026-09-02; page not opened)
+[^e25]: KPMG UK, "Social mobility: towards a fairer and more equitable workplace", https://kpmg.com/uk/en/insights/culture/social-mobility.html (seen in web search 2026-09-02; page not opened)
+[^e26]: KPMG UK, "Social mobility", https://kpmg.com/uk/en/home/about/our-impact/our-people/inclusion--diversity-and-equity/social-mobility.html (seen in web search 2026-09-02; page not opened)
+[^e27]: GOV.UK, "Civil Service online tests", https://www.gov.uk/guidance/civil-service-online-tests (seen in web search 2026-09-02; page not opened)
+[^e28]: EY UK, "How to apply - Early Careers", https://www.ey.com/en_uk/careers/students/application-process (seen in web search 2026-09-02; page not opened)
+[^e29]: Amberjack, "Reducing hiring bias with candidate assessments", https://www.weareamberjack.com/reducing-bias-in-hiring/ (seen in web search 2026-09-02; page not opened)
+[^e30]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (seen in web search 2026-09-02; page not opened)
 
 ## Related
 

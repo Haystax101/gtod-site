@@ -22,134 +22,134 @@ sources:
     title: FAQ - Frequently Asked Questions for Candidates
     publisher: HireVue
     url: https://www.hirevue.com/candidates/faq
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v2
     title: How to Take a HireVue Interview
     publisher: HireVue
     url: https://www.hirevue.com/blog/candidates/how-to-take-a-hirevue-interview
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v3
     title: Interview Tips for Candidates
     publisher: HireVue
     url: https://www.hirevue.com/candidates/interview-tips
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v4
     title: One-Way, On-Demand and Self-Paced Interview Guide
     publisher: HireVue
     url: https://www.hirevue.com/blog/hiring/video-interviewing-guide
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v5
     title: 2025 AI Explainability Statement
     publisher: HireVue
     url: https://www.hirevue.com/wp-content/uploads/2025/10/HV_2025_AI-Explainability-Statement.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v6
     title: 2024 AI Explainability Statement
     publisher: HireVue
     url: https://www.hirevue.com/wp-content/uploads/2024/09/HV_2024_AI-Explainability-Statement.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v7
     title: HireVue launches AI Explainability Statement in HR industry first
     publisher: HireVue (press release)
     url: https://www.hirevue.com/press-release/hirevue-launches-ai-explainability-statement-in-hr-industry-first
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v8
     title: HireVue's Assessment Science (white paper)
     publisher: HireVue
     url: https://www.hirevue.com/wp-content/uploads/2023/01/2021_10_HireVue_Assessment_Science_white_paper-FINAL.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v9
     title: HireVue Discontinues Facial Analysis Screening
     publisher: SHRM
     url: https://www.shrm.org/topics-tools/news/talent-acquisition/hirevue-discontinues-facial-analysis-screening
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: v10
     title: AI tools in recruitment - audit outcomes report, November 2024
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v11
     title: ICO intervention into AI recruitment tools leads to better data protection for job seekers
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v12
     title: Here's what jobseekers need to know about automated recruitment decisions
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v13
     title: Rights related to automated decision making including profiling
     publisher: Information Commissioner's Office
     url: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/rights-related-to-automated-decision-making-including-profiling/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v14
     title: Unilever UK&I - Unilever Future Leaders Programme 2026
     publisher: Unilever
     url: https://careers.unilever.com/en/uk-and-ireland-unilever-future-leaders-programme-2026
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v15
     title: Unilever - Interview Tips
     publisher: Unilever
     url: https://careers.unilever.com/en/career-tips-interview
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v16
     title: Thinking time - Willo Knowledge Base
     publisher: Willo
     url: https://support.willo.video/article/118-thinking-time
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v17
     title: Interview in 5 Easy Steps - Willo Knowledge Base
     publisher: Willo
     url: https://support.willo.video/article/64-5-easy-steps-to-your-interview
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v18
     title: Candidate Assessment Solutions
     publisher: Amberjack
     url: https://www.weareamberjack.com/solutions/candidate-assessment/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v19
     title: Raising the standard - quality assurance in human and AI screening
     publisher: Amberjack
     url: https://www.weareamberjack.com/raising-the-standard-quality-assurance-in-human-and-ai-screening/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v20
     title: What did 2024/25 teach us about early careers assessment?
     publisher: Amberjack
     url: https://www.weareamberjack.com/what-did-2024-25-teach-us-about-early-careers-assessment/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v21
     title: Reasonable adjustments for online tests - a candidate guide
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: v22
     title: What reasonable adjustments are
     publisher: Acas
     url: https://www.acas.org.uk/reasonable-adjustments
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line
@@ -167,8 +167,14 @@ An asynchronous video interview is a recorded, one-way interview with no intervi
 - The ICO's guidance for jobseekers states you have a right to be told when automated decision-making is used, to ask how a decision was reached, and to request human review of a decision you believe is wrong.[^v12][^v13]
 - Practice recordings are normally private. HireVue tells candidates only they see their practice attempts.[^v2]
 
-> [!GAP]
-> The machine that wrote this document could not open vendor pages directly because outbound web access was restricted to indexed search retrieval. Timings such as "30 seconds to prepare, 3 minutes to answer" are HireVue's published defaults; individual employers configure their own timings, and the timing shown in your own invitation always overrides this document.
+> [!GAP] Verification status: no page cited in this document was opened.
+> Outbound access to every research domain was denied by network policy on
+> 2026-09-02, so each source below was seen only as a web-search result against
+> the publisher's own domain. Timings, question counts, figures and employer
+> process descriptions here are leads to check, not confirmed facts, and
+> employer processes change every recruitment cycle. Open the publisher's own
+> page before relying on any specific number, and treat an employer's own
+> invitation email as authoritative over this document.
 
 ## How does an asynchronous video interview actually work, step by step?
 
@@ -262,28 +268,28 @@ The Equality Act 2010 duty to make reasonable adjustments applies to recruitment
 
 ## Sources
 
-[^v1]: HireVue, "FAQ - Frequently Asked Questions for Candidates", https://www.hirevue.com/candidates/faq (accessed 2026-09-02)
-[^v2]: HireVue, "How to Take a HireVue Interview", https://www.hirevue.com/blog/candidates/how-to-take-a-hirevue-interview (accessed 2026-09-02)
-[^v3]: HireVue, "Interview Tips", https://www.hirevue.com/candidates/interview-tips (accessed 2026-09-02)
-[^v4]: HireVue, "One-Way, On-Demand and Self-Paced Interview Guide", https://www.hirevue.com/blog/hiring/video-interviewing-guide (accessed 2026-09-02)
-[^v5]: HireVue, "2025 AI Explainability Statement", https://www.hirevue.com/wp-content/uploads/2025/10/HV_2025_AI-Explainability-Statement.pdf (accessed 2026-09-02)
-[^v6]: HireVue, "2024 AI Explainability Statement", https://www.hirevue.com/wp-content/uploads/2024/09/HV_2024_AI-Explainability-Statement.pdf (accessed 2026-09-02)
-[^v7]: HireVue, "HireVue launches AI Explainability Statement in HR industry first", https://www.hirevue.com/press-release/hirevue-launches-ai-explainability-statement-in-hr-industry-first (accessed 2026-09-02)
-[^v8]: HireVue, "HireVue's Assessment Science", https://www.hirevue.com/wp-content/uploads/2023/01/2021_10_HireVue_Assessment_Science_white_paper-FINAL.pdf (accessed 2026-09-02)
-[^v9]: SHRM, "HireVue Discontinues Facial Analysis Screening", https://www.shrm.org/topics-tools/news/talent-acquisition/hirevue-discontinues-facial-analysis-screening (accessed 2026-09-02)
-[^v10]: Information Commissioner's Office, "AI tools in recruitment: audit outcomes report, November 2024", https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf (accessed 2026-09-02)
-[^v11]: Information Commissioner's Office, "ICO intervention into AI recruitment tools leads to better data protection for job seekers", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/ (accessed 2026-09-02)
-[^v12]: Information Commissioner's Office, "Here's what jobseekers need to know about automated recruitment decisions", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/ (accessed 2026-09-02)
-[^v13]: Information Commissioner's Office, "Rights related to automated decision making including profiling", https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/rights-related-to-automated-decision-making-including-profiling/ (accessed 2026-09-02)
-[^v14]: Unilever, "Unilever UK&I - Unilever Future Leaders Programme 2026", https://careers.unilever.com/en/uk-and-ireland-unilever-future-leaders-programme-2026 (accessed 2026-09-02)
-[^v15]: Unilever, "Interview Tips", https://careers.unilever.com/en/career-tips-interview (accessed 2026-09-02)
-[^v16]: Willo, "Thinking time", https://support.willo.video/article/118-thinking-time (accessed 2026-09-02)
-[^v17]: Willo, "Interview in 5 Easy Steps", https://support.willo.video/article/64-5-easy-steps-to-your-interview (accessed 2026-09-02)
-[^v18]: Amberjack, "Candidate Assessment Solutions", https://www.weareamberjack.com/solutions/candidate-assessment/ (accessed 2026-09-02)
-[^v19]: Amberjack, "Raising the standard: quality assurance in human and AI screening", https://www.weareamberjack.com/raising-the-standard-quality-assurance-in-human-and-ai-screening/ (accessed 2026-09-02)
-[^v20]: Amberjack, "What did 2024/25 teach us about early careers assessment?", https://www.weareamberjack.com/what-did-2024-25-teach-us-about-early-careers-assessment/ (accessed 2026-09-02)
-[^v21]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (accessed 2026-09-02)
-[^v22]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (accessed 2026-09-02)
+[^v1]: HireVue, "FAQ - Frequently Asked Questions for Candidates", https://www.hirevue.com/candidates/faq (seen in web search 2026-09-02; page not opened)
+[^v2]: HireVue, "How to Take a HireVue Interview", https://www.hirevue.com/blog/candidates/how-to-take-a-hirevue-interview (seen in web search 2026-09-02; page not opened)
+[^v3]: HireVue, "Interview Tips", https://www.hirevue.com/candidates/interview-tips (seen in web search 2026-09-02; page not opened)
+[^v4]: HireVue, "One-Way, On-Demand and Self-Paced Interview Guide", https://www.hirevue.com/blog/hiring/video-interviewing-guide (seen in web search 2026-09-02; page not opened)
+[^v5]: HireVue, "2025 AI Explainability Statement", https://www.hirevue.com/wp-content/uploads/2025/10/HV_2025_AI-Explainability-Statement.pdf (seen in web search 2026-09-02; page not opened)
+[^v6]: HireVue, "2024 AI Explainability Statement", https://www.hirevue.com/wp-content/uploads/2024/09/HV_2024_AI-Explainability-Statement.pdf (seen in web search 2026-09-02; page not opened)
+[^v7]: HireVue, "HireVue launches AI Explainability Statement in HR industry first", https://www.hirevue.com/press-release/hirevue-launches-ai-explainability-statement-in-hr-industry-first (seen in web search 2026-09-02; page not opened)
+[^v8]: HireVue, "HireVue's Assessment Science", https://www.hirevue.com/wp-content/uploads/2023/01/2021_10_HireVue_Assessment_Science_white_paper-FINAL.pdf (seen in web search 2026-09-02; page not opened)
+[^v9]: SHRM, "HireVue Discontinues Facial Analysis Screening", https://www.shrm.org/topics-tools/news/talent-acquisition/hirevue-discontinues-facial-analysis-screening (seen in web search 2026-09-02; page not opened)
+[^v10]: Information Commissioner's Office, "AI tools in recruitment: audit outcomes report, November 2024", https://ico.org.uk/media2/migrated/4031620/ai-in-recruitment-outcomes-report.pdf (seen in web search 2026-09-02; page not opened)
+[^v11]: Information Commissioner's Office, "ICO intervention into AI recruitment tools leads to better data protection for job seekers", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2024/11/ico-intervention-into-ai-recruitment-tools-leads-to-better-data-protection-for-job-seekers/ (seen in web search 2026-09-02; page not opened)
+[^v12]: Information Commissioner's Office, "Here's what jobseekers need to know about automated recruitment decisions", https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2026/03/here-s-what-jobseekers-need-to-know-about-automated-recruitment-decisions/ (seen in web search 2026-09-02; page not opened)
+[^v13]: Information Commissioner's Office, "Rights related to automated decision making including profiling", https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/individual-rights/rights-related-to-automated-decision-making-including-profiling/ (seen in web search 2026-09-02; page not opened)
+[^v14]: Unilever, "Unilever UK&I - Unilever Future Leaders Programme 2026", https://careers.unilever.com/en/uk-and-ireland-unilever-future-leaders-programme-2026 (seen in web search 2026-09-02; page not opened)
+[^v15]: Unilever, "Interview Tips", https://careers.unilever.com/en/career-tips-interview (seen in web search 2026-09-02; page not opened)
+[^v16]: Willo, "Thinking time", https://support.willo.video/article/118-thinking-time (seen in web search 2026-09-02; page not opened)
+[^v17]: Willo, "Interview in 5 Easy Steps", https://support.willo.video/article/64-5-easy-steps-to-your-interview (seen in web search 2026-09-02; page not opened)
+[^v18]: Amberjack, "Candidate Assessment Solutions", https://www.weareamberjack.com/solutions/candidate-assessment/ (seen in web search 2026-09-02; page not opened)
+[^v19]: Amberjack, "Raising the standard: quality assurance in human and AI screening", https://www.weareamberjack.com/raising-the-standard-quality-assurance-in-human-and-ai-screening/ (seen in web search 2026-09-02; page not opened)
+[^v20]: Amberjack, "What did 2024/25 teach us about early careers assessment?", https://www.weareamberjack.com/what-did-2024-25-teach-us-about-early-careers-assessment/ (seen in web search 2026-09-02; page not opened)
+[^v21]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (seen in web search 2026-09-02; page not opened)
+[^v22]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (seen in web search 2026-09-02; page not opened)
 
 ## Related
 

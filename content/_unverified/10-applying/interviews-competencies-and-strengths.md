@@ -23,146 +23,146 @@ sources:
     title: The STAR method
     publisher: National Careers Service
     url: https://nationalcareers.service.gov.uk/careers-advice/interview-advice/the-star-method
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i2
     title: Using STAR effectively in your job application and interviews
     publisher: Ofqual (GOV.UK blog)
     url: https://ofqual.blog.gov.uk/wp-content/uploads/sites/137/2017/12/How-to-use-STAR-in-your-application.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i3
     title: STAR(R) and CAR techniques
     publisher: Government Digital and Data Hub (GOV.UK)
     url: https://governmentdigitalanddatahub.campaign.gov.uk/join/government-digital-and-data-careers/prepare-for-your-interview/starr-and-car-techniques/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i4
     title: "Success Profiles: Strengths"
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i5
     title: "Success Profiles: Civil Service behaviours"
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i6
     title: A guide to Civil Service Success Profiles
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i7
     title: Preparing for the Civil Service Work Strengths Test
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/preparing-for-the-civil-service-work-strengths-test
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i8
     title: Success Profiles - Civil Service Strengths Dictionary
     publisher: National Crime Agency (publishing the Cabinet Office framework)
     url: https://www.nationalcrimeagency.gov.uk/who-we-are/publications/661-success-profiles-strengths-dictionary/file
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i9
     title: Succeeding at strengths based interviewing
     publisher: LSE Careers
     url: https://blogs.lse.ac.uk/careers/2019/11/25/succeeding-at-strengths-based-interviewing/
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: i10
     title: Example Interview Questions (LSE Careers, Sep 2020)
     publisher: LSE Careers
     url: https://info.lse.ac.uk/current-students/careers/Assets/Documents/LSE-Careers-common-interview-questions.pdf
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: i11
     title: Types of interview questions
     publisher: LSE Careers
     url: https://info.lse.ac.uk/current-students/careers/information-and-resources/interview-assessment-centre-psychometric/types-of-interview-questions
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: i12
     title: Values-based recruitment
     publisher: NHS Employers
     url: https://www.nhsemployers.org/articles/values-based-recruitment
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i13
     title: Values Based Recruitment Framework (March 2016)
     publisher: Health Education England / NHS England
     url: https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i14
     title: "Values Based Recruitment: structured interviews"
     publisher: Health Education England / NHS England
     url: https://www.hee.nhs.uk/sites/default/files/documents/3.%20Structured%20interviews.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i15
     title: The NHS values
     publisher: Health Careers (NHS)
     url: https://www.healthcareers.nhs.uk/working-health/working-nhs/nhs-constitution
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i16
     title: Example job interview questions for all allied health professionals
     publisher: NHS England Workforce, Training and Education
     url: https://www.hee.nhs.uk/our-work/student-hub-1/ahp-learner-hub/diagnostic-radiography/diagnostic-radiography-job-interviews-offers/common/generic-job-interview-questions-ahp
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i17
     title: Compassion in Practice strategy and the 6Cs
     publisher: NHS England
     url: https://www.england.nhs.uk/6cs/wp-content/uploads/sites/25/2015/03/cip-6cs.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i18
     title: What is commercial awareness?
     publisher: targetjobs
     url: https://targetjobs.co.uk/careers-advice/skills-for-getting-a-job/what-commercial-awareness
-    accessed: 2026-09-02
-    type: secondary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: secondary-UNVERIFIED
   - id: i19
     title: Commercial awareness - employability skills
     publisher: ICAEW
     url: https://www.icaew.com/learning-and-development/job-essential-skills/employability-skills/commercial-awareness
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i20
     title: Assessments and Interviews
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/assessments-and-interviews/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i21
     title: How to improve Civil Service job applications and ace your interviews
     publisher: Defra Digital (GOV.UK blog)
     url: https://defradigital.blog.gov.uk/2023/04/14/how-to-improve-civil-service-job-applications-and-ace-your-interviews/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i22
     title: Early Careers Assessment
     publisher: Deloitte UK
     url: https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i23
     title: Assessment and selection process - Early Careers
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: i24
     title: Selection Methods factsheet
     publisher: CIPD
     url: https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line
@@ -181,8 +181,14 @@ There are four interview types you will meet in UK apprenticeship recruitment â€
 - NHS values-based recruitment selects on alignment with the values of the NHS Constitution, alongside the usual assessment of aptitude and skills, and can be delivered through structured interviews, multiple mini interviews, role play, written scenarios and assessment centres.[^i12][^i13][^i14]
 - Commercial awareness means knowing how the employer makes money, who its customers and competitors are, and what external forces affect it.[^i18][^i19]
 
-> [!GAP]
-> The machine that wrote this document could not open pages directly because outbound web access was restricted to indexed search retrieval. The list of employers using strengths-based interviewing comes from a university careers service (LSE Careers), not from those employers' own statements. Employers change interview style between cycles; check the employer's own assessment page for the current format rather than assuming.
+> [!GAP] Verification status: no page cited in this document was opened.
+> Outbound access to every research domain was denied by network policy on
+> 2026-09-02, so each source below was seen only as a web-search result against
+> the publisher's own domain. Timings, question counts, figures and employer
+> process descriptions here are leads to check, not confirmed facts, and
+> employer processes change every recruitment cycle. Open the publisher's own
+> page before relying on any specific number, and treat an employer's own
+> invitation email as authoritative over this document.
 
 ## What is a competency interview and how do I answer one?
 
@@ -409,30 +415,30 @@ Most real apprenticeship interviews are mixed. Civil Service guidance describes 
 
 ## Sources
 
-[^i1]: National Careers Service, "The STAR method", https://nationalcareers.service.gov.uk/careers-advice/interview-advice/the-star-method (accessed 2026-09-02)
-[^i2]: Ofqual (GOV.UK blog), "Using STAR effectively in your job application and interviews", https://ofqual.blog.gov.uk/wp-content/uploads/sites/137/2017/12/How-to-use-STAR-in-your-application.pdf (accessed 2026-09-02)
-[^i3]: Government Digital and Data Hub (GOV.UK), "STAR(R) and CAR techniques", https://governmentdigitalanddatahub.campaign.gov.uk/join/government-digital-and-data-careers/prepare-for-your-interview/starr-and-car-techniques/ (accessed 2026-09-02)
-[^i4]: GOV.UK / Cabinet Office, "Success Profiles: Strengths", https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths (accessed 2026-09-02)
-[^i5]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service behaviours", https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours (accessed 2026-09-02)
-[^i6]: Civil Service Careers, "A guide to Civil Service Success Profiles", https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/ (accessed 2026-09-02)
-[^i7]: GOV.UK, "Preparing for the Civil Service Work Strengths Test", https://www.gov.uk/guidance/preparing-for-the-civil-service-work-strengths-test (accessed 2026-09-02)
-[^i8]: National Crime Agency (publishing the Cabinet Office framework), "Success Profiles - Civil Service Strengths Dictionary", https://www.nationalcrimeagency.gov.uk/who-we-are/publications/661-success-profiles-strengths-dictionary/file (accessed 2026-09-02)
-[^i9]: LSE Careers, "Succeeding at strengths based interviewing", https://blogs.lse.ac.uk/careers/2019/11/25/succeeding-at-strengths-based-interviewing/ (accessed 2026-09-02)
-[^i10]: LSE Careers, "Example Interview Questions", https://info.lse.ac.uk/current-students/careers/Assets/Documents/LSE-Careers-common-interview-questions.pdf (accessed 2026-09-02)
-[^i11]: LSE Careers, "Types of interview questions", https://info.lse.ac.uk/current-students/careers/information-and-resources/interview-assessment-centre-psychometric/types-of-interview-questions (accessed 2026-09-02)
-[^i12]: NHS Employers, "Values-based recruitment", https://www.nhsemployers.org/articles/values-based-recruitment (accessed 2026-09-02)
-[^i13]: Health Education England / NHS England, "Values Based Recruitment Framework, March 2016", https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf (accessed 2026-09-02)
-[^i14]: Health Education England / NHS England, "Values Based Recruitment: structured interviews", https://www.hee.nhs.uk/sites/default/files/documents/3.%20Structured%20interviews.pdf (accessed 2026-09-02)
-[^i15]: Health Careers (NHS), "The NHS values", https://www.healthcareers.nhs.uk/working-health/working-nhs/nhs-constitution (accessed 2026-09-02)
-[^i16]: NHS England Workforce, Training and Education, "Example job interview questions for all allied health professionals", https://www.hee.nhs.uk/our-work/student-hub-1/ahp-learner-hub/diagnostic-radiography/diagnostic-radiography-job-interviews-offers/common/generic-job-interview-questions-ahp (accessed 2026-09-02)
-[^i17]: NHS England, "Compassion in Practice strategy and the 6Cs", https://www.england.nhs.uk/6cs/wp-content/uploads/sites/25/2015/03/cip-6cs.pdf (accessed 2026-09-02)
-[^i18]: targetjobs, "What is commercial awareness?", https://targetjobs.co.uk/careers-advice/skills-for-getting-a-job/what-commercial-awareness (accessed 2026-09-02)
-[^i19]: ICAEW, "Commercial awareness - employability skills", https://www.icaew.com/learning-and-development/job-essential-skills/employability-skills/commercial-awareness (accessed 2026-09-02)
-[^i20]: Civil Service Careers, "Assessments and Interviews", https://www.civil-service-careers.gov.uk/assessments-and-interviews/ (accessed 2026-09-02)
-[^i21]: Defra Digital (GOV.UK blog), "How to improve Civil Service job applications and ace your interviews", https://defradigital.blog.gov.uk/2023/04/14/how-to-improve-civil-service-job-applications-and-ace-your-interviews/ (accessed 2026-09-02)
-[^i22]: Deloitte UK, "Early Careers Assessment", https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html (accessed 2026-09-02)
-[^i23]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (accessed 2026-09-02)
-[^i24]: CIPD, "Selection Methods factsheet", https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/ (accessed 2026-09-02)
+[^i1]: National Careers Service, "The STAR method", https://nationalcareers.service.gov.uk/careers-advice/interview-advice/the-star-method (seen in web search 2026-09-02; page not opened)
+[^i2]: Ofqual (GOV.UK blog), "Using STAR effectively in your job application and interviews", https://ofqual.blog.gov.uk/wp-content/uploads/sites/137/2017/12/How-to-use-STAR-in-your-application.pdf (seen in web search 2026-09-02; page not opened)
+[^i3]: Government Digital and Data Hub (GOV.UK), "STAR(R) and CAR techniques", https://governmentdigitalanddatahub.campaign.gov.uk/join/government-digital-and-data-careers/prepare-for-your-interview/starr-and-car-techniques/ (seen in web search 2026-09-02; page not opened)
+[^i4]: GOV.UK / Cabinet Office, "Success Profiles: Strengths", https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths (seen in web search 2026-09-02; page not opened)
+[^i5]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service behaviours", https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours (seen in web search 2026-09-02; page not opened)
+[^i6]: Civil Service Careers, "A guide to Civil Service Success Profiles", https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/ (seen in web search 2026-09-02; page not opened)
+[^i7]: GOV.UK, "Preparing for the Civil Service Work Strengths Test", https://www.gov.uk/guidance/preparing-for-the-civil-service-work-strengths-test (seen in web search 2026-09-02; page not opened)
+[^i8]: National Crime Agency (publishing the Cabinet Office framework), "Success Profiles - Civil Service Strengths Dictionary", https://www.nationalcrimeagency.gov.uk/who-we-are/publications/661-success-profiles-strengths-dictionary/file (seen in web search 2026-09-02; page not opened)
+[^i9]: LSE Careers, "Succeeding at strengths based interviewing", https://blogs.lse.ac.uk/careers/2019/11/25/succeeding-at-strengths-based-interviewing/ (seen in web search 2026-09-02; page not opened)
+[^i10]: LSE Careers, "Example Interview Questions", https://info.lse.ac.uk/current-students/careers/Assets/Documents/LSE-Careers-common-interview-questions.pdf (seen in web search 2026-09-02; page not opened)
+[^i11]: LSE Careers, "Types of interview questions", https://info.lse.ac.uk/current-students/careers/information-and-resources/interview-assessment-centre-psychometric/types-of-interview-questions (seen in web search 2026-09-02; page not opened)
+[^i12]: NHS Employers, "Values-based recruitment", https://www.nhsemployers.org/articles/values-based-recruitment (seen in web search 2026-09-02; page not opened)
+[^i13]: Health Education England / NHS England, "Values Based Recruitment Framework, March 2016", https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf (seen in web search 2026-09-02; page not opened)
+[^i14]: Health Education England / NHS England, "Values Based Recruitment: structured interviews", https://www.hee.nhs.uk/sites/default/files/documents/3.%20Structured%20interviews.pdf (seen in web search 2026-09-02; page not opened)
+[^i15]: Health Careers (NHS), "The NHS values", https://www.healthcareers.nhs.uk/working-health/working-nhs/nhs-constitution (seen in web search 2026-09-02; page not opened)
+[^i16]: NHS England Workforce, Training and Education, "Example job interview questions for all allied health professionals", https://www.hee.nhs.uk/our-work/student-hub-1/ahp-learner-hub/diagnostic-radiography/diagnostic-radiography-job-interviews-offers/common/generic-job-interview-questions-ahp (seen in web search 2026-09-02; page not opened)
+[^i17]: NHS England, "Compassion in Practice strategy and the 6Cs", https://www.england.nhs.uk/6cs/wp-content/uploads/sites/25/2015/03/cip-6cs.pdf (seen in web search 2026-09-02; page not opened)
+[^i18]: targetjobs, "What is commercial awareness?", https://targetjobs.co.uk/careers-advice/skills-for-getting-a-job/what-commercial-awareness (seen in web search 2026-09-02; page not opened)
+[^i19]: ICAEW, "Commercial awareness - employability skills", https://www.icaew.com/learning-and-development/job-essential-skills/employability-skills/commercial-awareness (seen in web search 2026-09-02; page not opened)
+[^i20]: Civil Service Careers, "Assessments and Interviews", https://www.civil-service-careers.gov.uk/assessments-and-interviews/ (seen in web search 2026-09-02; page not opened)
+[^i21]: Defra Digital (GOV.UK blog), "How to improve Civil Service job applications and ace your interviews", https://defradigital.blog.gov.uk/2023/04/14/how-to-improve-civil-service-job-applications-and-ace-your-interviews/ (seen in web search 2026-09-02; page not opened)
+[^i22]: Deloitte UK, "Early Careers Assessment", https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html (seen in web search 2026-09-02; page not opened)
+[^i23]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (seen in web search 2026-09-02; page not opened)
+[^i24]: CIPD, "Selection Methods factsheet", https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/ (seen in web search 2026-09-02; page not opened)
 
 ## Related
 

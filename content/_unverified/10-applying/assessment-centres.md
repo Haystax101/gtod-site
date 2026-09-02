@@ -23,176 +23,176 @@ sources:
     title: Success Profiles
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a2
     title: "Success Profiles: Civil Service behaviours"
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a3
     title: "Success Profiles: Strengths"
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a4
     title: "Success Profiles: Candidate overview"
     publisher: GOV.UK / Cabinet Office
     url: https://www.gov.uk/government/publications/success-profiles/success-profiles-candidate-overview
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a5
     title: A guide to Civil Service Success Profiles
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a6
     title: Success Profiles - Civil Service Behaviours (2018)
     publisher: GOV.UK / Cabinet Office
     url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1004397/CS_Behaviours_2018.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a7
     title: FSAC - the assessments
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-the-assessments/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a8
     title: FSAC - written advice exercise
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-written-advice-exercise/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a9
     title: FSAC - prepare and assess
     publisher: Civil Service Careers
     url: https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-prepare-and-assess/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a10
     title: Fast Track Assessment Centre (FTAC) Guide 2018
     publisher: GOV.UK / Cabinet Office
     url: https://assets.publishing.service.gov.uk/media/5a8ea2e5e5274a5e67567ed2/FTAC_Guide_-_Supporting_you_through_the_assessment_process.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a11
     title: "[Withdrawn] Fast Track assessment centre (FTAC) guide"
     publisher: GOV.UK
     url: https://www.gov.uk/government/publications/fast-track-assessment-centre-ftac-guide
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a12
     title: Assessment and selection process - Early Careers
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a13
     title: Adjustments to the early careers recruitment process
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/apply/applying-with-a-disability.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a14
     title: Early careers application support
     publisher: PwC UK
     url: https://www.pwc.co.uk/careers/early-careers/assessment-support.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a15
     title: Our application process (apprentice)
     publisher: KPMG UK
     url: https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a16
     title: Getting ready for your Launch Pad assessment day
     publisher: KPMG UK
     url: https://www.kpmgcareers.co.uk/media/2484/getting-ready-for-your-launch-pad-assessment-day.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a17
     title: Early Careers Assessment
     publisher: Deloitte UK
     url: https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a18
     title: Introduction to the Final Stage Assessment
     publisher: Deloitte UK
     url: https://www2.deloitte.com/content/dam/Deloitte/uk/Documents/careers/Introduction%20to%20the%20Final%20Stage%20Assessment.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a19
     title: Integrity Guidance (early careers)
     publisher: Deloitte UK
     url: https://www.deloitte.com/uk/en/careers/early-careers/integrity-guidance.html
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a20
     title: How to apply - Early Careers
     publisher: EY UK
     url: https://www.ey.com/en_uk/careers/students/application-process
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a21
     title: Early Careers FAQs
     publisher: EY UK
     url: https://www.ey.com/en_uk/careers/students/faqs
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a22
     title: Values-based recruitment
     publisher: NHS Employers
     url: https://www.nhsemployers.org/articles/values-based-recruitment
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a23
     title: Values Based Recruitment Framework (March 2016)
     publisher: Health Education England / NHS England
     url: https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a24
     title: Selection Methods factsheet
     publisher: CIPD
     url: https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a25
     title: Using assessment centres effectively for candidate selection and development
     publisher: CIPD
     url: https://www.cipd.org/uk/knowledge/bitesize-research/effective-assessment-centres-use/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a26
     title: How your application is assessed - Success Profiles
     publisher: Crown Office and Procurator Fiscal Service
     url: https://www.copfs.gov.uk/about-copfs/careers/how-your-application-is-assessed-success-profiles/
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a27
     title: Guidance on completing the expenses claim form - external recruitment travel expenses
     publisher: GOV.UK / Cabinet Office
     url: https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/136040/ext-rct-trav-exp-actuals-claim-form.doc
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a28
     title: What reasonable adjustments are
     publisher: Acas
     url: https://www.acas.org.uk/reasonable-adjustments
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
   - id: a29
     title: Reasonable adjustments for online tests - a candidate guide
     publisher: GOV.UK
     url: https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide
-    accessed: 2026-09-02
-    type: primary
+    accessed: 2026-09-02  # date of web SEARCH; page not opened
+    type: primary-UNVERIFIED
 ---
 
 ## In one line
@@ -212,8 +212,14 @@ A UK early-careers assessment centre is a half or full day of standardised exerc
 - The NHS assesses candidate values against the NHS Constitution through values-based recruitment, delivered through methods including pre-screening, values-based interviews, role play, written scenario responses and assessment centres.[^a22][^a23]
 - CIPD guidance is that assessment centre selectors must be trained to observe, record, classify and rate behaviour against the job description and person specification, and that centres should be overseen by experienced selectors for consistency.[^a24][^a25]
 
-> [!GAP]
-> The machine that wrote this document could not open employer pages directly because outbound web access was restricted to indexed search retrieval. Employer assessment processes change every recruitment cycle, often between the autumn and spring intakes of the same year. Treat every employer-specific structure below as "what this employer published as at 2 September 2026" and check the employer's own page before you rely on it.
+> [!GAP] Verification status: no page cited in this document was opened.
+> Outbound access to every research domain was denied by network policy on
+> 2026-09-02, so each source below was seen only as a web-search result against
+> the publisher's own domain. Timings, question counts, figures and employer
+> process descriptions here are leads to check, not confirmed facts, and
+> employer processes change every recruitment cycle. Open the publisher's own
+> page before relying on any specific number, and treat an employer's own
+> invitation email as authoritative over this document.
 
 ## What is an assessment centre and why do apprenticeship employers run one?
 
@@ -353,35 +359,35 @@ Ask at application, or as soon as you are invited. Adjustments that need a room 
 
 ## Sources
 
-[^a1]: GOV.UK / Cabinet Office, "Success Profiles", https://www.gov.uk/government/publications/success-profiles (accessed 2026-09-02)
-[^a2]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service behaviours", https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours (accessed 2026-09-02)
-[^a3]: GOV.UK / Cabinet Office, "Success Profiles: Strengths", https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths (accessed 2026-09-02)
-[^a4]: GOV.UK / Cabinet Office, "Success Profiles: Candidate overview", https://www.gov.uk/government/publications/success-profiles/success-profiles-candidate-overview (accessed 2026-09-02)
-[^a5]: Civil Service Careers, "A guide to Civil Service Success Profiles", https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/ (accessed 2026-09-02)
-[^a6]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service Behaviours (2018)", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1004397/CS_Behaviours_2018.pdf (accessed 2026-09-02)
-[^a7]: Civil Service Careers, "FSAC - the assessments", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-the-assessments/ (accessed 2026-09-02)
-[^a8]: Civil Service Careers, "FSAC - written advice exercise", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-written-advice-exercise/ (accessed 2026-09-02)
-[^a9]: Civil Service Careers, "FSAC - prepare and assess", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-prepare-and-assess/ (accessed 2026-09-02)
-[^a10]: GOV.UK / Cabinet Office, "Fast Track Assessment Centre (FTAC) Guide 2018", https://assets.publishing.service.gov.uk/media/5a8ea2e5e5274a5e67567ed2/FTAC_Guide_-_Supporting_you_through_the_assessment_process.pdf (accessed 2026-09-02)
-[^a11]: GOV.UK, "[Withdrawn] Fast Track assessment centre (FTAC) guide", https://www.gov.uk/government/publications/fast-track-assessment-centre-ftac-guide (accessed 2026-09-02)
-[^a12]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (accessed 2026-09-02)
-[^a13]: PwC UK, "Adjustments to the early careers recruitment process", https://www.pwc.co.uk/careers/early-careers/apply/applying-with-a-disability.html (accessed 2026-09-02)
-[^a14]: PwC UK, "Early careers application support", https://www.pwc.co.uk/careers/early-careers/assessment-support.html (accessed 2026-09-02)
-[^a15]: KPMG UK, "Our application process (apprentice)", https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/ (accessed 2026-09-02)
-[^a16]: KPMG UK, "Getting ready for your Launch Pad assessment day", https://www.kpmgcareers.co.uk/media/2484/getting-ready-for-your-launch-pad-assessment-day.pdf (accessed 2026-09-02)
-[^a17]: Deloitte UK, "Early Careers Assessment", https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html (accessed 2026-09-02)
-[^a18]: Deloitte UK, "Introduction to the Final Stage Assessment", https://www2.deloitte.com/content/dam/Deloitte/uk/Documents/careers/Introduction%20to%20the%20Final%20Stage%20Assessment.pdf (accessed 2026-09-02)
-[^a19]: Deloitte UK, "Integrity Guidance", https://www.deloitte.com/uk/en/careers/early-careers/integrity-guidance.html (accessed 2026-09-02)
-[^a20]: EY UK, "How to apply - Early Careers", https://www.ey.com/en_uk/careers/students/application-process (accessed 2026-09-02)
-[^a21]: EY UK, "Early Careers FAQs", https://www.ey.com/en_uk/careers/students/faqs (accessed 2026-09-02)
-[^a22]: NHS Employers, "Values-based recruitment", https://www.nhsemployers.org/articles/values-based-recruitment (accessed 2026-09-02)
-[^a23]: Health Education England / NHS England, "Values Based Recruitment Framework, March 2016", https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf (accessed 2026-09-02)
-[^a24]: CIPD, "Selection Methods factsheet", https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/ (accessed 2026-09-02)
-[^a25]: CIPD, "Using assessment centres effectively for candidate selection and development", https://www.cipd.org/uk/knowledge/bitesize-research/effective-assessment-centres-use/ (accessed 2026-09-02)
-[^a26]: Crown Office and Procurator Fiscal Service, "How your application is assessed - Success Profiles", https://www.copfs.gov.uk/about-copfs/careers/how-your-application-is-assessed-success-profiles/ (accessed 2026-09-02)
-[^a27]: GOV.UK / Cabinet Office, "Guidance on completing the expenses claim form - external recruitment travel expenses", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/136040/ext-rct-trav-exp-actuals-claim-form.doc (accessed 2026-09-02)
-[^a28]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (accessed 2026-09-02)
-[^a29]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (accessed 2026-09-02)
+[^a1]: GOV.UK / Cabinet Office, "Success Profiles", https://www.gov.uk/government/publications/success-profiles (seen in web search 2026-09-02; page not opened)
+[^a2]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service behaviours", https://www.gov.uk/government/publications/success-profiles/success-profiles-civil-service-behaviours (seen in web search 2026-09-02; page not opened)
+[^a3]: GOV.UK / Cabinet Office, "Success Profiles: Strengths", https://www.gov.uk/government/publications/success-profiles/success-profiles-strengths (seen in web search 2026-09-02; page not opened)
+[^a4]: GOV.UK / Cabinet Office, "Success Profiles: Candidate overview", https://www.gov.uk/government/publications/success-profiles/success-profiles-candidate-overview (seen in web search 2026-09-02; page not opened)
+[^a5]: Civil Service Careers, "A guide to Civil Service Success Profiles", https://www.civil-service-careers.gov.uk/a-guide-to-civil-service-success-profiles/ (seen in web search 2026-09-02; page not opened)
+[^a6]: GOV.UK / Cabinet Office, "Success Profiles: Civil Service Behaviours (2018)", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1004397/CS_Behaviours_2018.pdf (seen in web search 2026-09-02; page not opened)
+[^a7]: Civil Service Careers, "FSAC - the assessments", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-the-assessments/ (seen in web search 2026-09-02; page not opened)
+[^a8]: Civil Service Careers, "FSAC - written advice exercise", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-written-advice-exercise/ (seen in web search 2026-09-02; page not opened)
+[^a9]: Civil Service Careers, "FSAC - prepare and assess", https://www.civil-service-careers.gov.uk/fast-stream/fs-how-to-apply/fast-stream-assessment-centre-guide-2/fsac-prepare-and-assess/ (seen in web search 2026-09-02; page not opened)
+[^a10]: GOV.UK / Cabinet Office, "Fast Track Assessment Centre (FTAC) Guide 2018", https://assets.publishing.service.gov.uk/media/5a8ea2e5e5274a5e67567ed2/FTAC_Guide_-_Supporting_you_through_the_assessment_process.pdf (seen in web search 2026-09-02; page not opened)
+[^a11]: GOV.UK, "[Withdrawn] Fast Track assessment centre (FTAC) guide", https://www.gov.uk/government/publications/fast-track-assessment-centre-ftac-guide (seen in web search 2026-09-02; page not opened)
+[^a12]: PwC UK, "Assessment and selection process - Early Careers", https://www.pwc.co.uk/careers/early-careers/applying/assessment-selection-process.html (seen in web search 2026-09-02; page not opened)
+[^a13]: PwC UK, "Adjustments to the early careers recruitment process", https://www.pwc.co.uk/careers/early-careers/apply/applying-with-a-disability.html (seen in web search 2026-09-02; page not opened)
+[^a14]: PwC UK, "Early careers application support", https://www.pwc.co.uk/careers/early-careers/assessment-support.html (seen in web search 2026-09-02; page not opened)
+[^a15]: KPMG UK, "Our application process (apprentice)", https://www.kpmgcareers.co.uk/apprentice/applying-to-kpmg/application-process/ (seen in web search 2026-09-02; page not opened)
+[^a16]: KPMG UK, "Getting ready for your Launch Pad assessment day", https://www.kpmgcareers.co.uk/media/2484/getting-ready-for-your-launch-pad-assessment-day.pdf (seen in web search 2026-09-02; page not opened)
+[^a17]: Deloitte UK, "Early Careers Assessment", https://www.deloitte.com/uk/en/careers/early-careers/early-careers-assessment.html (seen in web search 2026-09-02; page not opened)
+[^a18]: Deloitte UK, "Introduction to the Final Stage Assessment", https://www2.deloitte.com/content/dam/Deloitte/uk/Documents/careers/Introduction%20to%20the%20Final%20Stage%20Assessment.pdf (seen in web search 2026-09-02; page not opened)
+[^a19]: Deloitte UK, "Integrity Guidance", https://www.deloitte.com/uk/en/careers/early-careers/integrity-guidance.html (seen in web search 2026-09-02; page not opened)
+[^a20]: EY UK, "How to apply - Early Careers", https://www.ey.com/en_uk/careers/students/application-process (seen in web search 2026-09-02; page not opened)
+[^a21]: EY UK, "Early Careers FAQs", https://www.ey.com/en_uk/careers/students/faqs (seen in web search 2026-09-02; page not opened)
+[^a22]: NHS Employers, "Values-based recruitment", https://www.nhsemployers.org/articles/values-based-recruitment (seen in web search 2026-09-02; page not opened)
+[^a23]: Health Education England / NHS England, "Values Based Recruitment Framework, March 2016", https://www.hee.nhs.uk/sites/default/files/documents/VBR_Framework%20March%202016.pdf (seen in web search 2026-09-02; page not opened)
+[^a24]: CIPD, "Selection Methods factsheet", https://www.cipd.org/uk/knowledge/factsheets/selection-factsheet/ (seen in web search 2026-09-02; page not opened)
+[^a25]: CIPD, "Using assessment centres effectively for candidate selection and development", https://www.cipd.org/uk/knowledge/bitesize-research/effective-assessment-centres-use/ (seen in web search 2026-09-02; page not opened)
+[^a26]: Crown Office and Procurator Fiscal Service, "How your application is assessed - Success Profiles", https://www.copfs.gov.uk/about-copfs/careers/how-your-application-is-assessed-success-profiles/ (seen in web search 2026-09-02; page not opened)
+[^a27]: GOV.UK / Cabinet Office, "Guidance on completing the expenses claim form - external recruitment travel expenses", https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/136040/ext-rct-trav-exp-actuals-claim-form.doc (seen in web search 2026-09-02; page not opened)
+[^a28]: Acas, "What reasonable adjustments are", https://www.acas.org.uk/reasonable-adjustments (seen in web search 2026-09-02; page not opened)
+[^a29]: GOV.UK, "Reasonable adjustments for online tests - a candidate guide", https://www.gov.uk/guidance/reasonable-adjustments-for-online-tests-a-candidate-guide (seen in web search 2026-09-02; page not opened)
 
 ## Related
 
