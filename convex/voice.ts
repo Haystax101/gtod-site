@@ -20,6 +20,8 @@ import { ConvexError, v } from 'convex/values'
 import { requireUser } from './users'
 import { TIERS, monthKey } from './tiers'
 import { checkVoiceBudget, voiceCostMicros, VOICE_POLICY } from './budget'
+import { CHECKIN_SYSTEM, INTERVIEW_SYSTEM, buildVoiceContext } from './voicePrompts'
+import { bm25, selectChunks } from './retrieval'
 
 /** A session whose heartbeat has been silent this long is presumed dead. */
 const STALE_AFTER_MS = 3 * 60 * 1000
@@ -138,6 +140,71 @@ export const release = internalMutation({
   },
 })
 
+
+/**
+ * Everything Charge needs to know before the call starts.
+ *
+ * Gathered once, up front, because a live audio session cannot stop to look
+ * things up mid-sentence without an audible pause. Retrieval is capped tightly:
+ * spoken context has to stay small or the model starts reciting it.
+ */
+export const briefing = internalQuery({
+  args: { kind: kindValidator, query: v.string() },
+  handler: async (ctx, { kind, query: q }) => {
+    const user = await requireUser(ctx)
+
+    const applications = await ctx.db
+      .query('applications')
+      .withIndex('by_user', (qq) => qq.eq('userId', user._id))
+      .order('desc')
+      .take(8)
+
+    const live = applications.filter(
+      (a) => a.stage !== 'rejected' && a.stage !== 'withdrawn',
+    )
+
+    const named: { employer: string; scheme: string; stage: string; deadline?: string }[] = []
+    for (const a of live) {
+      const scheme = a.schemeId ? await ctx.db.get(a.schemeId) : null
+      named.push({
+        employer: scheme?.employer ?? a.customEmployer ?? 'an employer',
+        scheme: scheme?.name ?? a.customName ?? 'their scheme',
+        stage: a.stage.replace(/_/g, ' '),
+        // Only ever a date we actually hold. Never inferred.
+        deadline: a.deadlineAt ? new Date(a.deadlineAt).toDateString() : undefined,
+      })
+    }
+
+    const tasks = await ctx.db
+      .query('tasks')
+      .withIndex('by_user_done', (qq) => qq.eq('userId', user._id).eq('doneAt', undefined))
+      .take(6)
+
+    // Ground the call in the verified corpus, same as chat does.
+    let extracts: { text: string }[] = []
+    if (q.trim()) {
+      const chunks = await ctx.db.query('knowledgeChunks').collect()
+      if (chunks.length) {
+        const ranked = bm25(q, chunks).slice(0, 8).map((r) => r.chunk)
+        extracts = selectChunks(ranked, { tokenBudget: 900, maxPerDoc: 2 })
+      }
+    }
+
+    return {
+      system: kind === 'checkin' ? CHECKIN_SYSTEM : INTERVIEW_SYSTEM,
+      context: buildVoiceContext({
+        name: user.name,
+        applications: named,
+        tasks: tasks.map((t) => ({
+          title: t.title,
+          due: t.dueAt ? new Date(t.dueAt).toDateString() : undefined,
+        })),
+        extracts,
+      }),
+    }
+  },
+})
+
 /**
  * Start a call. Returns the credential the browser needs, plus the hard limit
  * it must respect. The limit is also enforced by the credential's TTL, so a
@@ -151,6 +218,8 @@ export const start = action({
     expiresAt: number
     sessionMinutes: number
     remainingMinutes: number
+    system: string
+    context: string
   }> => {
     const { userId, plan, usage, activeSessions } = await ctx.runQuery(
       internal.voice.voiceContext,
@@ -170,6 +239,10 @@ export const start = action({
     })
 
     try {
+      const { system, context } = await ctx.runQuery(internal.voice.briefing, {
+        kind,
+        query: kind === 'interview' ? 'interview questions competency assessment' : 'application deadlines next steps',
+      })
       const { token, expiresAt } = await mintEphemeralCredential(verdict.sessionMinutes)
       return {
         sessionId,
@@ -177,6 +250,8 @@ export const start = action({
         expiresAt,
         sessionMinutes: verdict.sessionMinutes,
         remainingMinutes: verdict.remainingMinutes,
+        system,
+        context,
       }
     } catch (err) {
       // Nothing ran, so nothing should be charged.
