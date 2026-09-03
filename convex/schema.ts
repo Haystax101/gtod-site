@@ -64,15 +64,25 @@ export default defineSchema({
     costMicros: v.number(),
   }).index('by_user_month', ['userId', 'month']),
 
-  // The GTOD knowledge base Charge answers from. Small for now (the playbook),
-  // so every enabled doc goes straight into the system prompt.
+  // The GTOD knowledge base Charge answers from. Small for now (the playbook
+  // plus video notes), so every enabled doc goes straight into the system prompt.
   knowledge: defineTable({
     slug: v.string(),
     title: v.string(),
     content: v.string(),
     enabled: v.boolean(),
     updatedAt: v.number(),
-  }).index('by_slug', ['slug']),
+    // Attribution. 'manual' for hand-written docs, 'tiktok' for video notes
+    // produced by scripts/ingest-tiktok.mjs.
+    sourceType: v.optional(v.union(v.literal('manual'), v.literal('tiktok'))),
+    sourceId: v.optional(v.string()),
+    sourceUrl: v.optional(v.string()),
+    sourceTitle: v.optional(v.string()),
+    postedAt: v.optional(v.number()),
+    tags: v.optional(v.array(v.string())),
+  })
+    .index('by_slug', ['slug'])
+    .index('by_sourceId', ['sourceId']),
 
   // Reserved for when the knowledge base outgrows the prompt: chunk + embed docs
   // here and switch prompt.ts to vector retrieval. Unused until then.

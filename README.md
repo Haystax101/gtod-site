@@ -37,6 +37,7 @@ Seed the knowledge base once per deployment: `npx convex run knowledge:seed`.
 - `convex/prompt.ts` - Charge's persona and how the knowledge base is injected
 - `convex/billing.ts`, `convex/http.ts` - Stripe checkout, portal and webhook
 - `convex/content/playbook.ts` - the knowledge base seed (keep in sync with the playbook page)
+- `scripts/ingest-tiktok.mjs` - turns a TikTok data export into knowledge base notes
 - `public/assets/` - logo, favicon, hero reel; `public/.htaccess` - SPA rewrite for Hostinger
 
 ## How Charge works
@@ -54,6 +55,61 @@ Seed the knowledge base once per deployment: `npx convex run knowledge:seed`.
    `prompt.ts` to vector search.
 6. Stripe Checkout → webhook at `https://<deployment>.convex.site/stripe/webhook` → `users.setSubscription`
    flips the plan to `pro` (and back on cancellation).
+
+## Adding TikTok videos to the knowledge base
+
+`scripts/ingest-tiktok.mjs` turns GTOD TikToks into knowledge base notes, so Charge can
+answer from the videos and link back to them.
+
+```
+npm run ingest -- ~/Downloads/TikTok_Data.zip --limit 3 --dry-run   # try it on 3 videos
+npm run ingest -- ~/Downloads/TikTok_Data.zip                        # the real thing
+npm run ingest -- ~/Downloads/TikTok_Data.zip --prod                 # against production
+```
+
+For each video it extracts the audio with ffmpeg, transcribes it locally with whisper.cpp,
+asks the cheap model to turn the transcript into a short titled note, and upserts that into
+the `knowledge` table with the post URL, caption, date and topic tags. Charge is told to
+mention the video and give the link when it leans on one of these notes.
+
+**Getting the export.** TikTok app → Profile → Settings and privacy → Account →
+Download your data. Choose **JSON** (the script reads the metadata from it) and, if offered,
+select only your posts rather than everything. The download link expires after a few days.
+
+**Requirements.** `brew install ffmpeg whisper-cpp`. The whisper model downloads itself on
+first run into `.ingest-cache/` (gitignored). Transcription is local and free; the only cost
+is the summarising call, well under a penny per video.
+
+**Re-running is safe and cheap.** Videos already in the knowledge base are skipped, so when
+you export everything again in six months only the new ones get processed. Transcripts are
+cached locally too, so a failed run doesn't re-transcribe. Use `--force` to redo everything,
+for instance after changing the note-writing prompt.
+
+**Large exports.** Videos are pulled out of the zip one at a time and deleted straight after,
+so a 20 GB export never needs more than a few hundred MB of free space, and there's no need
+to unzip it first. If the zip is too big to download in one go, request the export in parts,
+or run with `--limit 50` a few times: each run picks up where the last left off.
+
+| Option | What it does |
+| --- | --- |
+| `--dry-run` | Transcribe and summarise, but write nothing to Convex |
+| `--limit N` | Only process N new videos |
+| `--force` | Re-ingest videos already in the knowledge base |
+| `--prod` | Target the production deployment |
+| `--whisper-model NAME` | Default `small.en`; `base.en` is ~3x faster and a bit rougher |
+| `--no-cache` | Don't keep transcripts on disk |
+
+Useful companions:
+
+```
+npx convex run knowledge:list                              # what's in there
+npx convex run dev:systemPrompt                            # exactly what Charge is told
+npx convex run knowledge:removeSource '{"sourceType":"tiktok"}'   # undo an ingest run
+```
+
+Notes are injected into the system prompt whole, alongside the playbook. Once that gets past
+roughly 30k tokens (`dev:systemPrompt` prints the count), populate `knowledgeChunks` with
+embeddings and switch `prompt.ts` to vector retrieval.
 
 ## Backend environment variables (Convex dashboard → Settings → Environment variables)
 

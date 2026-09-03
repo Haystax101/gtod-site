@@ -7,6 +7,7 @@ import { internalMutation, internalQuery } from './_generated/server'
 import { internal } from './_generated/api'
 import { v } from 'convex/values'
 import { TIERS } from './tiers'
+import { buildSystemPrompt } from './prompt'
 
 const SMOKE_CLERK_ID = 'smoke-test-user'
 
@@ -57,5 +58,16 @@ export const smokeCleanup = internalMutation({
     for (const u of usage) await ctx.db.delete(u._id)
     await ctx.db.delete(user._id)
     return `removed ${convos.length} conversations`
+  },
+})
+
+// Inspect exactly what Charge is told, including knowledge base citations.
+//   npx convex run dev:systemPrompt
+export const systemPrompt = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    const docs = (await ctx.db.query('knowledge').collect()).filter((d) => d.enabled)
+    const prompt = buildSystemPrompt(docs, [])
+    return { documents: docs.length, chars: prompt.length, approxTokens: Math.ceil(prompt.length / 4), prompt }
   },
 })
