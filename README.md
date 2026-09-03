@@ -63,6 +63,10 @@ Seed the knowledge base once per deployment: `npx convex run knowledge:seed`.
 | `XAI_API_KEY` | Pro tier (Grok 4.5) |
 | `DEEPSEEK_API_KEY` | Flash tier (DeepSeek V4 Flash) |
 | `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` | Billing |
+| `EMBEDDINGS_API_KEY` | Vector search. Reuse the Gemini key |
+| `EMBEDDINGS_URL` | `https://generativelanguage.googleapis.com/v1beta/openai/embeddings` |
+| `EMBEDDINGS_MODEL` | `gemini-embedding-001` |
+| `EMBEDDINGS_DIMENSIONS` | `1536`, must match `EMBEDDING_DIMENSIONS` in the schema |
 | `SITE_URL` | `https://getthereoneday.com`, used for Stripe redirect URLs |
 | `XAI_MODEL`, `DEEPSEEK_MODEL` | Optional model overrides |
 
