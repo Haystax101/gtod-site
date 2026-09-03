@@ -19,8 +19,9 @@ def main() -> None:
     p.add_argument("--gbp-per-usd", type=float, default=0.79, help="UNVERIFIED placeholder FX rate")
     p.add_argument("--stripe-pct", type=float, default=0.029)
     p.add_argument("--stripe-fixed-gbp", type=float, default=0.20)
-    p.add_argument("--voice-rate-per-min", type=float, default=0.05,
-                   help="USD per minute of live audio. PLACEHOLDER - set the real rate.")
+    p.add_argument("--voice-rate-per-min", type=float, default=0.023,
+                   help="USD/min live audio. Default verified for "
+                        "gemini-3.1-flash-live-preview (0.005 in + 0.018 out) 2026-09-03.")
     p.add_argument("--pro-voice-minutes", type=int, default=60)
     p.add_argument("--text-msgs-per-month", type=int, default=300,
                    help="Pro daily cap is 150; 300/month is a realistic heavy user")
@@ -63,7 +64,9 @@ def main() -> None:
     else:
         headroom = margin / args.voice_rate_per_min if args.voice_rate_per_min else 0
         print(f"\n  Headroom: {headroom:.0f} more voice minutes before break-even.")
-    print("\n  Rates above are PLACEHOLDERS. Verify before trusting this.\n")
+    print("\n  Voice rate is verified (gemini-3.1-flash-live-preview, 2026-09-03).")
+    print("  TEXT rates are still placeholders - set --input-usd-per-m / --output-usd-per-m")
+    print("  from your chosen OpenRouter model before trusting the text half.\n")
 
 
 if __name__ == "__main__":

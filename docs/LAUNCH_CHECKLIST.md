@@ -5,7 +5,27 @@ item says who can do it and what breaks if it is skipped.
 
 ## 1. Keys and environment (you)
 
-Set in the **Convex dashboard**, not in a file. Nothing here belongs in git.
+Set with the CLI, which is faster than the dashboard and works before you have
+even opened it. Nothing here belongs in git.
+
+```bash
+npx convex dev          # first run: logs you in and creates the project
+                        # (this is what creates the dashboard - no setup needed first)
+
+npx convex env set OPENROUTER_API_KEY sk-or-...
+npx convex env set OPENROUTER_MODEL_FLASH <slug>
+npx convex env set OPENROUTER_MODEL_PRO <slug>
+npx convex env set GEMINI_API_KEY AIza...
+npx convex env set CLERK_JWT_ISSUER_DOMAIN https://...
+npx convex env set STRIPE_SECRET_KEY sk_test_...
+npx convex env set STRIPE_PRICE_ID price_...
+npx convex env set STRIPE_WEBHOOK_SECRET whsec_...
+
+npx convex env list     # check what landed
+```
+
+`VOICE_USD_PER_MINUTE` and the voice allowances have working defaults, so set
+them only to override.
 
 | Variable | Needed for | If missing |
 |---|---|---|
@@ -13,7 +33,7 @@ Set in the **Convex dashboard**, not in a file. Nothing here belongs in git.
 | `OPENROUTER_MODEL_FLASH` | free tier model | falls back to a default slug that is **unverified** |
 | `OPENROUTER_MODEL_PRO` | Pro tier model | as above |
 | `GEMINI_API_KEY` | voice calls | voice returns "not configured yet"; everything else works |
-| `VOICE_USD_PER_MINUTE` | cost accounting | defaults to a **placeholder** rate; billing maths will be wrong |
+| `VOICE_USD_PER_MINUTE` | cost accounting | defaults to 0.023, verified for gemini-3.1-flash-live-preview on 2026-09-03 |
 | `VOICE_MINUTES_PRO` / `VOICE_MINUTES_FLASH` | allowances | defaults to 60 / 10 |
 | `CLERK_JWT_ISSUER_DOMAIN`, `STRIPE_*` | existing auth and billing | unchanged from before this work |
 
@@ -22,7 +42,7 @@ Front end (`.env.local`, baked in at build time):
 | Variable | Needed for |
 |---|---|
 | `VITE_VOICE_WS_URL` | the voice websocket endpoint |
-| `VITE_VOICE_MODEL` | the Live model id. **Required** - voice refuses to start without it |
+| `VITE_VOICE_MODEL` | the Live model id: `gemini-3.1-flash-live-preview`. **Required** - voice refuses to start without it |
 
 ## 2. Things that must be verified, not assumed (you)
 
@@ -52,10 +72,15 @@ is a small, contained edit.
    models get retired, and only a subset of any generation supports Live. The setup frame
    requires it and the client now refuses to open a socket without one, rather
    than connecting and dying on an opaque close.
-5. **The real per-minute audio rate.** Then run
-   `python3 tools/cost/model.py --voice-rate-per-min <rate> --heavy-user` and
-   confirm the margin is still positive. If it is not, lower
-   `VOICE_MINUTES_PRO` until it is. **Do this before enabling voice.**
+5. ~~The real per-minute audio rate.~~ **Done.** gemini-3.1-flash-live-preview
+   is $0.005/min audio in and $0.018/min out, so 0.023 worst case. At 60 Pro
+   minutes a user exhausting every cap still leaves 53% margin, with 276
+   minutes of headroom before break-even.
+
+   The open cost question is now the **text** side, not voice: at the assumed
+   rates a heavy user's chat costs $4.32 against voice's $1.38. Set
+   `--input-usd-per-m` and `--output-usd-per-m` from the OpenRouter model you
+   actually pick and re-run before trusting the totals.
 
 ## 3. Deploy (you)
 

@@ -19,13 +19,16 @@ import { TIERS } from './tiers'
 /**
  * USD per minute of live audio.
  *
- * PLACEHOLDER. This value was not verified against any provider pricing page -
- * the build environment has no network access. Set VOICE_USD_PER_MINUTE to the
- * real published rate for the model actually in use before launch, and re-run
- * `python3 tools/cost/model.py --voice-rate-per-min <rate>` to confirm the
- * allowances below still leave margin.
+ * Verified against Google's published pricing for gemini-3.1-flash-live-preview
+ * on 2026-09-03: audio input $0.005/min, audio output $0.018/min. The default
+ * below is the sum, which is the worst case where both directions stream for
+ * the whole minute. Real conversations are cheaper, because the model is not
+ * speaking while the user is.
+ *
+ * If the model changes, re-check the rate and re-run
+ * `python3 tools/cost/model.py --voice-rate-per-min <rate> --heavy-user`.
  */
-export const VOICE_USD_PER_MINUTE = Number(process.env.VOICE_USD_PER_MINUTE ?? 0.05)
+export const VOICE_USD_PER_MINUTE = Number(process.env.VOICE_USD_PER_MINUTE ?? 0.023)
 
 export interface VoicePolicy {
   /** Minutes granted per calendar month. */
