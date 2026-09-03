@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAction, useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
+import AppNav from '../components/AppNav.jsx'
 import { startVoiceSession } from '../lib/voiceClient'
 import '../styles/voice.css'
 
@@ -106,6 +107,7 @@ export default function Interview() {
 
   return (
     <main className="voice-page">
+      <AppNav />
       <header className="voice-head">
         <p className="section-tag">Practice out loud</p>
         <h1>Mock interviews with <span className="hl">Charge</span></h1>

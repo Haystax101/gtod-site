@@ -34,7 +34,7 @@ console.log('\ntokenize')
 console.log('\nfront matter and sources')
 {
   const draft = readFileSync(
-    'content/_unverified/00-foundations/apprentice-pay-and-minimum-wage.md', 'utf8')
+    'content/apprenticeships/00-foundations/apprentice-minimum-wage.md', 'utf8')
   const { frontMatter, body } = splitFrontMatter(draft)
   check('front matter extracted', frontMatter.includes('sources:'))
   check('body excludes front matter', !body.startsWith('---'))
@@ -57,10 +57,10 @@ console.log('\nchunking the real playbook')
     chunks.map((c) => c.heading).join(' | ').slice(0, 120))
 }
 
-console.log('\nchunking a cited corpus draft')
+console.log('\nchunking a cited corpus document')
 {
   const raw = readFileSync(
-    'content/_unverified/00-foundations/apprentice-pay-and-minimum-wage.md', 'utf8')
+    'content/apprenticeships/00-foundations/apprentice-minimum-wage.md', 'utf8')
   const chunks = chunkDocument({ slug: 'pay', title: 'Apprentice pay', content: raw })
   check('produces chunks', chunks.length > 2, `${chunks.length}`)
   check('excludes the Sources section',
@@ -74,9 +74,9 @@ console.log('\nchunking a cited corpus draft')
     withCites.every((c) => /Sources: .*http/.test(c.text)))
 }
 
-console.log('\nbm25 ranking over the whole draft corpus')
+console.log('\nbm25 ranking over the whole verified corpus')
 {
-  const dir = 'content/_unverified'
+  const dir = 'content/apprenticeships'
   const files: string[] = []
   for (const sub of readdirSync(dir, { withFileTypes: true })) {
     if (!sub.isDirectory()) continue
@@ -86,7 +86,9 @@ console.log('\nbm25 ranking over the whole draft corpus')
   }
   const all = [
     // The playbook is part of the real index - CV and interview advice lives
-    // there, not in the drafts, so omitting it made the CV query unanswerable.
+    // there, not in the sourced documents, so omitting it made the CV query
+    // unanswerable. Fixtures are the verified corpus, so this exercises exactly
+    // what ships rather than a set of drafts that can be retired underneath it.
     ...chunkDocument(PLAYBOOK),
     ...files.flatMap((f) =>
       chunkDocument({
@@ -102,8 +104,14 @@ console.log('\nbm25 ranking over the whole draft corpus')
   check('returns results', ranked.length > 0)
   check('scores descend', ranked.every((r, i) => i === 0 || ranked[i - 1].score >= r.score))
   const topSlugs = ranked.slice(0, 5).map((r) => r.chunk.slug)
-  check('pay question retrieves the pay document',
-    topSlugs.some((s) => s.includes('pay')), topSlugs.join(', '))
+  // Asserts the wage document is in the retrieved set, not that it ranks first.
+  // It currently sits around 5th: apprentice-rights and the legal-definition
+  // document both discuss pay at length, so lexical scoring cannot separate the
+  // dedicated source from the passing mentions. Since selectChunks sends the top
+  // several chunks, the right answer still reaches the model - but this is the
+  // clearest example in the suite of why embeddings are worth configuring.
+  check('pay question retrieves the wage document',
+    topSlugs.some((s) => s.includes('minimum-wage')), topSlugs.join(', '))
 
   const cv = bm25('what should I put on my CV with no work experience', all)
   check('cv question retrieves the playbook CV guidance',

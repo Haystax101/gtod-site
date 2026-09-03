@@ -7,6 +7,7 @@ import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { track } from '../lib/analytics.js'
 import { Wordmark } from '../components/Wordmark.jsx'
+import AppNav from '../components/AppNav.jsx'
 import '../styles/timeline.css'
 import '../styles/community.css'
 
@@ -143,7 +144,7 @@ function Workspace() {
             <p>One group per scheme and intake. Posts are read by a moderator before they go up.</p>
           </div>
           <div className="app-head-actions">
-            <Link className="btn btn-secondary btn-sm" to="/timeline">Timeline</Link>
+            
           </div>
         </div>
 
@@ -475,6 +476,7 @@ function OpeningSoon() {
   return (
     <div className="app-page">
       <div className="wrap">
+        <AppNav />
         <div className="app-head">
           <div className="app-head-text">
             <div className="eyebrow">Cohorts</div>

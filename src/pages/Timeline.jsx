@@ -7,6 +7,7 @@ import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { track } from '../lib/analytics.js'
 import { Wordmark } from '../components/Wordmark.jsx'
+import AppNav from '../components/AppNav.jsx'
 import TaskList, { formatDate, startOfWeek, DAY } from '../components/TaskList.jsx'
 import StageBadge, { STAGES, stageProgress } from '../components/StageBadge.jsx'
 import '../styles/timeline.css'
@@ -168,13 +169,14 @@ function Workspace() {
   return (
     <div className="app-page">
       <div className="wrap">
+        <AppNav />
         <div className="app-head">
           <div className="app-head-text">
             <div className="eyebrow">Your timeline</div>
             <h1>This week</h1>
           </div>
           <div className="app-head-actions">
-            <Link className="btn btn-secondary btn-sm" to="/answers"><Sparkles size={14} /> Answer bank</Link>
+            
           </div>
         </div>
 

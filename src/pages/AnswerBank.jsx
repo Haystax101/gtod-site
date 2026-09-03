@@ -7,6 +7,7 @@ import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { track } from '../lib/analytics.js'
 import { Wordmark, ChargeMark } from '../components/Wordmark.jsx'
+import AppNav from '../components/AppNav.jsx'
 import { formatDate } from '../components/TaskList.jsx'
 import '../styles/timeline.css'
 import '../styles/coach.css'
@@ -186,6 +187,7 @@ function Workspace() {
   return (
     <div className="app-page">
       <div className="wrap">
+        <AppNav />
         <div className="app-head">
           <div className="app-head-text">
             <div className="eyebrow">Answer bank</div>

@@ -33,6 +33,10 @@ export default function Nav() {
         <nav className="links">
           <a className="hide-mobile" href={to('podcast')}>Podcast</a>
           <NavLink to="/apprenticeships" className={cls}>Playbook</NavLink>
+          {/* Entry point into the signed-in app. Without a link here the
+              timeline, answer bank, practice calls and cohorts were reachable
+              only by typing a URL. AppNav takes over once you are inside. */}
+          <NavLink to="/timeline" className={cls}>This week</NavLink>
           <NavLink to="/charge" className={({ isActive }) => `charge-link${isActive ? ' active' : ''}`}>
             <span className="wordmark"><span className="cha">cha</span><span className="rge">rge</span></span>
           </NavLink>

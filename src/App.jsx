@@ -15,6 +15,7 @@ const Charge = lazy(() => import('./pages/Charge.jsx'))
 const Timeline = lazy(() => import('./pages/Timeline.jsx'))
 const AnswerBank = lazy(() => import('./pages/AnswerBank.jsx'))
 const Community = lazy(() => import('./pages/Community.jsx'))
+const Interview = lazy(() => import('./pages/Interview.jsx'))
 
 // Handles two things a plain HTML page got for free:
 //  - jumping to #anchors after a route change (e.g. /apprenticeships -> /#ask)
@@ -50,6 +51,7 @@ export default function App() {
         <Route path="/charge" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Charge /></Suspense>} />
         <Route path="/timeline" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Timeline /></Suspense>} />
         <Route path="/answers" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><AnswerBank /></Suspense>} />
+        <Route path="/interview" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Interview /></Suspense>} />
         <Route path="/community" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Community /></Suspense>} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
