@@ -188,7 +188,6 @@ function PlanCard({ me, onUpgrade }) {
     <div className="plan-card">
       <div className="plan-head">
         <span className={`plan-badge${pro ? ' pro' : ''}`}>{pro ? <Sparkles size={12} /> : <Zap size={12} />} {l.label}</span>
-        <span className="plan-model">{l.model}</span>
       </div>
       <div className="meter"><i className={pct > 85 ? 'warn' : ''} style={{ width: `${pct}%` }} /></div>
       <div className="meter-label">
@@ -380,7 +379,7 @@ function PlansModal({ me, onClose }) {
         <button type="button" className="icon-btn close" onClick={onClose} aria-label="Close"><X /></button>
         <div className="eyebrow">Plans</div>
         <h2 style={{ marginBottom: 4 }}>Pick your <Wordmark /></h2>
-        <p className="muted">Both plans know the whole GTOD playbook. Pro runs on a much stronger model and gives you room to go deep.</p>
+        <p className="muted">Both plans know the whole GTOD playbook. Pro thinks harder, writes in more depth, and gives you room to go deep.</p>
         <div className="plans">
           <div className="plan">
             <div className="plan-badge"><Zap size={12} /> Flash</div>
@@ -388,7 +387,7 @@ function PlansModal({ me, onClose }) {
             <ul>
               <li><Check /> 25 messages a day</li>
               <li><Check /> Upload a CV or cover letter for feedback</li>
-              <li><Check /> Fast, lightweight model</li>
+              <li><Check /> Quick, punchy answers</li>
             </ul>
             <button type="button" className="btn btn-secondary" disabled>{me?.plan === 'flash' ? 'Your current plan' : 'Included'}</button>
           </div>
@@ -397,7 +396,7 @@ function PlansModal({ me, onClose }) {
             <div className="price">£10 <small>/ month</small></div>
             <ul>
               <li><Check /> Up to 150 messages a day, with a generous monthly allowance</li>
-              <li><Check /> Runs on Grok 4.5 for sharper, more detailed feedback</li>
+              <li><Check /> Sharper, more detailed feedback on your documents</li>
               <li><Check /> Longer memory within each conversation</li>
               <li><Check /> Cancel any time</li>
             </ul>
