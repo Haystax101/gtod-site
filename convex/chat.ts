@@ -136,22 +136,19 @@ export const context = internalQuery({
   },
 })
 
-function provider(name: 'deepseek' | 'xai') {
-  return name === 'xai'
-    ? { url: 'https://api.x.ai/v1/chat/completions', key: process.env.XAI_API_KEY }
-    : { url: 'https://api.deepseek.com/chat/completions', key: process.env.DEEPSEEK_API_KEY }
-}
+// Every tier goes through OpenRouter, so swapping a model is an env change.
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 export const generate = action({
   args: { assistantId: v.id('messages') },
   handler: async (ctx, { assistantId }) => {
     const { tierKey, system, turns } = await ctx.runQuery(internal.chat.context, { assistantId })
     const tier = TIERS[tierKey]
-    const p = provider(tier.provider)
-    if (!p.key) {
+    const key = process.env.OPENROUTER_API_KEY
+    if (!key) {
       await ctx.runMutation(internal.messages.fail, {
         id: assistantId,
-        error: `Charge isn't configured yet (${tier.provider} API key missing).`,
+        error: "Charge isn't configured yet (OPENROUTER_API_KEY missing).",
       })
       return
     }
@@ -168,9 +165,15 @@ export const generate = action({
     }
 
     try {
-      const res = await fetch(p.url, {
+      const res = await fetch(OPENROUTER_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${p.key}` },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${key}`,
+          // OpenRouter shows these on their dashboard to attribute the traffic.
+          'HTTP-Referer': process.env.SITE_URL ?? 'https://getthereoneday.com',
+          'X-Title': 'Charge by Get There One Day',
+        },
         body: JSON.stringify({
           model: tier.model,
           stream: true,
@@ -182,7 +185,7 @@ export const generate = action({
       })
       if (!res.ok || !res.body) {
         const text = await res.text().catch(() => '')
-        throw new ConvexError(`${tier.provider} returned ${res.status}: ${text.slice(0, 300)}`)
+        throw new ConvexError(`OpenRouter returned ${res.status}: ${text.slice(0, 300)}`)
       }
       const reader = res.body.getReader()
       const decoder = new TextDecoder()

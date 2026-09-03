@@ -259,15 +259,17 @@ function readApiKey() {
       return null
     }
   }
-  for (const name of ['DEEPSEEK_API_KEY', 'XAI_API_KEY']) {
-    const key = process.env[name] ?? fromFile(name) ?? fromConvex(name)
-    if (key) {
-      return name === 'XAI_API_KEY'
-        ? { key, url: API_URL ?? 'https://api.x.ai/v1/chat/completions', model: process.env.XAI_MODEL ?? 'grok-4.5' }
-        : { key, url: API_URL ?? 'https://api.deepseek.com/chat/completions', model: process.env.DEEPSEEK_MODEL ?? 'deepseek-v4-flash' }
-    }
+  const key = process.env.OPENROUTER_API_KEY ?? fromFile('OPENROUTER_API_KEY') ?? fromConvex('OPENROUTER_API_KEY')
+  if (!key) return null
+  return {
+    key,
+    url: API_URL ?? 'https://openrouter.ai/api/v1/chat/completions',
+    // Summarising is easy work, so it uses the cheaper of the two tier models.
+    model:
+      process.env.OPENROUTER_MODEL_FLASH ??
+      fromConvex('OPENROUTER_MODEL_FLASH') ??
+      'deepseek/deepseek-v4-flash-0731',
   }
-  return null
 }
 
 const NOTE_PROMPT = `You turn transcripts of short-form videos into notes for a knowledge base.
@@ -345,7 +347,7 @@ Usage: npm run ingest -- <TikTok export zip or folder> [options]
   }
 
   const api = readApiKey()
-  if (!api) die('no DEEPSEEK_API_KEY or XAI_API_KEY found in the environment, .env.local, or the Convex deployment')
+  if (!api) die('no OPENROUTER_API_KEY found in the environment, .env.local, or the Convex deployment')
   log(`Summarising with ${api.model}`)
 
   const source = openSource(resolve(opts.input))

@@ -1,11 +1,16 @@
 // Everything about what each plan gets and what it costs us, in one place.
+//
+// Both tiers are served through OpenRouter, so the model is a slug rather than a
+// provider choice. The slugs below are the ones verified working on 2026-09-03;
+// override them with OPENROUTER_MODEL_FLASH / OPENROUTER_MODEL_PRO rather than
+// editing this file. An invalid slug fails the whole request with a 400.
 // Prices are USD per million tokens (input / output); costs are tracked in micro-dollars.
 
 export type Tier = 'flash' | 'pro'
 
 export interface TierConfig {
   label: string
-  provider: 'deepseek' | 'xai'
+  /** OpenRouter model slug. Set via env so a model swap needs no deploy. */
   model: string
   dailyMessages: number
   monthlyCostMicros: number
@@ -18,8 +23,7 @@ export interface TierConfig {
 export const TIERS: Record<Tier, TierConfig> = {
   flash: {
     label: 'Flash',
-    provider: 'deepseek',
-    model: process.env.DEEPSEEK_MODEL ?? 'deepseek-v4-flash',
+    model: process.env.OPENROUTER_MODEL_FLASH ?? 'deepseek/deepseek-v4-flash-0731',
     dailyMessages: 25,
     monthlyCostMicros: 600_000, // $0.60, a safety net only
     maxOutputTokens: 700,
@@ -29,8 +33,7 @@ export const TIERS: Record<Tier, TierConfig> = {
   },
   pro: {
     label: 'Pro',
-    provider: 'xai',
-    model: process.env.XAI_MODEL ?? 'grok-4.5',
+    model: process.env.OPENROUTER_MODEL_PRO ?? 'x-ai/grok-4.6',
     dailyMessages: 150,
     monthlyCostMicros: 8_000_000, // $8 ≈ £6, the cost ceiling behind the £10 plan
     maxOutputTokens: 1400,
