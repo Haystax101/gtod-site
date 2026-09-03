@@ -47,7 +47,14 @@ export default function Interview() {
       sessionIdRef.current = session.sessionId
 
       sessionRef.current = startVoiceSession({
-        url: import.meta.env.VITE_VOICE_WS_URL ?? 'wss://generativelanguage.googleapis.com/ws',
+        // Path taken from the official @google/genai SDK (v2.21.0), which builds
+        // `${base}/ws/google.ai.generativelanguage.${apiVersion}.GenerativeService.BidiGenerateContent`
+        // for the Gemini Developer API. voiceClient appends ?access_token=,
+        // which is the query parameter the SDK uses for ephemeral credentials
+        // (a raw API key would use ?key= instead - we never send one).
+        url:
+          import.meta.env.VITE_VOICE_WS_URL ??
+          'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent',
         model: import.meta.env.VITE_VOICE_MODEL,
         token: session.token,
         sessionMinutes: session.sessionMinutes,

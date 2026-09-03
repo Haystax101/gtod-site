@@ -41,7 +41,7 @@ Front end (`.env.local`, baked in at build time):
 
 | Variable | Needed for |
 |---|---|
-| `VITE_VOICE_WS_URL` | the voice websocket endpoint |
+| `VITE_VOICE_WS_URL` | the voice websocket endpoint. **Has a working default now** - only set it to override |
 | `VITE_VOICE_MODEL` | the Live model id: `gemini-3.1-flash-live-preview`. **Required** - voice refuses to start without it |
 
 ## 2. Things that must be verified, not assumed (you)
@@ -59,12 +59,22 @@ is a small, contained edit.
    (`convex/voice.ts`). One fetch. Two rules must survive the edit: the
    credential stays short-lived and single-session, and the raw API key is never
    returned to the browser.
-4. **The voice websocket protocol** in `src/lib/voiceClient.js` -
-   `encodeFrame`, `decodeFrame`, the `onmessage` branch, and the socket URL.
-   The default `wss://generativelanguage.googleapis.com/ws` is a placeholder:
-   the real Live endpoint carries a full service path, so this will not connect
-   as-is. Everything else in that file (capture, resampling, playback,
-   teardown, timing) is provider-independent.
+4. **The voice websocket frame format** in `src/lib/voiceClient.js` -
+   `encodeFrame`, `decodeFrame` and the `onmessage` branch.
+
+   The endpoint itself is no longer a guess. Read out of the official
+   `@google/genai` SDK (v2.21.0), the Gemini Developer API builds
+   `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent`,
+   with the ephemeral credential passed as `?access_token=` (a raw API key would
+   be `?key=`, which we never send to a browser). That is now the default.
+
+   **Strongly consider replacing the hand-rolled client with the official SDK**
+   (`npm i @google/genai`, `ai.live.connect(...)`). It owns the endpoint, the
+   handshake and the frame format, so it removes the last unverified thing in
+   the voice path and stops the protocol being our problem when it changes.
+   Everything that governs cost - the budget check, the reservation, the TTL,
+   the concurrency limit - lives server-side in `convex/voice.ts` and is
+   untouched by that swap.
    Also set `VITE_VOICE_MODEL` to a Live-capable model id. Find it with
    `GEMINI_API_KEY=... tools/voice/list-live-models.sh`, which asks your own key
    which models support `bidiGenerateContent`. Do not take a model id from
