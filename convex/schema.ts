@@ -85,7 +85,19 @@ export default defineSchema({
     // Everything else is retrieved on demand.
     alwaysOn: v.optional(v.boolean()),
     updatedAt: v.number(),
-  }).index('by_slug', ['slug']),
+    // Attribution. 'manual' for hand-written docs and the research corpus,
+    // 'tiktok' for notes produced by scripts/ingest-tiktok.mjs. sourceUrl is
+    // what Charge cites, so it must be a permanent public link, never a
+    // signed CDN URL from a data export.
+    sourceType: v.optional(v.union(v.literal('manual'), v.literal('tiktok'))),
+    sourceId: v.optional(v.string()),
+    sourceUrl: v.optional(v.string()),
+    sourceTitle: v.optional(v.string()),
+    postedAt: v.optional(v.number()),
+    tags: v.optional(v.array(v.string())),
+  })
+    .index('by_slug', ['slug'])
+    .index('by_sourceId', ['sourceId']),
 
   // ---------------------------------------------------------------- timeline
 
@@ -328,6 +340,11 @@ export default defineSchema({
     position: v.number(),
     embedding: v.optional(v.array(v.float64())),
     updatedAt: v.number(),
+    // Denormalised from the parent document so a retrieved chunk can be cited
+    // without a second read.
+    sourceType: v.optional(v.string()),
+    sourceUrl: v.optional(v.string()),
+    postedAt: v.optional(v.number()),
   })
     .index('by_knowledge', ['knowledgeId'])
     .index('by_slug', ['slug'])

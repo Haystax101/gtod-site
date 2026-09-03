@@ -3,3 +3,6 @@ dist
 .env
 .env.local
 .DS_Store
+
+# TikTok ingest working files (transcripts, whisper models, profile cache)
+.ingest-cache
