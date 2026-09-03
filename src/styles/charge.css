@@ -32,7 +32,6 @@
 .plan-head { display: flex; align-items: center; justify-content: space-between; }
 .plan-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
 .plan-badge.pro { background: var(--orange-soft); color: var(--orange); }
-.plan-model { font-size: 0.78rem; color: var(--muted); }
 .meter { height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
 .meter i { display: block; height: 100%; background: var(--teal); border-radius: 999px; transition: width 0.3s; }
 .meter i.warn { background: var(--orange); }

@@ -62,7 +62,8 @@ export const me = query({
       hasBilling: Boolean(user.stripeCustomerId),
       limits: {
         label: tier.label,
-        model: tier.model,
+        // The model slug is deliberately not returned. Which model sits behind
+        // each tier is our business, and swapping it shouldn't be visible.
         dailyMessages: tier.dailyMessages,
         usedToday: today.length,
         monthlyCostMicros: tier.monthlyCostMicros,
