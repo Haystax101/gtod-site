@@ -238,6 +238,11 @@ export const generate = internalAction({
           stream: true,
           stream_options: { include_usage: true },
           max_tokens: tier.maxOutputTokens,
+          // These are short, well-scoped advice answers, and the knowledge is
+          // handed over in the prompt, so private reasoning buys little. Left
+          // on, it ate most of the token budget and replies stopped mid-word.
+          // Providers that don't support the flag ignore it.
+          reasoning: { enabled: false },
           temperature: 0.6,
           messages: [{ role: 'system', content: system }, ...messages],
         }),

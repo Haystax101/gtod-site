@@ -38,7 +38,7 @@ export const smokeResult = internalQuery({
     const msgs = await ctx.db.query('messages').withIndex('by_conversation', (q) => q.eq('conversationId', conversationId)).collect()
     const user = await ctx.db.query('users').withIndex('by_clerkId', (q) => q.eq('clerkId', SMOKE_CLERK_ID)).unique()
     const usage = user ? await ctx.db.query('usage').withIndex('by_user_month', (q) => q.eq('userId', user._id)).collect() : []
-    return { messages: msgs.map((m) => ({ role: m.role, status: m.status, tokens: [m.inputTokens ?? null, m.outputTokens ?? null], content: m.content.slice(0, 600) })), usage }
+    return { messages: msgs.map((m) => ({ role: m.role, status: m.status, tokens: [m.inputTokens ?? null, m.outputTokens ?? null], content: m.content })), usage }
   },
 })
 

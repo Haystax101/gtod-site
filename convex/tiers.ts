@@ -26,7 +26,11 @@ export const TIERS: Record<Tier, TierConfig> = {
     model: process.env.OPENROUTER_MODEL_FLASH ?? 'deepseek/deepseek-chat',
     dailyMessages: 25,
     monthlyCostMicros: 600_000, // $0.60, a safety net only
-    maxOutputTokens: 700,
+    // The Flash model spends tokens on internal reasoning before it answers,
+    // and those count against this cap, so a 700 budget was cutting real
+    // replies off mid-word. Headroom here costs nothing when unused: billing
+    // follows actual usage, and the monthly envelope is the real guard.
+    maxOutputTokens: 1600,
     inputPerM: 0.44, // peak-rate cache miss, worst case
     outputPerM: 1.32,
     contextMessages: 12,
@@ -36,7 +40,7 @@ export const TIERS: Record<Tier, TierConfig> = {
     model: process.env.OPENROUTER_MODEL_PRO ?? 'x-ai/grok-4',
     dailyMessages: 150,
     monthlyCostMicros: 8_000_000, // $8 ≈ £6, the cost ceiling behind the £10 plan
-    maxOutputTokens: 1400,
+    maxOutputTokens: 2600,
     inputPerM: 2,
     outputPerM: 6,
     contextMessages: 24,
