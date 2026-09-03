@@ -348,7 +348,7 @@ Search vacancies on apprenticeships.scot; each listing explains how to apply.[^s
 
 Wales uses the same level numbers as England (Level 2 upwards) but its own names:[^s27][^s25]
 
-| Welsh name | Level | Equivalent | 
+| Welsh name | Level | Equivalent |
 |---|---|---|
 | Foundation Apprenticeship | 2 | five good GCSEs / NVQ 2 |
 | Apprenticeship | 3 | two A levels / NVQ 3 |

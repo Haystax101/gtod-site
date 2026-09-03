@@ -17,7 +17,7 @@ served to anyone.
 
 ```bash
 # 1. Fix the mechanical differences between a research chat's output and the
-#    corpus format: citation widgets, [s1] to [^s1], bullet sources to
+#    corpus format: citation widgets, [^s1] to [^s1], bullet sources to
 #    footnotes, unquoted colons in YAML.
 python3 tools/corpus/normalise.py content/inbox/*.md
 
