@@ -14,14 +14,18 @@ cd "$(dirname "$0")/.."
 
 run_one() {
   local src="$1"
-  local out
-  out="$(mktemp -t gtodtest.XXXXXX.mjs)"
+  local dir out
+  # BSD mktemp appends its random suffix rather than substituting XXXXXX, so a
+  # file template cannot guarantee a .mjs ending, and node then refuses to load
+  # the bundle. A temp directory sidesteps that on both BSD and GNU.
+  dir="$(mktemp -d -t gtodtest)"
+  out="$dir/bundle.mjs"
   # `process.env` reads at module load need a real object, hence platform=node.
   ./node_modules/.bin/esbuild "$src" --bundle --platform=node --format=esm \
     --log-level=warning --outfile="$out"
   node "$out"
   local code=$?
-  rm -f "$out"
+  rm -rf "$dir"
   return $code
 }
 
