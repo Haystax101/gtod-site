@@ -98,7 +98,7 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="wrap">
           <div>
-            <div className="eyebrow">11K+ strong on TikTok</div>
+            <div className="eyebrow">14K+ strong on TikTok</div>
             <h1>The community for ambitious young people <span className="hl">going places</span></h1>
             <p className="lede">
               At uni, at school, at work, or building your own thing. Real talk about getting
@@ -122,7 +122,7 @@ export default function Home() {
 
       <div className="stats">
         <div className="wrap">
-          <div className="stat"><div className="num">11K+</div><div className="label">TikTok followers</div></div>
+          <div className="stat"><div className="num">14K+</div><div className="label">TikTok followers</div></div>
           <div className="stat"><div className="num">100%</div><div className="label">Q&amp;A podcast, your questions</div></div>
           <div className="stat"><div className="num">4</div><div className="label">Platforms: TikTok, IG, Spotify, YouTube</div></div>
         </div>
@@ -206,7 +206,7 @@ export default function Home() {
           <h2>Join the <span className="hl">community</span></h2>
           <div className="follow-grid">
             <a className="social" href={TIKTOK} target="_blank" rel="noopener">
-              <TikTokIcon /><span className="name">TikTok</span><span className="sub">11K+ followers · daily content</span>
+              <TikTokIcon /><span className="name">TikTok</span><span className="sub">14K+ followers · daily content</span>
             </a>
             <a className="social" href={INSTAGRAM} target="_blank" rel="noopener">
               <InstagramIcon /><span className="name">Instagram</span><span className="sub">Behind the scenes</span>

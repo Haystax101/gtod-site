@@ -1,7 +1,7 @@
 # Get There One Day site
 
 Website and app for **Get There One Day**, the community for ambitious young people
-(degree apprentices especially welcome). 11K+ on TikTok, a 100% Q&A podcast, and now
+(degree apprentices especially welcome). 14K+ on TikTok, a 100% Q&A podcast, and now
 **Charge**, the GTOD apprenticeship assistant.
 
 React + Vite front end, Convex backend, Clerk auth, Stripe billing.
