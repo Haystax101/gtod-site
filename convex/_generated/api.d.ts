@@ -30,6 +30,7 @@ import type * as retrieval from "../retrieval.js";
 import type * as tiers from "../tiers.js";
 import type * as timeline from "../timeline.js";
 import type * as users from "../users.js";
+import type * as vacancies from "../vacancies.js";
 import type * as voice from "../voice.js";
 import type * as voicePrompts from "../voicePrompts.js";
 
@@ -62,6 +63,7 @@ declare const fullApi: ApiFromModules<{
   tiers: typeof tiers;
   timeline: typeof timeline;
   users: typeof users;
+  vacancies: typeof vacancies;
   voice: typeof voice;
   voicePrompts: typeof voicePrompts;
 }>;

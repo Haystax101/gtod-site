@@ -20,4 +20,8 @@ crons.weekly(
   { dayOfWeek: 'monday', hourUTC: 6, minuteUTC: 0 },
   internal.timeline.generateWeeklyTasks,
 )
+// Live vacancies go stale fast, and a closed advert is worse than none.
+// No-ops until FAA_API_KEY is set.
+crons.daily('refresh apprenticeship vacancies', { hourUTC: 5, minuteUTC: 0 }, internal.vacancies.refresh, {})
+
 export default crons

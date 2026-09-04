@@ -124,8 +124,14 @@ export default defineSchema({
     verified: v.boolean(),
     verifiedAt: v.optional(v.number()),
     updatedAt: v.number(),
+    // 'seed' for the hand-written directory, 'faa' for rows pulled from the
+    // DfE Find an apprenticeship API. Refreshes only ever touch 'faa' rows, so
+    // a bad import can never overwrite hand-checked work.
+    source: v.optional(v.union(v.literal('seed'), v.literal('faa'))),
+    externalId: v.optional(v.string()),
   })
     .index('by_slug', ['slug'])
+    .index('by_externalId', ['externalId'])
     .index('by_closesAt', ['closesAt']),
 
   // A scheme a user is tracking, and where they have got to with it.

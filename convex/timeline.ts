@@ -554,11 +554,13 @@ export const seedSchemes = internalMutation({
           sector: seed.sector,
           url: seed.url,
           notes: seed.notes,
+          // Tag the origin so vacancies:refresh only ever touches its own rows.
+          source: 'seed' as const,
           updatedAt: now,
         })
         updated++
       } else {
-        await ctx.db.insert('schemes', { ...seed, verified: false, updatedAt: now })
+        await ctx.db.insert('schemes', { ...seed, verified: false, source: 'seed' as const, updatedAt: now })
         created++
       }
     }
