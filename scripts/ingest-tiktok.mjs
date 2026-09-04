@@ -387,19 +387,29 @@ async function callModel(api, caption, transcript, maxTokens) {
  * those count against max_tokens. Too small a budget truncates the JSON
  * mid-string, so start generous and retry once with more room.
  */
+/**
+ * Han, kana and hangul. The model occasionally slips out of English. A stray
+ * Chinese clause in a chat reply is embarrassing but transient; baked into a
+ * knowledge base note it is permanent, and would surface months later inside
+ * an answer. Cheaper to catch it here.
+ */
+const CJK = /[\u3400-\u4dbf\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/
+
 async function summarise(api, { caption, transcript }) {
-  for (const budget of [2000, 3500]) {
+  for (const budget of [2000, 3500, 3500]) {
     const { raw, truncated } = await callModel(api, caption, transcript, budget)
     const cleaned = raw.replace(/^```(?:json)?/, '').replace(/```$/, '').trim()
     if (!truncated && cleaned) {
       try {
-        return JSON.parse(cleaned)
+        const note = JSON.parse(cleaned)
+        if (CJK.test(`${note.title ?? ''} ${note.notes ?? ''}`)) continue
+        return note
       } catch {
         // Fall through and retry with a larger budget.
       }
     }
   }
-  throw new Error('model did not return usable JSON')
+  throw new Error('model did not return usable English JSON')
 }
 
 // ---------------------------------------------------------------------------

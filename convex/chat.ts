@@ -189,6 +189,93 @@ export async function retrieve(ctx: any, question: string) {
   return selectChunks(fused, { tokenBudget: RETRIEVAL_TOKEN_BUDGET })
 }
 
+/**
+ * Han, kana and hangul. The Flash model occasionally substitutes a word or a
+ * clause in Chinese mid-sentence. It is rare, but it is very visible, and the
+ * audience is British teenagers.
+ */
+const CJK = /[\u3400-\u4dbf\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/
+
+interface Attempt {
+  content: string
+  inputTokens: number
+  outputTokens: number
+}
+
+/**
+ * One completion, read to the end before returning.
+ *
+ * Deliberately not written to the database as it arrives. Partial writes meant
+ * the reply had to be shown before anything could check it, and they landed
+ * every 250ms, which is what made it appear in lumps rather than a stream. The
+ * client animates the reveal instead.
+ */
+async function callModel(
+  key: string,
+  model: string,
+  maxTokens: number,
+  system: string,
+  messages: { role: string; content: string }[],
+): Promise<Attempt> {
+  const res = await fetch(OPENROUTER_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${key}`,
+      'HTTP-Referer': process.env.SITE_URL ?? 'https://getthereoneday.com',
+      'X-Title': 'Charge by Get There One Day',
+    },
+    body: JSON.stringify({
+      model,
+      stream: true,
+      stream_options: { include_usage: true },
+      max_tokens: maxTokens,
+      // Short, well-scoped answers with the knowledge supplied in the prompt,
+      // so private reasoning bought little and ate the token budget.
+      reasoning: { enabled: false },
+      temperature: 0.6,
+      messages: [{ role: 'system', content: system }, ...messages],
+    }),
+  })
+  if (!res.ok || !res.body) {
+    const text = await res.text().catch(() => '')
+    throw new ConvexError(`OpenRouter returned ${res.status}: ${text.slice(0, 300)}`)
+  }
+
+  let content = ''
+  let inputTokens = 0
+  let outputTokens = 0
+  const reader = res.body.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  while (true) {
+    const { value, done } = await reader.read()
+    if (done) break
+    buffer += decoder.decode(value, { stream: true })
+    const lines = buffer.split('\n')
+    buffer = lines.pop() ?? ''
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (!trimmed.startsWith('data:')) continue
+      const data = trimmed.slice(5).trim()
+      if (data === '[DONE]') continue
+      let json: any
+      try {
+        json = JSON.parse(data)
+      } catch {
+        continue
+      }
+      const delta = json.choices?.[0]?.delta?.content
+      if (delta) content += delta
+      if (json.usage) {
+        inputTokens = json.usage.prompt_tokens ?? inputTokens
+        outputTokens = json.usage.completion_tokens ?? outputTokens
+      }
+    }
+  }
+  return { content, inputTokens, outputTokens }
+}
+
 export const generate = internalAction({
   args: { assistantId: v.id('messages') },
   handler: async (ctx, { assistantId }) => {
@@ -212,81 +299,40 @@ export const generate = internalAction({
       t === lastUser ? { ...t, content: buildUserTurn(t.content, extracts) } : t,
     )
 
-    let content = ''
+    // Generate, check, and try again if the model slipped out of English.
+    // Cost of a retry is a fraction of a penny at the rate this happens, and a
+    // visibly broken reply costs more than that in trust.
     let inputTokens = 0
     let outputTokens = 0
-    let lastFlush = 0
-    const flush = async () => {
-      const now = Date.now()
-      if (now - lastFlush < 250) return
-      lastFlush = now
-      await ctx.runMutation(internal.messages.append, { id: assistantId, content })
-    }
-
+    let content = ''
     try {
-      const res = await fetch(OPENROUTER_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${key}`,
-          // OpenRouter attributes traffic with these; both are optional.
-          'HTTP-Referer': process.env.SITE_URL ?? 'https://getthereoneday.com',
-          'X-Title': 'Charge by Get There One Day',
-        },
-        body: JSON.stringify({
-          model: tier.model,
-          stream: true,
-          stream_options: { include_usage: true },
-          max_tokens: tier.maxOutputTokens,
-          // These are short, well-scoped advice answers, and the knowledge is
-          // handed over in the prompt, so private reasoning buys little. Left
-          // on, it ate most of the token budget and replies stopped mid-word.
-          // Providers that don't support the flag ignore it.
-          reasoning: { enabled: false },
-          temperature: 0.6,
-          messages: [{ role: 'system', content: system }, ...messages],
-        }),
-      })
-      if (!res.ok || !res.body) {
-        const text = await res.text().catch(() => '')
-        throw new ConvexError(`OpenRouter returned ${res.status}: ${text.slice(0, 300)}`)
-      }
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
-      while (true) {
-        const { value, done } = await reader.read()
-        if (done) break
-        buffer += decoder.decode(value, { stream: true })
-        const lines = buffer.split('\n')
-        buffer = lines.pop() ?? ''
-        for (const line of lines) {
-          const trimmed = line.trim()
-          if (!trimmed.startsWith('data:')) continue
-          const data = trimmed.slice(5).trim()
-          if (data === '[DONE]') continue
-          let json: any
-          try {
-            json = JSON.parse(data)
-          } catch {
-            continue
-          }
-          const delta = json.choices?.[0]?.delta?.content
-          if (delta) {
-            content += delta
-            await flush()
-          }
-          if (json.usage) {
-            inputTokens = json.usage.prompt_tokens ?? inputTokens
-            outputTokens = json.usage.completion_tokens ?? outputTokens
-          }
+      const plan = [
+        { model: tier.model, max: tier.maxOutputTokens },
+        { model: tier.model, max: tier.maxOutputTokens },
+        // Last resort: the stronger model, which does not have this failure.
+        { model: TIERS.pro.model, max: TIERS.pro.maxOutputTokens },
+      ]
+      for (const [i, step] of plan.entries()) {
+        const attempt = await callModel(key, step.model, step.max, system, messages)
+        // Every attempt was paid for, so every attempt counts against usage.
+        inputTokens += attempt.inputTokens
+        outputTokens += attempt.outputTokens
+        content = attempt.content
+        if (!CJK.test(content)) break
+        if (i < plan.length - 1) {
+          console.warn(`non-English output from ${step.model}, retrying`)
+        } else {
+          // Nothing worked. Better a short honest failure than broken text.
+          console.error('non-English output survived every attempt')
+          content = ''
         }
       }
+
       if (!inputTokens) inputTokens = estimateTokens(system + messages.map((t) => t.content).join(''))
       if (!outputTokens) outputTokens = estimateTokens(content)
       await ctx.runMutation(internal.messages.finish, {
         id: assistantId,
-        content: content || "Sorry, I didn't manage to come up with a reply. Try asking again.",
+        content: content || "Sorry, that one came out garbled. Ask me again and I'll have another go.",
         inputTokens,
         outputTokens,
       })

@@ -218,6 +218,13 @@ function Thread({ conversationId, me, onConversationCreated, onNeedUpgrade }) {
 
   const streaming = messages.some((m) => m.status === 'streaming')
 
+  // A reply is only worth animating if we watched it being written. Messages
+  // already complete when the conversation loaded should just be there.
+  const liveIds = useRef(new Set())
+  for (const m of messages) {
+    if (m.status === 'streaming') liveIds.current.add(m._id)
+  }
+
   useEffect(() => {
     const el = scrollRef.current
     if (el) el.scrollTop = el.scrollHeight
@@ -283,7 +290,7 @@ function Thread({ conversationId, me, onConversationCreated, onNeedUpgrade }) {
           </div>
         ) : (
           <div className="thread-inner">
-            {messages.map((m) => <Message key={m._id} m={m} />)}
+            {messages.map((m) => <Message key={m._id} m={m} animate={liveIds.current.has(m._id)} />)}
           </div>
         )}
       </div>
@@ -333,8 +340,43 @@ function Thread({ conversationId, me, onConversationCreated, onNeedUpgrade }) {
   )
 }
 
-function Message({ m }) {
-  const html = useMemo(() => (m.role === 'assistant' ? renderMarkdown(m.content) : null), [m.content, m.role])
+const REVEAL_MS = 45
+
+/**
+ * Reveal a finished reply a line at a time.
+ *
+ * The server now writes the whole reply in one go, so that it can be checked
+ * before anyone sees it. Without this the text would land as a wall. Revealing
+ * by line also reads better than what it replaced: partial writes every 250ms,
+ * which arrived in uneven lumps rather than as a stream.
+ */
+function useLineReveal(text, animate) {
+  const [shown, setShown] = useState(animate ? '' : text)
+  useEffect(() => {
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    if (!animate || reduced) {
+      setShown(text)
+      return
+    }
+    const lines = text.split('\n')
+    let i = 0
+    let timer
+    const tick = () => {
+      i += 1
+      setShown(lines.slice(0, i).join('\n'))
+      if (i < lines.length) timer = setTimeout(tick, REVEAL_MS)
+    }
+    setShown('')
+    timer = setTimeout(tick, REVEAL_MS)
+    return () => clearTimeout(timer)
+  }, [text, animate])
+  return shown
+}
+
+function Message({ m, animate = false }) {
+  const revealed = useLineReveal(m.content, animate && m.role === 'assistant' && m.status === 'done')
+  const body = m.role === 'assistant' ? revealed : m.content
+  const html = useMemo(() => (m.role === 'assistant' ? renderMarkdown(body) : null), [body, m.role])
   if (m.role === 'user') {
     return (
       <div className="msg user">
@@ -348,7 +390,7 @@ function Message({ m }) {
       <div className="bubble">
         {m.status === 'error' ? (
           <div className="msg-error">{m.content}</div>
-        ) : m.status === 'streaming' && !m.content ? (
+        ) : (m.status === 'streaming' && !m.content) || (m.status === 'done' && !body) ? (
           <div className="typing"><i /><i /><i /></div>
         ) : (
           <div className={`md${m.status === 'streaming' ? ' cursor' : ''}`} dangerouslySetInnerHTML={{ __html: html }} />
