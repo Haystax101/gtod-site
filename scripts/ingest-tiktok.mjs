@@ -24,7 +24,7 @@
  * and anything already in the knowledge base is skipped.
  */
 import { execFile, execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { promisify } from 'node:util'
 import { tmpdir } from 'node:os'
@@ -73,7 +73,7 @@ const opts = {
   force: flag('force'),
   prod: flag('prod'),
   limit: Number(option('limit', '0')) || 0,
-  whisperModel: option('whisper-model', 'small.en'),
+  whisperModel: option('whisper-model', 'large-v3-turbo'),
   refreshProfile: flag('refresh-profile'),
   skipProfile: flag('no-links'),
 }
@@ -209,10 +209,42 @@ async function ensureWhisperModel(name) {
   return path
 }
 
-/** Stream just the audio out of a CDN link. No video is written to disk. */
+/**
+ * Get 16 kHz mono audio for a post, as small a download as possible.
+ *
+ * The export's CDN link serves the ORIGINAL upload, tens of megabytes each,
+ * because that is what a data export is for. Pulling ~1500 of those is tens of
+ * gigabytes and many hours. The public post has a separate compressed audio
+ * track, roughly 2 MB, so yt-dlp fetches that instead: same speech, a fraction
+ * of the bytes. The export link stays as the fallback for the handful of posts
+ * that never matched a public video id.
+ */
 async function fetchAudio(post, index) {
   mkdirSync(WORK, { recursive: true })
   const wav = join(WORK, `clip-${index}.wav`)
+
+  if (post.url) {
+    const stem = join(WORK, `dl-${index}`)
+    try {
+      await run(
+        'uvx',
+        ['--quiet', '--with', 'curl_cffi', 'yt-dlp', '-f', 'ba/worst', '--no-playlist',
+         '--no-progress', '-o', `${stem}.%(ext)s`, post.url],
+        { maxBuffer: 32 * 1024 * 1024, timeout: 180_000, env: { ...process.env, ...CERT_ENV } },
+      )
+      const got = readdirSync(WORK).find((f) => f.startsWith(`dl-${index}.`))
+      if (got) {
+        const src = join(WORK, got)
+        await run('ffmpeg', ['-loglevel', 'error', '-i', src, '-vn', '-ar', '16000', '-ac', '1',
+          '-c:a', 'pcm_s16le', wav, '-y'], { maxBuffer: 32 * 1024 * 1024 })
+        rmSync(src, { force: true })
+        return wav
+      }
+    } catch {
+      // Fall through to the export link.
+    }
+  }
+
   await run(
     'ffmpeg',
     [
@@ -222,18 +254,43 @@ async function fetchAudio(post, index) {
       '-vn', '-ar', '16000', '-ac', '1', '-c:a', 'pcm_s16le',
       wav, '-y',
     ],
-    { maxBuffer: 32 * 1024 * 1024, timeout: 180_000 },
+    { maxBuffer: 32 * 1024 * 1024, timeout: 300_000 },
   )
   return wav
 }
 
-async function transcribe(wav, modelPath) {
-  const { stdout } = await run(
-    'whisper-cli',
-    ['-m', modelPath, '-f', wav, '-l', 'en', '-nt', '-np', '-t', '8'],
-    { maxBuffer: 64 * 1024 * 1024 },
-  )
-  return stdout.replace(/\s+/g, ' ').trim()
+/**
+ * Transcribe a whole batch in one whisper-cli call.
+ *
+ * The large model is 1.5 GB and is loaded fresh on every invocation, which at
+ * one call per video cost more than the transcription itself. Passing the batch
+ * together loads it once. Output goes to a .txt beside each input rather than
+ * stdout, which is the only way to tell the results apart.
+ *
+ * Returns a Map of wav path -> transcript, omitting any that produced nothing.
+ */
+async function transcribeBatch(wavs, modelPath) {
+  const out = new Map()
+  if (!wavs.length) return out
+  try {
+    await run(
+      'whisper-cli',
+      ['-m', modelPath, '-l', 'en', '-nt', '-np', '-t', '8', '-otxt', ...wavs],
+      { maxBuffer: 128 * 1024 * 1024, timeout: 900_000 },
+    )
+  } catch (err) {
+    warn(`whisper failed on a batch: ${String(err.message).slice(0, 120)}`)
+  }
+  for (const wav of wavs) {
+    // whisper-cli writes "<input>.txt", keeping the original extension.
+    const txt = `${wav}.txt`
+    if (existsSync(txt)) {
+      const text = readFileSync(txt, 'utf8').replace(/\s+/g, ' ').trim()
+      rmSync(txt, { force: true })
+      if (text) out.set(wav, text)
+    }
+  }
+  return out
 }
 
 // ---------------------------------------------------------------------------
@@ -310,6 +367,8 @@ async function callModel(api, caption, transcript, maxTokens) {
       model: api.model,
       temperature: 0.3,
       max_tokens: maxTokens,
+      // Mechanical summarising, so private reasoning only cost latency and tokens.
+      reasoning: { enabled: false },
       response_format: { type: 'json_object' },
       messages: [
         { role: 'system', content: NOTE_PROMPT },
@@ -357,7 +416,10 @@ Usage: npm run ingest -- <user_data_tiktok.json> [options]
   --dry-run              transcribe and summarise, but write nothing to Convex
   --force                re-ingest videos already in the knowledge base
   --prod                 target the production deployment
-  --whisper-model NAME   default small.en; base.en is ~3x faster, a bit rougher
+  --whisper-model NAME   default large-v3-turbo. Do not drop to small.en: it
+                         silently skipped ~10% of one test video, losing two
+                         whole entries from a ranking, and turbo is faster
+                         than medium.en anyway.
   --refresh-profile      re-list the public profile instead of using the cache
   --no-links             skip the profile listing; notes get no citable URL
 `)
@@ -447,30 +509,51 @@ Usage: npm run ingest -- <user_data_tiktok.json> [options]
       )
     }
 
+    // One whisper call for the whole batch, then clean the audio up.
+    const transcripts = await transcribeBatch([...audio.values()], modelPath)
+    for (const wav of audio.values()) rmSync(wav, { force: true })
+
+    // Resolve each post's transcript, from cache or from this batch.
+    const ready = []
     for (const post of group) {
+      const cachePath = join(TRANSCRIPTS, `${post.sourceId}.txt`)
+      let transcript = existsSync(cachePath) ? readFileSync(cachePath, 'utf8') : null
+      if (!transcript) {
+        const wav = audio.get(post.sourceId)
+        transcript = wav ? transcripts.get(wav) : null
+        if (transcript) writeFileSync(cachePath, transcript)
+      }
+      ready.push({ post, transcript })
+    }
+
+    // Summarising is a network round trip each, so the batch goes out together
+    // rather than one at a time.
+    const notes = await Promise.all(
+      ready.map(async ({ post, transcript }) => {
+        if (!transcript) return { post, error: 'no transcript produced' }
+        if (transcript.length < 40) return { post, quiet: true }
+        try {
+          return { post, note: await summarise(api, { caption: post.caption, transcript }) }
+        } catch (err) {
+          return { post, error: String(err.message).slice(0, 140) }
+        }
+      }),
+    )
+
+    for (const { post, note, error, quiet } of notes) {
       done++
       const label = `[${done}/${todo.length}] ${post.date}`
-      const cachePath = join(TRANSCRIPTS, `${post.sourceId}.txt`)
       try {
-        let transcript = existsSync(cachePath) ? readFileSync(cachePath, 'utf8') : null
-        if (!transcript) {
-          const wav = audio.get(post.sourceId)
-          if (!wav) {
-            failed++
-            continue
-          }
-          transcript = await transcribe(wav, modelPath)
-          rmSync(wav, { force: true })
-          writeFileSync(cachePath, transcript)
+        if (error) {
+          warn(`${post.date}: ${error}`)
+          failed++
+          continue
         }
-
-        if (transcript.length < 40) {
+        if (quiet) {
           log(`${label} almost no speech, skipped`)
           skipped++
           continue
         }
-
-        const note = await summarise(api, { caption: post.caption, transcript })
         if (!note.useful) {
           log(`${label} not careers content, skipped`)
           skipped++

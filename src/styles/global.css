@@ -123,12 +123,15 @@ nav.links a.charge-link { display: inline-flex; align-items: center; gap: 6px; }
 .nav-auth { display: flex; align-items: center; gap: 10px; margin-left: 8px; }
 .nav-auth .cl-userButtonTrigger { outline: none; }
 @media (max-width: 720px) {
-  nav.links a.hide-mobile { display: none; }
+  /* Everything lives in the drawer on a phone, so the bar keeps only the
+     identity and the two controls. Leaving links in as well pushed the burger
+     off the edge of the screen. */
+  nav.links { display: none; }
   .nav { gap: 10px; }
+  .nav-auth { margin-left: auto; }
   .nav-name { font-size: 0.9rem; white-space: nowrap; }
-  nav.links a { padding: 7px 9px; font-size: 0.88rem; white-space: nowrap; }
 }
-@media (max-width: 400px) { .nav-name { display: none; } }
+@media (max-width: 430px) { .nav-name { display: none; } }
 
 /* ---------- Charge wordmark ---------- */
 .wordmark { font-weight: 800; letter-spacing: -0.03em; display: inline-flex; }
