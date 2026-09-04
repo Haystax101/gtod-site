@@ -29,16 +29,32 @@ import { internalAction, internalMutation } from './_generated/server'
 import { internal } from './_generated/api'
 import { v } from 'convex/values'
 
-const BASE = 'https://api.apprenticeships.education.gov.uk/vacancies'
+const BASE = 'https://api.apprenticeships.education.gov.uk/vacancies/vacancy'
+/** The gateway caps a page at 100 and rejects anything larger with a 400. */
+const MAX_PAGE_SIZE = 100
+/**
+ * Level 6 and above, ie the degree apprenticeships this audience applies for.
+ *
+ * Worth knowing what this feed actually is: a sample of 584 live adverts held
+ * 173 at level 2, 388 at level 3, and just 3 at level 6 or above. The large
+ * employers running degree schemes recruit through their own portals, so this
+ * supplements the curated directory rather than replacing it.
+ */
+const MIN_LEVEL = 6
 
 function apiKey() {
   return process.env.FAA_API_KEY ?? null
 }
 
 async function fetchPage(key: string, pageNumber: number, pageSize: number) {
-  const url = `${BASE}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+  const url = `${BASE}?pageNumber=${pageNumber}&pageSize=${Math.min(pageSize, MAX_PAGE_SIZE)}`
   const res = await fetch(url, {
-    headers: { 'Ocp-Apim-Subscription-Key': key, Accept: 'application/json' },
+    headers: {
+      'Ocp-Apim-Subscription-Key': key,
+      // Without this the gateway does not route to the versioned API at all.
+      'X-Version': '2',
+      Accept: 'application/json',
+    },
     redirect: 'manual',
   })
   // The gateway bounces an unrecognised key to the developer portal rather
@@ -75,52 +91,43 @@ export const probe = internalAction({
   },
 })
 
-const pick = (row: any, ...names: string[]) => {
-  for (const n of names) {
-    const val = row?.[n]
-    if (val !== undefined && val !== null && val !== '') return val
-  }
-  return undefined
-}
-
 const toTime = (val: unknown) => {
   if (!val) return undefined
   const t = Date.parse(String(val))
   return Number.isNaN(t) ? undefined : t
 }
 
-/** Map one advert onto a `schemes` row. Tolerant of field-name variation. */
+/**
+ * Map one advert onto a `schemes` row, against the fields the API really
+ * returns. Note `apprenticeshipLevel` is a word ("Intermediate"), while the
+ * number worth filtering on lives at `course.level`.
+ */
 function mapVacancy(row: any) {
-  const externalId = String(
-    pick(row, 'vacancyReference', 'vacancyReferenceNumber', 'reference', 'id') ?? '',
-  )
-  if (!externalId) return null
-  const employer = String(pick(row, 'employerName', 'employer', 'companyName') ?? 'Unknown employer')
-  const title = String(pick(row, 'title', 'vacancyTitle', 'name') ?? 'Apprenticeship')
-  const rawLevel = pick(row, 'level', 'apprenticeshipLevel', 'courseLevel')
-  const level = Number.isFinite(Number(rawLevel)) ? Number(rawLevel) : undefined
-  const address = pick(row, 'address', 'location') ?? {}
-  const locations = [pick(address, 'addressLine3', 'city', 'town'), pick(address, 'postcode')]
+  const externalId = String(row?.vacancyReference ?? '')
+  const course = row?.course ?? {}
+  const level = typeof course.level === 'number' ? course.level : undefined
+  if (!externalId || !level || level < MIN_LEVEL) return null
+
+  // v2 returns `addresses` for adverts open in several places, and `address`
+  // for single-site ones. Both shapes appear in the same feed.
+  const address = row?.address ?? (Array.isArray(row?.addresses) ? row.addresses[0] : null) ?? {}
+  const locations = [address.addressLine3, address.addressLine4, address.postcode]
     .filter(Boolean)
-    .map(String)
+    .map((x: unknown) => String(x))
 
   return {
     externalId,
     slug: `faa-${externalId}`,
-    employer,
-    name: title,
+    employer: String(row?.employerName ?? 'Unknown employer'),
+    name: String(course.title ?? row?.title ?? 'Apprenticeship'),
     level,
-    sector: pick(row, 'routeName', 'route', 'sector') ? String(pick(row, 'routeName', 'route', 'sector')) : undefined,
-    url: String(pick(row, 'vacancyUrl', 'url') ?? `https://www.findapprenticeship.service.gov.uk/apprenticeship/${externalId}`),
-    opensAt: toTime(pick(row, 'postedDate', 'startDate', 'liveDate')),
-    closesAt: toTime(pick(row, 'closingDate', 'applicationClosingDate')),
+    sector: course.route ? String(course.route) : undefined,
+    url: String(row?.vacancyUrl ?? `https://www.findapprenticeship.service.gov.uk/apprenticeship/reference/${externalId}`),
+    opensAt: toTime(row?.postedDate),
+    closesAt: toTime(row?.closingDate),
     locations: locations.length ? locations : undefined,
-    salary: pick(row, 'wage', 'wageText', 'salary')
-      ? String(pick(row, 'wageAdditionalInformation', 'wageText', 'wage', 'salary')).slice(0, 200)
-      : undefined,
-    entryRequirements: pick(row, 'qualifications', 'entryRequirements')
-      ? String(pick(row, 'qualifications', 'entryRequirements')).slice(0, 500)
-      : undefined,
+    salary: row?.wage?.wageAdditionalInformation ? String(row.wage.wageAdditionalInformation).slice(0, 200) : undefined,
+    entryRequirements: row?.expectedDuration ? `Duration: ${row.expectedDuration}` : undefined,
   }
 }
 
@@ -187,7 +194,7 @@ export const pruneExpired = internalMutation({
 
 export const refresh = internalAction({
   args: { pages: v.optional(v.number()), pageSize: v.optional(v.number()) },
-  handler: async (ctx, { pages = 5, pageSize = 100 }): Promise<unknown> => {
+  handler: async (ctx, { pages = 40, pageSize = MAX_PAGE_SIZE }): Promise<unknown> => {
     const key = apiKey()
     if (!key) return 'FAA_API_KEY is not set, skipping'
     let created = 0
