@@ -1,6 +1,40 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
+import { Menu, X } from 'lucide-react'
 import { backendConfigured } from '../lib/backend.jsx'
+
+/**
+ * Everything reachable from the top of the site.
+ *
+ * Only a couple of the signed-in tools fit across the bar, so on a phone the
+ * rest were reachable only by typing a URL or from inside AppNav. The drawer
+ * lists the lot.
+ */
+const SECTIONS = [
+  {
+    title: 'Your tools',
+    items: [
+      { to: '/charge', label: 'Charge', wordmark: true },
+      { to: '/timeline', label: 'This week' },
+      { to: '/answers', label: 'Answers' },
+      { to: '/interview', label: 'Practice' },
+      { to: '/community', label: 'Cohorts' },
+    ],
+  },
+  {
+    title: 'Get There One Day',
+    items: [
+      { to: '/apprenticeships', label: 'Playbook' },
+      { hash: 'podcast', label: 'Podcast' },
+      { hash: 'ask', label: 'Ask the pod' },
+    ],
+  },
+]
+
+const ChargeWord = () => (
+  <span className="wordmark"><span className="cha">cha</span><span className="rge">rge</span></span>
+)
 
 function AuthControls() {
   if (!backendConfigured) return null
@@ -20,30 +54,102 @@ function AuthControls() {
 
 export default function Nav() {
   const { pathname } = useLocation()
+  const [open, setOpen] = useState(false)
+  const panelRef = useRef(null)
   const home = pathname === '/'
+
   // On the landing page the section links are plain anchors so the browser
   // scrolls natively; from other pages they route back home with the hash.
-  const to = (id) => (home ? `#${id}` : `/#${id}`)
+  const href = (hash) => (home ? `#${hash}` : `/#${hash}`)
   const cls = ({ isActive }) => (isActive ? 'active' : undefined)
+
+  // Close on navigation, so tapping a link doesn't leave the drawer open.
+  useEffect(() => setOpen(false), [pathname])
+
+  // While it is open the drawer owns the screen: nothing scrolls behind it,
+  // and escape closes it.
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    panelRef.current?.focus()
+    return () => {
+      document.body.style.overflow = previous
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
   return (
     <header className="site">
       <div className="nav">
         <div className="nav-logo"><img src="/assets/logo.png" alt="Get There One Day logo" /></div>
         <Link className="nav-name" to="/">Get There <span>One Day</span></Link>
-        <nav className="links">
-          <a className="hide-mobile" href={to('podcast')}>Podcast</a>
-          <NavLink to="/apprenticeships" className={cls}>Playbook</NavLink>
-          {/* Entry point into the signed-in app. Without a link here the
-              timeline, answer bank, practice calls and cohorts were reachable
-              only by typing a URL. AppNav takes over once you are inside. */}
-          <NavLink to="/timeline" className={cls}>This week</NavLink>
+
+        <nav className="links" aria-label="Main">
+          <a className="hide-mobile" href={href('podcast')}>Podcast</a>
+          <NavLink className="hide-mobile" to="/apprenticeships">Playbook</NavLink>
+          <NavLink className="hide-mobile" to="/timeline">This week</NavLink>
           <NavLink to="/charge" className={({ isActive }) => `charge-link${isActive ? ' active' : ''}`}>
-            <span className="wordmark"><span className="cha">cha</span><span className="rge">rge</span></span>
+            <ChargeWord />
           </NavLink>
-          <a className="hide-mobile" href={to('ask')}>Ask the pod</a>
+          <a className="hide-mobile" href={href('ask')}>Ask the pod</a>
         </nav>
+
         <AuthControls />
+
+        <button
+          type="button"
+          className="icon-btn nav-burger"
+          aria-label="Open menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          <Menu />
+        </button>
       </div>
+
+      {open && (
+        <>
+          <div className="drawer-backdrop" onClick={() => setOpen(false)} />
+          <div
+            className="drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            ref={panelRef}
+            tabIndex={-1}
+          >
+            <div className="drawer-head">
+              <span className="drawer-title">Menu</span>
+              <button type="button" className="icon-btn" aria-label="Close menu" onClick={() => setOpen(false)}>
+                <X />
+              </button>
+            </div>
+            <nav className="drawer-body" aria-label="All pages">
+              {SECTIONS.map((section) => (
+                <div className="drawer-section" key={section.title}>
+                  <div className="drawer-label">{section.title}</div>
+                  {section.items.map((item) =>
+                    item.hash ? (
+                      <a key={item.label} href={href(item.hash)} onClick={() => setOpen(false)}>
+                        {item.label}
+                      </a>
+                    ) : (
+                      <NavLink key={item.to} to={item.to} className={cls}>
+                        {item.wordmark ? <ChargeWord /> : item.label}
+                      </NavLink>
+                    ),
+                  )}
+                </div>
+              ))}
+            </nav>
+          </div>
+        </>
+      )}
     </header>
   )
 }

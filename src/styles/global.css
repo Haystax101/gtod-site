@@ -26,21 +26,21 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --bg: #0f171d;
-    --surface: #16222b;
-    --surface-2: #1d2b36;
-    --ink: #ece7de;
-    --ink-2: #cfc9be;
-    --muted: #8f99a3;
-    --line: #26343f;
-    --line-strong: #34454f;
+    --bg: #0c1216;
+    --surface: #151f26;
+    --surface-2: #1e2a33;
+    --ink: #f0ece4;
+    --ink-2: #c3bdb3;
+    --muted: #8d97a1;
+    --line: #24313a;
+    --line-strong: #3a4a55;
     --primary: #3f93a6;
     --primary-hover: #4ea4b8;
     --primary-ink: #081218;
     --teal: #6fb6c5;
     --teal-soft: #17313a;
-    --orange: #ff8a52;
-    --orange-soft: #3a2418;
+    --orange: #ff9163;
+    --orange-soft: #33211a;
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
   }
 }
@@ -273,3 +273,46 @@ footer.site .legal a:hover { color: var(--ink); }
 }
 .spinner { width: 22px; height: 22px; border: 2px solid var(--line-strong); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Mobile drawer ---------- */
+/* The bar only has room for a couple of links on a phone, so everything lives
+   in a drawer instead. The burger is hidden wherever the full bar fits. */
+.nav-burger { display: none; margin-left: 4px; }
+@media (max-width: 720px) {
+  .nav-burger { display: grid; }
+}
+.drawer-backdrop {
+  position: fixed; inset: 0; z-index: 60;
+  background: rgba(15, 23, 29, 0.45);
+  backdrop-filter: blur(2px);
+}
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 61;
+  width: min(320px, 84vw);
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.18);
+  display: flex; flex-direction: column;
+  animation: drawer-in 0.18s ease-out;
+  overflow-y: auto;
+}
+.drawer:focus { outline: none; }
+@keyframes drawer-in { from { transform: translateX(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .drawer { animation: none; } }
+.drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 12px 14px 18px; border-bottom: 1px solid var(--line);
+}
+.drawer-title { font-weight: 600; font-size: 0.95rem; }
+.drawer-body { padding: 8px 10px 24px; }
+.drawer-section + .drawer-section { margin-top: 6px; border-top: 1px solid var(--line); padding-top: 10px; }
+.drawer-label {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--muted); padding: 10px 10px 6px;
+}
+.drawer-body a {
+  display: block; padding: 12px 10px; border-radius: 9px;
+  text-decoration: none; color: var(--ink); font-size: 1rem; font-weight: 500;
+}
+.drawer-body a:hover { background: var(--surface-2); }
+.drawer-body a.active { background: var(--teal-soft); color: var(--ink); }

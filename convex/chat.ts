@@ -154,7 +154,7 @@ const CANDIDATES = 12
  * rank fusion. With no embeddings configured this degrades to lexical-only
  * rather than failing.
  */
-async function retrieve(ctx: any, question: string) {
+export async function retrieve(ctx: any, question: string) {
   if (!question.trim()) return []
 
   const chunks = await ctx.runQuery(internal.knowledge.allChunks, {})

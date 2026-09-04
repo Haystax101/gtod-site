@@ -3,10 +3,11 @@
 //   npx convex run dev:smokeTest
 //   npx convex run dev:smokeResult '{"conversationId": "..."}'
 //   npx convex run dev:smokeCleanup
-import { internalMutation, internalQuery } from './_generated/server'
+import { internalAction, internalMutation, internalQuery } from './_generated/server'
 import { internal } from './_generated/api'
 import { v } from 'convex/values'
 import { TIERS } from './tiers'
+import { retrieve as retrieveChunks } from './chat'
 
 const SMOKE_CLERK_ID = 'smoke-test-user'
 
@@ -57,5 +58,25 @@ export const smokeCleanup = internalMutation({
     for (const u of usage) await ctx.db.delete(u._id)
     await ctx.db.delete(user._id)
     return `removed ${convos.length} conversations`
+  },
+})
+
+/**
+ * What does retrieval actually put in front of the model for a question?
+ *   npx convex run dev:retrieve '{"question":"KCL or Birmingham for medicine?"}'
+ */
+export const retrieve = internalAction({
+  args: { question: v.string() },
+  handler: async (ctx, { question }): Promise<unknown> => {
+    const chunks: any[] = await retrieveChunks(ctx, question)
+    return {
+      selected: chunks.length,
+      extracts: chunks.map((c) => ({
+        doc: c.docTitle,
+        heading: c.heading,
+        cited: c.sourceUrl ?? null,
+        preview: String(c.text).slice(0, 110),
+      })),
+    }
   },
 })
