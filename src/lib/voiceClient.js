@@ -25,6 +25,13 @@ const INPUT_SAMPLE_RATE = 16000
 const OUTPUT_SAMPLE_RATE = 24000
 /** How often we tell the server we are still talking. */
 const HEARTBEAT_MS = 10000
+/**
+ * Silence the microphone for this long after Charge finishes speaking.
+ *
+ * Without it the tail of his own voice, still in the room, is heard as the
+ * user starting to talk.
+ */
+const ECHO_TAIL_S = 0.35
 
 /**
  * Call tracing.
@@ -164,6 +171,7 @@ export function startVoiceSession(opts) {
   let tick = null
   let muteGain = null
   let micFrames = 0
+  let micSuppressed = 0
   let inbound = 0
   let unrecognised = 0
   let audioChunks = 0
@@ -284,6 +292,23 @@ export function startVoiceSession(opts) {
           const out = e.outputBuffer.getChannelData(0)
           out.fill(0)
           if (socket?.readyState !== WebSocket.OPEN) return
+
+          // Half duplex, on purpose. Charge plays through the speakers, the
+          // microphone hears him, and we send that back as if the user were
+          // talking: he then answers himself and never stops. The browser's
+          // echoCancellation does not help, because it cancels against what the
+          // browser itself is playing and Web Audio output is not part of that
+          // reference signal. playHead already says when his speech ends, so
+          // the microphone simply stops sending until it has.
+          const speaking = playbackCtx && playbackCtx.currentTime < playHead + ECHO_TAIL_S
+          if (speaking) {
+            micSuppressed += 1
+            if (micSuppressed === 1 || micSuppressed % 200 === 0) {
+              log('mic gated while Charge is speaking', { frames: micSuppressed })
+            }
+            return
+          }
+
           const input = e.inputBuffer.getChannelData(0)
           const resampled = resample(input, audioCtx.sampleRate, INPUT_SAMPLE_RATE)
           socket.send(encodeFrame(floatTo16BitPCM(resampled)))
