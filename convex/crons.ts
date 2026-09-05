@@ -19,6 +19,9 @@ crons.weekly(
   'generate weekly tasks',
   { dayOfWeek: 'monday', hourUTC: 6, minuteUTC: 0 },
   internal.timeline.generateWeeklyTasks,
+  // Required even when every argument is optional, and omitting it is a type
+  // error rather than a runtime default.
+  {},
 )
 // Live vacancies go stale fast, and a closed advert is worse than none.
 // No-ops until FAA_API_KEY is set.

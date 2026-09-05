@@ -211,6 +211,7 @@ export const briefing = internalQuery({
     // context loaded was about deadlines. Widening the seed with what this user
     // is actually working on helps, but the real fix is retrieving per question
     // mid-call, which needs tool calling on the Live session.
+    let extracts: { text: string }[] = []
     const seed = [q, ...named.map((a) => `${a.employer} ${a.scheme}`)].join(' ').trim()
     if (seed) {
       const chunks = await ctx.db.query('knowledgeChunks').collect()
