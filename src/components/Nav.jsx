@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 import { Menu, X } from 'lucide-react'
@@ -112,7 +113,12 @@ export default function Nav() {
         </button>
       </div>
 
-      {open && (
+      {/* Rendered into <body>, not into the header. header.site sets
+          backdrop-filter, which makes it the containing block for every
+          position:fixed descendant - so inside it the drawer's top/bottom
+          resolved against the 64px bar and the panel was one navbar tall with
+          the whole menu scrolling inside it. A portal escapes that. */}
+      {open && createPortal(
         <>
           <div className="drawer-backdrop" onClick={() => setOpen(false)} />
           <div
@@ -148,7 +154,8 @@ export default function Nav() {
               ))}
             </nav>
           </div>
-        </>
+        </>,
+        document.body,
       )}
     </header>
   )

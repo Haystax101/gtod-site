@@ -75,6 +75,18 @@ function decodeFrame(raw) {
 }
 
 /**
+ * The Live model every call uses unless VITE_VOICE_MODEL overrides it.
+ *
+ * Voice was dark in production because this had no default and the variable was
+ * never set: the client threw ConfigError before it ever opened a socket. A
+ * default that matches the rate convex/budget.ts is costed against (see
+ * VOICE_USD_PER_MINUTE) keeps the two honest. Model ids do get retired - when
+ * one does, `GEMINI_API_KEY=... tools/voice/list-live-models.sh` prints what the
+ * key can actually run today, and that id goes in VITE_VOICE_MODEL.
+ */
+export const DEFAULT_VOICE_MODEL = 'gemini-3.1-flash-live-preview'
+
+/**
  * Start a call.
  *
  * @param {object} opts
@@ -132,6 +144,10 @@ export function startVoiceSession(opts) {
       if (!model) {
         throw Object.assign(new Error('no-model'), { name: 'ConfigError' })
       }
+      // The Live API wants the fully-qualified resource name ('models/<id>').
+      // A bare id opens the socket and then closes it with nothing useful to
+      // report, so accept either spelling and send the one it expects.
+      const qualifiedModel = model.startsWith('models/') ? model : `models/${model}`
 
       stream = await navigator.mediaDevices.getUserMedia({
         audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
@@ -153,7 +169,7 @@ export function startVoiceSession(opts) {
             // The Live API keys the session to a model here. Without it the
             // socket opens and then closes with nothing useful to report, so
             // the caller is required to supply one.
-            model,
+            model: qualifiedModel,
             systemInstruction: context ? `${system}\n\n${context}` : system,
             audioConfig: { sampleRateHertz: INPUT_SAMPLE_RATE },
           },
