@@ -157,6 +157,8 @@ export function startVoiceSession(opts) {
   let playbackCtx = null
   let tick = null
   let micFrames = 0
+  let inbound = 0
+  let unrecognised = 0
   let audioChunks = 0
   let audioSamples = 0
   let playHead = 0
@@ -287,7 +289,35 @@ export function startVoiceSession(opts) {
         // Browsers hand binary frames over as a Blob; the SDK reads them as
         // text the same way.
         const raw = typeof event.data === 'string' ? event.data : await event.data.text()
+
+        // Log what the server actually sends, not just what we manage to
+        // decode. decodeFrame returns an empty result for any shape it does not
+        // recognise, so a reply in an unexpected shape looks identical to no
+        // reply at all. The first few messages are shown in full-ish detail,
+        // then only the ones we fail to make sense of.
+        inbound += 1
+        if (inbound <= 12) {
+          let shape = raw.slice(0, 220)
+          try {
+            const parsed = JSON.parse(raw)
+            const sc = parsed?.serverContent
+            shape = {
+              keys: Object.keys(parsed),
+              serverContentKeys: sc ? Object.keys(sc) : undefined,
+              modelTurnPartKeys: (sc?.modelTurn?.parts ?? []).map((x) => Object.keys(x ?? {})),
+            }
+          } catch { /* not JSON, show the raw prefix */ }
+          log(`inbound #${inbound}`, shape)
+        }
+
         const { chunks, text, setupComplete, error: serverError } = decodeFrame(raw)
+
+        if (!setupComplete && !serverError && !chunks.length && !text) {
+          unrecognised += 1
+          if (unrecognised <= 5 || unrecognised % 25 === 0) {
+            log(`inbound not understood (${unrecognised})`, raw.slice(0, 260))
+          }
+        }
 
         if (setupComplete) return goLive()
         if (serverError) {
