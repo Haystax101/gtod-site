@@ -77,6 +77,7 @@ export function buildVoiceContext(input: {
   name?: string
   applications?: { employer: string; scheme: string; stage: string; deadline?: string }[]
   tasks?: { title: string; due?: string }[]
+  schemes?: { employer: string; name: string; closes?: string }[]
   extracts?: { text: string }[]
 }): string {
   const parts: string[] = []
@@ -94,6 +95,17 @@ export function buildVoiceContext(input: {
           .join('\n'),
     )
   }
+  if (input.schemes?.length) {
+    parts.push(
+      'Degree apprenticeships we currently track, for when they ask what to apply to. ' +
+        'Only a scheme with a closing date shown has a date we have actually verified; ' +
+        'for the rest, say we track the employer but they must check the closing date themselves:\n' +
+        input.schemes
+          .map((s) => `- ${s.employer}: ${s.name}${s.closes ? ` (closes ${s.closes})` : ''}`)
+          .join('\n'),
+    )
+  }
+
   if (input.tasks?.length) {
     parts.push(
       'What they said they would do this week:\n' +

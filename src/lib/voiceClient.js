@@ -124,6 +124,11 @@ function decodeFrame(raw) {
  * key can actually run today, and that id goes in VITE_VOICE_MODEL.
  */
 export const DEFAULT_VOICE_MODEL = 'gemini-3.1-flash-live-preview'
+/**
+ * Gemini's prebuilt voices. Puck is bright and young, Charon deeper, Kore
+ * warmer, Aoede softer. Override with VITE_VOICE_NAME.
+ */
+export const DEFAULT_VOICE = 'Puck'
 
 /**
  * Start a call.
@@ -142,6 +147,7 @@ export const DEFAULT_VOICE_MODEL = 'gemini-3.1-flash-live-preview'
 export function startVoiceSession(opts) {
   const {
     url, token, model, sessionMinutes, system, context = '',
+    voice = DEFAULT_VOICE,
     onState = () => {}, onHeartbeat = () => {}, onTick = () => {},
   } = opts
 
@@ -156,6 +162,7 @@ export function startVoiceSession(opts) {
   let processor = null
   let playbackCtx = null
   let tick = null
+  let muteGain = null
   let micFrames = 0
   let inbound = 0
   let unrecognised = 0
@@ -178,6 +185,7 @@ export function startVoiceSession(opts) {
     clearInterval(tick)
     clearTimeout(hardStop)
     try { processor?.disconnect() } catch { /* already gone */ }
+    try { muteGain?.disconnect() } catch { /* already gone */ }
     try { source?.disconnect() } catch { /* already gone */ }
     try { stream?.getTracks().forEach((t) => t.stop()) } catch { /* already gone */ }
     try { await audioCtx?.close() } catch { /* already gone */ }
@@ -237,7 +245,14 @@ export function startVoiceSession(opts) {
         socket.send(JSON.stringify({
           setup: {
             model: qualifiedModel,
-            generationConfig: { responseModalities: ['AUDIO'] },
+            generationConfig: {
+              responseModalities: ['AUDIO'],
+              // Gemini's named voices. Unset, the provider picks for us, so the
+              // character of Charge's voice would drift with their defaults.
+              speechConfig: {
+                voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } },
+              },
+            },
             systemInstruction: {
               parts: [{ text: context ? `${system}\n\n${context}` : system }],
             },
@@ -264,6 +279,10 @@ export function startVoiceSession(opts) {
         })
         onState({ status: 'live', seconds: 0 })
         processor.onaudioprocess = (e) => {
+          // Never leave the output buffer to chance: an untouched buffer can be
+          // reused with stale contents, which is audible.
+          const out = e.outputBuffer.getChannelData(0)
+          out.fill(0)
           if (socket?.readyState !== WebSocket.OPEN) return
           const input = e.inputBuffer.getChannelData(0)
           const resampled = resample(input, audioCtx.sampleRate, INPUT_SAMPLE_RATE)
@@ -277,7 +296,15 @@ export function startVoiceSession(opts) {
           }
         }
         source.connect(processor)
-        processor.connect(audioCtx.destination)
+        // A ScriptProcessorNode only keeps firing while it is connected to
+        // something, but this one never writes its output buffer, and wiring it
+        // straight to the speakers let whatever the buffer happened to contain
+        // reach them, which is where the intermittent beep came from. Route it
+        // through a silent gain node: it still runs, and it cannot be heard.
+        muteGain = audioCtx.createGain()
+        muteGain.gain.value = 0
+        processor.connect(muteGain)
+        muteGain.connect(audioCtx.destination)
         heartbeat = setInterval(() => onHeartbeat(elapsed()), HEARTBEAT_MS)
         // The heartbeat is a server round trip, so it stays infrequent. The
         // clock on screen is local and free, and should move every second.

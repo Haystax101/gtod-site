@@ -6,7 +6,7 @@ import { api } from '../../convex/_generated/api'
 import { backendConfigured } from '../lib/backend.jsx'
 import { Wordmark } from '../components/Wordmark.jsx'
 import AppNav from '../components/AppNav.jsx'
-import { startVoiceSession, DEFAULT_VOICE_MODEL } from '../lib/voiceClient'
+import { startVoiceSession, DEFAULT_VOICE_MODEL, DEFAULT_VOICE } from '../lib/voiceClient'
 import '../styles/timeline.css'
 import '../styles/voice.css'
 
@@ -77,6 +77,7 @@ function VoiceRoom() {
           import.meta.env.VITE_VOICE_WS_URL ||
           'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContentConstrained',
         model: import.meta.env.VITE_VOICE_MODEL || DEFAULT_VOICE_MODEL,
+        voice: import.meta.env.VITE_VOICE_NAME || DEFAULT_VOICE,
         token: session.token,
         sessionMinutes: session.sessionMinutes,
         system: session.system ?? '',

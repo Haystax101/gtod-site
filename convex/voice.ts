@@ -192,13 +192,31 @@ export const briefing = internalQuery({
       .withIndex('by_user_done', (qq) => qq.eq('userId', user._id).eq('doneAt', undefined))
       .take(6)
 
+    // Schemes worth naming out loud, verified dates first so anything with a
+    // date attached is one we hold rather than one the model invented.
+    const allSchemes = await ctx.db.query('schemes').take(200)
+    const schemes = allSchemes
+      .sort((a, b) => Number(Boolean(b.closesAt)) - Number(Boolean(a.closesAt)))
+      .slice(0, 25)
+      .map((sc) => ({
+        employer: sc.employer,
+        name: sc.name,
+        closes: sc.verified && sc.closesAt ? new Date(sc.closesAt).toDateString() : undefined,
+      }))
+
     // Ground the call in the verified corpus, same as chat does.
-    let extracts: { text: string }[] = []
-    if (q.trim()) {
+    //
+    // A call gets one retrieval, before anything has been said, so a canned
+    // phrase spends it badly: ask for scheme recommendations mid-call and the
+    // context loaded was about deadlines. Widening the seed with what this user
+    // is actually working on helps, but the real fix is retrieving per question
+    // mid-call, which needs tool calling on the Live session.
+    const seed = [q, ...named.map((a) => `${a.employer} ${a.scheme}`)].join(' ').trim()
+    if (seed) {
       const chunks = await ctx.db.query('knowledgeChunks').collect()
       if (chunks.length) {
-        const ranked = bm25(q, chunks).slice(0, 8).map((r) => r.chunk)
-        extracts = selectChunks(ranked, { tokenBudget: 900, maxPerDoc: 2 })
+        const ranked = bm25(seed, chunks).slice(0, 10).map((r) => r.chunk)
+        extracts = selectChunks(ranked, { tokenBudget: 1400, maxPerDoc: 2 })
       }
     }
 
@@ -207,6 +225,7 @@ export const briefing = internalQuery({
       context: buildVoiceContext({
         name: user.name,
         applications: named,
+        schemes,
         tasks: tasks.map((t) => ({
           title: t.title,
           due: t.dueAt ? new Date(t.dueAt).toDateString() : undefined,
