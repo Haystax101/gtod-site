@@ -284,21 +284,34 @@ footer.site .legal a:hover { color: var(--ink); }
 @media (max-width: 720px) {
   .nav-burger { display: grid; }
 }
+/* Both are portalled to <body> (see Nav.jsx): header.site sets backdrop-filter,
+   which makes it the containing block for fixed children, and inside it these
+   were clipped to the height of the bar. */
 .drawer-backdrop {
   position: fixed; inset: 0; z-index: 60;
+  height: 100vh; height: 100dvh;
   background: rgba(15, 23, 29, 0.45);
   backdrop-filter: blur(2px);
 }
 .drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 61;
-  width: min(320px, 84vw);
+  position: fixed; top: 0; right: 0; z-index: 61;
+  /* Full screen height. dvh so a phone's retracting URL bar cannot leave a
+     strip of the page showing under the panel; vh first for older browsers. */
+  height: 100vh; height: 100dvh;
+  /* Two thirds of the screen: enough to read, never the whole thing. The cap
+     stops it sprawling on a wide phone or a small tablet. */
+  width: min(66vw, 400px);
   background: var(--surface);
   border-left: 1px solid var(--line);
   box-shadow: -12px 0 32px rgba(0, 0, 0, 0.18);
   display: flex; flex-direction: column;
   animation: drawer-in 0.18s ease-out;
-  overflow-y: auto;
+  /* The head stays put and only the links scroll, so a long menu never pushes
+     the close button off screen. */
+  overflow: hidden;
 }
+.drawer .drawer-head { flex: none; }
+.drawer .drawer-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .drawer:focus { outline: none; }
 @keyframes drawer-in { from { transform: translateX(100%); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .drawer { animation: none; } }

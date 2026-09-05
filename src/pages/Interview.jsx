@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useAction, useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import AppNav from '../components/AppNav.jsx'
-import { startVoiceSession } from '../lib/voiceClient'
+import { startVoiceSession, DEFAULT_VOICE_MODEL } from '../lib/voiceClient'
 import '../styles/voice.css'
 
 /**
@@ -53,10 +53,13 @@ export default function Interview() {
         // for the Gemini Developer API. voiceClient appends ?access_token=,
         // which is the query parameter the SDK uses for ephemeral credentials
         // (a raw API key would use ?key= instead - we never send one).
+        // `||` rather than `??`: an unset Vite variable is undefined, but one
+        // declared-and-empty in .env (as .env.example ships it) is '', and an
+        // empty string is not a usable endpoint or model id.
         url:
-          import.meta.env.VITE_VOICE_WS_URL ??
+          import.meta.env.VITE_VOICE_WS_URL ||
           'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent',
-        model: import.meta.env.VITE_VOICE_MODEL,
+        model: import.meta.env.VITE_VOICE_MODEL || DEFAULT_VOICE_MODEL,
         token: session.token,
         sessionMinutes: session.sessionMinutes,
         system: session.system ?? '',
