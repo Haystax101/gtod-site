@@ -201,8 +201,14 @@ export function startVoiceSession(opts) {
         audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
       })
 
-      audioCtx = new AudioContext({ sampleRate: INPUT_SAMPLE_RATE })
-      playbackCtx = new AudioContext({ sampleRate: OUTPUT_SAMPLE_RATE })
+      // Do NOT force a sample rate here. A microphone runs at its own rate,
+      // usually 48 kHz, and asking the AudioContext for 16 kHz makes Safari
+      // hand back a stream of silence: the graph connects, frames arrive, and
+      // every sample is zero. resample() below converts to the 16 kHz the
+      // protocol wants, and createBuffer() states the playback rate explicitly,
+      // so neither context needs to be pinned.
+      audioCtx = new AudioContext()
+      playbackCtx = new AudioContext()
       // getUserMedia is awaited above, which breaks the gesture chain from the
       // click that started the call. Safari in particular then leaves the
       // context suspended, so everything looks correct and nothing is audible.
@@ -244,9 +250,15 @@ export function startVoiceSession(opts) {
       const goLive = () => {
         if (ready) return
         ready = true
+        const track = stream?.getAudioTracks?.()[0]
         log('setup accepted, microphone live', {
-          inputRate: audioCtx.sampleRate,
+          contextRate: audioCtx.sampleRate,
+          sendingAt: INPUT_SAMPLE_RATE,
+          playbackRate: playbackCtx?.sampleRate,
           playbackState: playbackCtx?.state,
+          micLabel: track?.label ?? '(none)',
+          micMuted: track?.muted,
+          micEnabled: track?.enabled,
         })
         onState({ status: 'live', seconds: 0 })
         processor.onaudioprocess = (e) => {
