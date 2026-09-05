@@ -77,7 +77,7 @@ function VoiceRoom() {
           import.meta.env.VITE_VOICE_WS_URL ||
           'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContentConstrained',
         model: import.meta.env.VITE_VOICE_MODEL || DEFAULT_VOICE_MODEL,
-        voice: import.meta.env.VITE_VOICE_NAME || DEFAULT_VOICE,
+        voice: import.meta.env.VITE_VOICE_NAME ?? DEFAULT_VOICE,
         token: session.token,
         sessionMinutes: session.sessionMinutes,
         system: session.system ?? '',

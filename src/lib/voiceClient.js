@@ -135,7 +135,7 @@ export const DEFAULT_VOICE_MODEL = 'gemini-3.1-flash-live-preview'
  * Gemini's prebuilt voices. Puck is bright and young, Charon deeper, Kore
  * warmer, Aoede softer. Override with VITE_VOICE_NAME.
  */
-export const DEFAULT_VOICE = 'Puck'
+export const DEFAULT_VOICE = '' // provider default, which sounds British
 
 /**
  * Start a call.
@@ -154,7 +154,7 @@ export const DEFAULT_VOICE = 'Puck'
 export function startVoiceSession(opts) {
   const {
     url, token, model, sessionMinutes, system, context = '',
-    voice = DEFAULT_VOICE,
+    voice = '',
     onState = () => {}, onHeartbeat = () => {}, onTick = () => {},
   } = opts
 
@@ -257,9 +257,10 @@ export function startVoiceSession(opts) {
               responseModalities: ['AUDIO'],
               // Gemini's named voices. Unset, the provider picks for us, so the
               // character of Charge's voice would drift with their defaults.
-              speechConfig: {
-                voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } },
-              },
+              // Only set when asked. The Live API does not accept en-GB, so
+              // an accent cannot be requested directly, and the provider's own
+              // default already sounds British where the named voices do not.
+              ...(voice ? { speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: voice } } } } : {}),
             },
             systemInstruction: {
               parts: [{ text: context ? `${system}\n\n${context}` : system }],
@@ -300,13 +301,24 @@ export function startVoiceSession(opts) {
           // browser itself is playing and Web Audio output is not part of that
           // reference signal. playHead already says when his speech ends, so
           // the microphone simply stops sending until it has.
-          const speaking = playbackCtx && playbackCtx.currentTime < playHead + ECHO_TAIL_S
+          const queued = playbackCtx ? playHead - playbackCtx.currentTime : 0
+          const speaking = queued + ECHO_TAIL_S > 0
           if (speaking) {
             micSuppressed += 1
-            if (micSuppressed === 1 || micSuppressed % 200 === 0) {
-              log('mic gated while Charge is speaking', { frames: micSuppressed })
+            // Audio arrives faster than it plays, so the queue can run well
+            // ahead of the clock. A long queue means a long stretch with the
+            // microphone shut, which is indistinguishable from a dead call.
+            if (micSuppressed === 1 || micSuppressed % 100 === 0) {
+              log('mic gated, Charge still has audio queued', {
+                frames: micSuppressed,
+                secondsQueued: +queued.toFixed(1),
+              })
             }
             return
+          }
+          if (micSuppressed) {
+            log('mic live again', { gatedFrames: micSuppressed })
+            micSuppressed = 0
           }
 
           const input = e.inputBuffer.getChannelData(0)
@@ -361,6 +373,17 @@ export function startVoiceSession(opts) {
           } catch { /* not JSON, show the raw prefix */ }
           log(`inbound #${inbound}`, shape)
         }
+
+        // When the server abandons a turn, anything still queued is never going
+        // to be spoken. Without clearing it the microphone stays gated against
+        // audio that no longer exists.
+        try {
+          const parsed = JSON.parse(raw)
+          if (parsed?.serverContent?.interrupted) {
+            log('server interrupted the turn, clearing the audio queue')
+            playHead = playbackCtx?.currentTime ?? 0
+          }
+        } catch { /* handled by decodeFrame */ }
 
         const { chunks, text, setupComplete, error: serverError } = decodeFrame(raw)
 
