@@ -26,6 +26,16 @@ const OUTPUT_SAMPLE_RATE = 24000
 /** How often we tell the server we are still talking. */
 const HEARTBEAT_MS = 10000
 
+/**
+ * Call tracing.
+ *
+ * A silent call gives nothing away: the socket, the setup handshake, the mic
+ * and the speaker can each fail while everything else looks healthy. These log
+ * every stage so the point of failure is visible in the console rather than
+ * guessed at. Filter the console by "[voice]".
+ */
+const log = (...args) => console.log('[voice]', ...args)
+
 /** Float32 [-1,1] to 16-bit little-endian PCM, which is what these APIs want. */
 function floatTo16BitPCM(input) {
   const out = new Int16Array(input.length)
@@ -146,6 +156,9 @@ export function startVoiceSession(opts) {
   let processor = null
   let playbackCtx = null
   let tick = null
+  let micFrames = 0
+  let audioChunks = 0
+  let audioSamples = 0
   let playHead = 0
   let heartbeat = null
   let hardStop = null
@@ -203,9 +216,11 @@ export function startVoiceSession(opts) {
       // main-thread cost is not audible. Move to an AudioWorklet if it bites.
       processor = audioCtx.createScriptProcessor(4096, 1, 1)
 
+      log('opening socket', { url, model: qualifiedModel, tokenPrefix: String(token).slice(0, 14) })
       socket = new WebSocket(`${url}?access_token=${encodeURIComponent(token)}`)
 
       socket.onopen = () => {
+        log('socket open, sending setup')
         // Every field here is mapped the way liveConnectParametersToMldev maps
         // it in @google/genai v2.21.0. systemInstruction is a Content, not a
         // string, and generationConfig carries the modalities. The previous
@@ -229,12 +244,23 @@ export function startVoiceSession(opts) {
       const goLive = () => {
         if (ready) return
         ready = true
+        log('setup accepted, microphone live', {
+          inputRate: audioCtx.sampleRate,
+          playbackState: playbackCtx?.state,
+        })
         onState({ status: 'live', seconds: 0 })
         processor.onaudioprocess = (e) => {
           if (socket?.readyState !== WebSocket.OPEN) return
           const input = e.inputBuffer.getChannelData(0)
           const resampled = resample(input, audioCtx.sampleRate, INPUT_SAMPLE_RATE)
           socket.send(encodeFrame(floatTo16BitPCM(resampled)))
+          micFrames += 1
+          if (micFrames === 1 || micFrames % 100 === 0) {
+            // Peak amplitude tells you whether the mic is live or just silent.
+            let peak = 0
+            for (let i = 0; i < input.length; i++) peak = Math.max(peak, Math.abs(input[i]))
+            log('mic out', { frames: micFrames, peak: +peak.toFixed(3) })
+          }
         }
         source.connect(processor)
         processor.connect(audioCtx.destination)
@@ -253,13 +279,31 @@ export function startVoiceSession(opts) {
 
         if (setupComplete) return goLive()
         if (serverError) {
+          log('server refused the call', serverError)
           failure = serverError
           onState({ status: 'error', error: `The voice service refused the call: ${serverError}` })
           return stop('server-error')
         }
         if (text) onState({ status: 'live', transcript: text, seconds: elapsed() })
-        if (!playbackCtx) return
-        if (playbackCtx.state === 'suspended') await playbackCtx.resume().catch(() => {})
+        if (chunks.length) {
+          audioChunks += chunks.length
+          audioSamples += chunks.reduce((n, c) => n + c.length, 0)
+          if (audioChunks <= 3 || audioChunks % 50 === 0) {
+            log('audio in', {
+              chunks: audioChunks,
+              seconds: +(audioSamples / OUTPUT_SAMPLE_RATE).toFixed(1),
+              playbackState: playbackCtx?.state,
+            })
+          }
+        }
+        if (!playbackCtx) {
+          log('audio arrived but there is no playback context')
+          return
+        }
+        if (playbackCtx.state === 'suspended') {
+          log('playback context was suspended, resuming')
+          await playbackCtx.resume().catch((e) => log('resume failed', e?.message))
+        }
         for (const pcm of chunks) {
           // Schedule each chunk after the previous one so speech does not overlap.
           const buffer = playbackCtx.createBuffer(1, pcm.length, OUTPUT_SAMPLE_RATE)
@@ -274,11 +318,18 @@ export function startVoiceSession(opts) {
         }
       }
 
-      socket.onerror = () => stop('connection-error')
+      socket.onerror = (e) => {
+        log('socket error', e?.message ?? '(no detail)')
+        stop('connection-error')
+      }
       // A close before setupComplete means the server rejected the session.
       // The code and reason are the only diagnosis available, so surface them
       // instead of discarding them and reporting a call that simply ended.
       socket.onclose = (e) => {
+        // The close code is the single most useful clue when a call dies:
+        // 1008 is the service refusing the credential or the model, 1006 is the
+        // connection dropping without a handshake at all.
+        log('socket closed', { code: e?.code, reason: e?.reason || '(none)', reachedLive: ready })
         if (!ready && !stopped && !failure) {
           const detail = [e?.code, e?.reason].filter(Boolean).join(' ')
           onState({
