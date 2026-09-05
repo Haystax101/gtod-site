@@ -1,6 +1,6 @@
 import { internalMutation, mutation, query, type MutationCtx, type QueryCtx } from './_generated/server'
 import { ConvexError, v } from 'convex/values'
-import { TIERS, monthKey, startOfDay } from './tiers'
+import { TIERS, isTestProAccount, monthKey, startOfDay } from './tiers'
 
 export async function currentUser(ctx: QueryCtx | MutationCtx) {
   const identity = await ctx.auth.getUserIdentity()
@@ -21,17 +21,24 @@ export const ensure = mutation({
     const identity = await ctx.auth.getUserIdentity()
     if (!identity) throw new ConvexError('Not signed in')
     const existing = await ctx.db.query('users').withIndex('by_clerkId', (q) => q.eq('clerkId', identity.subject)).unique()
+    // A test account is put on pro here rather than by hand in the dashboard,
+    // so adding an address to TEST_PRO_EMAILS is all it takes. It is never
+    // downgraded from here: a real paying account must not be reset to flash
+    // by dropping an address off the list.
+    const testPro = isTestProAccount(identity.email)
     if (existing) {
-      if (identity.email !== existing.email || identity.name !== existing.name) {
-        await ctx.db.patch(existing._id, { email: identity.email, name: identity.name })
-      }
+      const patch: Record<string, unknown> = {}
+      if (identity.email !== existing.email) patch.email = identity.email
+      if (identity.name !== existing.name) patch.name = identity.name
+      if (testPro && existing.plan !== 'pro') patch.plan = 'pro'
+      if (Object.keys(patch).length > 0) await ctx.db.patch(existing._id, patch)
       return existing._id
     }
     return ctx.db.insert('users', {
       clerkId: identity.subject,
       email: identity.email,
       name: identity.name,
-      plan: 'flash',
+      plan: testPro ? 'pro' : 'flash',
       createdAt: Date.now(),
     })
   },

@@ -64,17 +64,18 @@ function VoiceRoom() {
       sessionIdRef.current = session.sessionId
 
       sessionRef.current = startVoiceSession({
-        // Path taken from the official @google/genai SDK (v2.21.0), which builds
-        // `${base}/ws/google.ai.generativelanguage.${apiVersion}.GenerativeService.BidiGenerateContent`
-        // for the Gemini Developer API. voiceClient appends ?access_token=,
-        // which is the query parameter the SDK uses for ephemeral credentials
-        // (a raw API key would use ?key= instead - we never send one).
+        // Path taken from the official @google/genai SDK (v2.21.0). For an
+        // ephemeral credential - a token whose name starts with 'auth_tokens/',
+        // which is all we ever send - the SDK swaps the method to
+        // BidiGenerateContentConstrained and the query parameter to
+        // access_token. Plain BidiGenerateContent is the raw-API-key path and
+        // is refused for a token, which closes the socket on connect.
         // `||` rather than `??`: an unset Vite variable is undefined, but one
         // declared-and-empty in .env (as .env.example ships it) is '', and an
         // empty string is not a usable endpoint or model id.
         url:
           import.meta.env.VITE_VOICE_WS_URL ||
-          'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent',
+          'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContentConstrained',
         model: import.meta.env.VITE_VOICE_MODEL || DEFAULT_VOICE_MODEL,
         token: session.token,
         sessionMinutes: session.sessionMinutes,

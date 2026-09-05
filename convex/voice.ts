@@ -20,6 +20,7 @@ import { ConvexError, v } from 'convex/values'
 import { requireUser } from './users'
 import { TIERS, monthKey } from './tiers'
 import { checkVoiceBudget, voiceCostMicros, VOICE_POLICY } from './budget'
+import { isTestProAccount } from './tiers'
 import { CHECKIN_SYSTEM, INTERVIEW_SYSTEM, buildVoiceContext } from './voicePrompts'
 import { bm25, selectChunks } from './retrieval'
 
@@ -103,10 +104,21 @@ export const voiceContext = internalQuery({
       .query('voiceSessions')
       .withIndex('by_user_status', (q) => q.eq('userId', userId).eq('status', 'reserved'))
       .collect()
+    // A test account still has every call recorded and costed - we want to see
+    // the real spend - but starts each check from a clean slate, so testing is
+    // not rationed by the monthly allowance. checkVoiceBudget itself is
+    // untouched: it says an ok:false must be final and have no override path,
+    // and that stays true. What changes is only what we report as spent.
+    const spent = isTestProAccount(user.email)
+      ? { costMicros: 0, voiceSeconds: 0 }
+      : { costMicros: usage?.costMicros ?? 0, voiceSeconds: usage?.voiceSeconds ?? 0 }
+
     return {
       userId,
       plan: user.plan,
-      usage: { costMicros: usage?.costMicros ?? 0, voiceSeconds: usage?.voiceSeconds ?? 0 },
+      usage: spent,
+      // The one-live-session rule still applies: it prevents double billing
+      // from a stale tab, which a test account needs as much as anyone.
       activeSessions: active.length + reserved.length,
     }
   },
@@ -382,7 +394,9 @@ export const myVoiceAllowance = query({
       .withIndex('by_user_month', (q) => q.eq('userId', user._id).eq('month', monthKey()))
       .unique()
     const policy = VOICE_POLICY[user.plan]
-    const used = (usage?.voiceSeconds ?? 0) / 60
+    // Matches what voiceContext will decide, so the figure on screen agrees
+    // with whether a call is actually allowed to start.
+    const used = isTestProAccount(user.email) ? 0 : (usage?.voiceSeconds ?? 0) / 60
     return {
       plan: user.plan,
       monthlyMinutes: policy.monthlyMinutes,

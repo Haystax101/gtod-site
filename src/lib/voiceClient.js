@@ -52,25 +52,54 @@ function resample(input, fromRate, toRate) {
 }
 
 function encodeFrame(pcm16) {
-  // Base64 PCM in a JSON envelope is the common shape. Confirm against the
-  // provider's own protocol docs before launch.
+  // Shape taken from @google/genai v2.21.0, Session.sendRealtimeInput: it sends
+  // {realtimeInput: {audio: {data, mimeType}}}. The bare {audio: ...} this used
+  // to send is not a message the server recognises.
   let binary = ''
   const bytes = new Uint8Array(pcm16.buffer)
   for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
-  return JSON.stringify({ audio: { data: btoa(binary), mimeType: `audio/pcm;rate=${INPUT_SAMPLE_RATE}` } })
+  return JSON.stringify({
+    realtimeInput: {
+      audio: { data: btoa(binary), mimeType: `audio/pcm;rate=${INPUT_SAMPLE_RATE}` },
+    },
+  })
 }
 
+/** Base64 to Int16 PCM. */
+function pcmFromBase64(b64) {
+  const binary = atob(b64)
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  return new Int16Array(bytes.buffer)
+}
+
+/**
+ * Read one server frame.
+ *
+ * Shapes verified against @google/genai v2.21.0. Audio arrives as inlineData
+ * parts on serverContent.modelTurn (a Content), never as a top-level `audio`
+ * field, which is what this looked for before and why nothing ever played.
+ */
 function decodeFrame(raw) {
+  const empty = { text: null, chunks: [], setupComplete: false, error: null }
   try {
     const msg = JSON.parse(raw)
-    const b64 = msg?.audio?.data ?? msg?.serverContent?.audio?.data
-    if (!b64) return { text: msg?.text ?? msg?.serverContent?.text ?? null, pcm: null }
-    const binary = atob(b64)
-    const bytes = new Uint8Array(binary.length)
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
-    return { text: null, pcm: new Int16Array(bytes.buffer) }
+    if (msg?.setupComplete) return { ...empty, setupComplete: true }
+    // The server reports a rejected setup or a policy stop in-band.
+    const err = msg?.error ?? msg?.goAway
+    if (err) return { ...empty, error: err.message ?? JSON.stringify(err).slice(0, 200) }
+
+    const server = msg?.serverContent
+    const parts = server?.modelTurn?.parts ?? []
+    const chunks = []
+    for (const part of parts) {
+      if (part?.inlineData?.data) chunks.push(pcmFromBase64(part.inlineData.data))
+    }
+    const spoken = parts.map((part) => part?.text).filter(Boolean).join('')
+    const text = server?.outputTranscription?.text || spoken || null
+    return { text, chunks, setupComplete: false, error: null }
   } catch {
-    return { text: null, pcm: null }
+    return empty
   }
 }
 
@@ -120,6 +149,10 @@ export function startVoiceSession(opts) {
   let heartbeat = null
   let hardStop = null
   let stopped = false
+  /** True once the server has accepted setup: before that nothing may stream. */
+  let ready = false
+  /** Set when we have already reported a specific reason, so close stays quiet. */
+  let failure = null
 
   /** Every exit path funnels through here. The microphone must always close. */
   async function stop(reason = 'ended') {
@@ -164,18 +197,30 @@ export function startVoiceSession(opts) {
       socket = new WebSocket(`${url}?access_token=${encodeURIComponent(token)}`)
 
       socket.onopen = () => {
+        // Every field here is mapped the way liveConnectParametersToMldev maps
+        // it in @google/genai v2.21.0. systemInstruction is a Content, not a
+        // string, and generationConfig carries the modalities. The previous
+        // `audioConfig` key does not exist in this protocol at all - the input
+        // rate is declared on each audio blob's mimeType instead.
         socket.send(JSON.stringify({
           setup: {
-            // The Live API keys the session to a model here. Without it the
-            // socket opens and then closes with nothing useful to report, so
-            // the caller is required to supply one.
             model: qualifiedModel,
-            systemInstruction: context ? `${system}\n\n${context}` : system,
-            audioConfig: { sampleRateHertz: INPUT_SAMPLE_RATE },
+            generationConfig: { responseModalities: ['AUDIO'] },
+            systemInstruction: {
+              parts: [{ text: context ? `${system}\n\n${context}` : system }],
+            },
           },
         }))
-        onState({ status: 'live', seconds: 0 })
+      }
 
+      // The microphone opens on setupComplete, not on socket open. A rejected
+      // setup closes the socket straight after opening, and starting to stream
+      // before the server has accepted it is what made a failed call look like
+      // a call that ran for two seconds and ended.
+      const goLive = () => {
+        if (ready) return
+        ready = true
+        onState({ status: 'live', seconds: 0 })
         processor.onaudioprocess = (e) => {
           if (socket?.readyState !== WebSocket.OPEN) return
           const input = e.inputBuffer.getChannelData(0)
@@ -184,28 +229,51 @@ export function startVoiceSession(opts) {
         }
         source.connect(processor)
         processor.connect(audioCtx.destination)
+        heartbeat = setInterval(() => onHeartbeat(elapsed()), HEARTBEAT_MS)
       }
 
-      socket.onmessage = (event) => {
-        const { pcm, text } = decodeFrame(event.data)
+      socket.onmessage = async (event) => {
+        // Browsers hand binary frames over as a Blob; the SDK reads them as
+        // text the same way.
+        const raw = typeof event.data === 'string' ? event.data : await event.data.text()
+        const { chunks, text, setupComplete, error: serverError } = decodeFrame(raw)
+
+        if (setupComplete) return goLive()
+        if (serverError) {
+          failure = serverError
+          onState({ status: 'error', error: `The voice service refused the call: ${serverError}` })
+          return stop('server-error')
+        }
         if (text) onState({ status: 'live', transcript: text, seconds: elapsed() })
-        if (!pcm || !playbackCtx) return
-        // Schedule each chunk after the previous one so speech does not overlap.
-        const buffer = playbackCtx.createBuffer(1, pcm.length, OUTPUT_SAMPLE_RATE)
-        const channel = buffer.getChannelData(0)
-        for (let i = 0; i < pcm.length; i++) channel[i] = pcm[i] / 0x8000
-        const node = playbackCtx.createBufferSource()
-        node.buffer = buffer
-        node.connect(playbackCtx.destination)
-        playHead = Math.max(playHead, playbackCtx.currentTime)
-        node.start(playHead)
-        playHead += buffer.duration
+        if (!playbackCtx) return
+        for (const pcm of chunks) {
+          // Schedule each chunk after the previous one so speech does not overlap.
+          const buffer = playbackCtx.createBuffer(1, pcm.length, OUTPUT_SAMPLE_RATE)
+          const channel = buffer.getChannelData(0)
+          for (let i = 0; i < pcm.length; i++) channel[i] = pcm[i] / 0x8000
+          const node = playbackCtx.createBufferSource()
+          node.buffer = buffer
+          node.connect(playbackCtx.destination)
+          playHead = Math.max(playHead, playbackCtx.currentTime)
+          node.start(playHead)
+          playHead += buffer.duration
+        }
       }
 
       socket.onerror = () => stop('connection-error')
-      socket.onclose = () => stop('closed')
-
-      heartbeat = setInterval(() => onHeartbeat(elapsed()), HEARTBEAT_MS)
+      // A close before setupComplete means the server rejected the session.
+      // The code and reason are the only diagnosis available, so surface them
+      // instead of discarding them and reporting a call that simply ended.
+      socket.onclose = (e) => {
+        if (!ready && !stopped && !failure) {
+          const detail = [e?.code, e?.reason].filter(Boolean).join(' ')
+          onState({
+            status: 'error',
+            error: `The voice service closed the call before it started${detail ? ` (${detail})` : ''}. This usually means the model id or the session credential was rejected.`,
+          })
+        }
+        stop('closed')
+      }
       // Belt and braces alongside the credential TTL: stop ourselves just
       // before the server would, so the user gets a clean ending rather than a
       // mid-sentence cut.

@@ -66,3 +66,28 @@ export function startOfDay(ts = Date.now()) {
 export function estimateTokens(text: string) {
   return Math.ceil(text.length / 4)
 }
+
+/**
+ * Accounts that may exercise paid features without being billed against a
+ * monthly allowance, so the team can test the product end to end.
+ *
+ * Set on the deployment, never in the repo - this repository is public and
+ * these are personal email addresses:
+ *
+ *   npx convex env set TEST_PRO_EMAILS "someone@example.com,other@example.com"
+ *
+ * Read where the code runs, so adding an address takes effect on the next call
+ * with no deploy. Empty by default, which is what production should stay.
+ */
+export function isTestProAccount(email?: string | null): boolean {
+  if (!email) return false
+  // String() so the list is typed even where node's process types are absent.
+  const raw = String(process.env.TEST_PRO_EMAILS ?? '')
+  if (!raw.trim()) return false
+  const wanted = email.trim().toLowerCase()
+  return raw
+    .split(',')
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean)
+    .includes(wanted)
+}
