@@ -1,9 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { useAction, useMutation, useQuery } from 'convex/react'
+import { Component, useCallback, useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { SignInButton, SignUpButton } from '@clerk/clerk-react'
+import { useAction, useConvexAuth, useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
+import { backendConfigured } from '../lib/backend.jsx'
+import { Wordmark } from '../components/Wordmark.jsx'
 import AppNav from '../components/AppNav.jsx'
 import { startVoiceSession, DEFAULT_VOICE_MODEL } from '../lib/voiceClient'
+import '../styles/timeline.css'
 import '../styles/voice.css'
+
+const errorText = (err) => err?.data?.message ?? err?.data ?? err?.message ?? 'Something went wrong'
 
 /**
  * Live voice with Charge: mock interviews and check-in calls.
@@ -13,7 +20,16 @@ import '../styles/voice.css'
  * exactly three things before the call: how long it lasts, that they can stop
  * whenever, and that nobody else hears it. Everything else waits.
  */
-export default function Interview() {
+/**
+ * The call itself. Only ever rendered signed in and inside a boundary: every
+ * query below throws for a signed-out caller, and Convex rethrows that during
+ * render, which is a white screen rather than an error.
+ */
+function VoiceRoom() {
+  // A Clerk identity is not yet a users row, and requireUser needs the row.
+  const ensure = useMutation(api.users.ensure)
+  useEffect(() => { ensure() }, [ensure])
+
   const allowance = useQuery(api.voice.myVoiceAllowance)
   const startCall = useAction(api.voice.start)
   const heartbeat = useMutation(api.voice.heartbeat)
@@ -191,4 +207,84 @@ export default function Interview() {
       </p>
     </main>
   )
+}
+
+function NotConfigured() {
+  return (
+    <div className="app-gate">
+      <Wordmark />
+      <h1>Mock interviews aren't switched on yet</h1>
+      <p>This build has no Clerk or Convex keys, so we can't start a call. Add them and redeploy.</p>
+      <Link className="btn btn-secondary" to="/apprenticeships">Read the playbook instead</Link>
+    </div>
+  )
+}
+
+// Convex throws from useQuery when a query fails, so a boundary is the
+// difference between "we couldn't load this" and a white screen.
+class Boundary extends Component {
+  constructor(props) { super(props); this.state = { error: null, key: 0 } }
+  static getDerivedStateFromError(error) { return { error } }
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="app-page"><div className="wrap">
+          <div className="app-error" role="alert">
+            <strong>We couldn't start a practice call.</strong>
+            <p>{errorText(this.state.error)}</p>
+            <div className="row">
+              <button type="button" className="btn btn-secondary btn-sm" onClick={() => this.setState((s) => ({ error: null, key: s.key + 1 }))}>Try again</button>
+              <Link className="btn btn-ghost btn-sm" to="/charge">Ask Charge instead</Link>
+            </div>
+          </div>
+        </div></div>
+      )
+    }
+    return <div key={this.state.key}>{this.props.children}</div>
+  }
+}
+
+function Gate() {
+  const { isAuthenticated, isLoading } = useConvexAuth()
+  if (isLoading) {
+    return (
+      <div className="app-page">
+        <div className="wrap skel-stack" aria-busy="true" aria-label="Loading mock interviews">
+          <div className="skel w-40" />
+          <div className="skel" />
+          <div className="skel" />
+        </div>
+      </div>
+    )
+  }
+  if (!isAuthenticated) {
+    return (
+      <div className="app-gate">
+        <div className="eyebrow">Practice out loud</div>
+        <h1>Mock interviews with Charge</h1>
+        <p>
+          A real spoken interview, one question at a time, then honest feedback. Nobody else
+          hears it, and you can stop whenever you like.
+        </p>
+        <ul className="feature-list">
+          <li>Competency and motivational questions, asked out loud</li>
+          <li>Feedback straight after, on what you actually said</li>
+          <li>Or a five-minute check-in on where your applications are up to</li>
+        </ul>
+        <div className="cta-row">
+          <SignUpButton mode="modal"><button type="button" className="btn btn-primary">Create a free account</button></SignUpButton>
+          <SignInButton mode="modal"><button type="button" className="btn btn-secondary">Sign in</button></SignInButton>
+        </div>
+        <p className="muted" style={{ fontSize: '0.8rem' }}>
+          Free, and it stays free. See our <Link to="/terms">terms</Link> and <Link to="/privacy">privacy policy</Link>.
+        </p>
+      </div>
+    )
+  }
+  return <Boundary><VoiceRoom /></Boundary>
+}
+
+export default function Interview() {
+  if (!backendConfigured) return <NotConfigured />
+  return <Gate />
 }
