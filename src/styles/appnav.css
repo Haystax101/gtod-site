@@ -1,0 +1,51 @@
+/* Tab bar across the signed-in surfaces.
+   Scrolls sideways rather than wrapping: five tabs will not fit a phone, and a
+   bar that reflows to two rows pushes the actual page content off the screen. */
+.app-nav {
+  margin: 0 0 20px;
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.app-nav::-webkit-scrollbar { display: none; }
+
+.app-nav ul {
+  display: flex;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: max-content;
+}
+
+.app-nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: var(--ink-2, #a89f93);
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.app-nav-tab:hover { color: var(--ink, #f4eee3); }
+.app-nav-tab:focus-visible {
+  outline: 2px solid var(--orange, #f2662b);
+  outline-offset: -2px;
+  border-radius: 4px;
+}
+/* The active tab is the one piece of orange on the bar, so where you are is
+   readable at a glance without reading the labels. */
+.app-nav-tab.is-active {
+  color: var(--orange, #f2662b);
+  border-bottom-color: var(--orange, #f2662b);
+}
+.app-nav-tab svg { flex-shrink: 0; }
+
+@media (max-width: 420px) {
+  .app-nav-tab { padding: 10px 11px; font-size: 0.88rem; }
+}
