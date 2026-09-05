@@ -91,6 +91,8 @@ function VoiceRoom() {
           }
           if (s.status === 'error') setError(s.error)
         },
+        // Local clock, once a second, so the timer does not jump in tens.
+        onTick: (secs) => setSeconds(secs),
         onHeartbeat: async (secs) => {
           setSeconds(secs)
           if (!sessionIdRef.current) return

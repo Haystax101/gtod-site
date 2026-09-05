@@ -132,7 +132,7 @@ export const DEFAULT_VOICE_MODEL = 'gemini-3.1-flash-live-preview'
 export function startVoiceSession(opts) {
   const {
     url, token, model, sessionMinutes, system, context = '',
-    onState = () => {}, onHeartbeat = () => {},
+    onState = () => {}, onHeartbeat = () => {}, onTick = () => {},
   } = opts
 
   const startedAt = Date.now()
@@ -145,6 +145,7 @@ export function startVoiceSession(opts) {
   let source = null
   let processor = null
   let playbackCtx = null
+  let tick = null
   let playHead = 0
   let heartbeat = null
   let hardStop = null
@@ -159,6 +160,7 @@ export function startVoiceSession(opts) {
     if (stopped) return elapsed()
     stopped = true
     clearInterval(heartbeat)
+    clearInterval(tick)
     clearTimeout(hardStop)
     try { processor?.disconnect() } catch { /* already gone */ }
     try { source?.disconnect() } catch { /* already gone */ }
@@ -188,6 +190,13 @@ export function startVoiceSession(opts) {
 
       audioCtx = new AudioContext({ sampleRate: INPUT_SAMPLE_RATE })
       playbackCtx = new AudioContext({ sampleRate: OUTPUT_SAMPLE_RATE })
+      // getUserMedia is awaited above, which breaks the gesture chain from the
+      // click that started the call. Safari in particular then leaves the
+      // context suspended, so everything looks correct and nothing is audible.
+      await Promise.all([
+        audioCtx.state === 'suspended' ? audioCtx.resume() : null,
+        playbackCtx.state === 'suspended' ? playbackCtx.resume() : null,
+      ].filter(Boolean)).catch(() => {})
       source = audioCtx.createMediaStreamSource(stream)
       // ScriptProcessor is deprecated but is the only option that works without
       // shipping a separate worklet file; the buffer is small enough that the
@@ -230,6 +239,10 @@ export function startVoiceSession(opts) {
         source.connect(processor)
         processor.connect(audioCtx.destination)
         heartbeat = setInterval(() => onHeartbeat(elapsed()), HEARTBEAT_MS)
+        // The heartbeat is a server round trip, so it stays infrequent. The
+        // clock on screen is local and free, and should move every second.
+        tick = setInterval(() => onTick(elapsed()), 1000)
+        onTick(elapsed())
       }
 
       socket.onmessage = async (event) => {
@@ -246,6 +259,7 @@ export function startVoiceSession(opts) {
         }
         if (text) onState({ status: 'live', transcript: text, seconds: elapsed() })
         if (!playbackCtx) return
+        if (playbackCtx.state === 'suspended') await playbackCtx.resume().catch(() => {})
         for (const pcm of chunks) {
           // Schedule each chunk after the previous one so speech does not overlap.
           const buffer = playbackCtx.createBuffer(1, pcm.length, OUTPUT_SAMPLE_RATE)
