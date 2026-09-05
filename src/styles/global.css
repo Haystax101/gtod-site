@@ -122,10 +122,15 @@ nav.links a.active { color: var(--ink); background: var(--surface-2); }
 nav.links a.charge-link { display: inline-flex; align-items: center; gap: 6px; }
 .nav-auth { display: flex; align-items: center; gap: 10px; margin-left: 8px; }
 .nav-auth .cl-userButtonTrigger { outline: none; }
-@media (max-width: 720px) {
-  /* Everything lives in the drawer on a phone, so the bar keeps only the
-     identity and the two controls. Leaving links in as well pushed the burger
-     off the edge of the screen. */
+@media (max-width: 1180px) {
+  /* Trim the bar before dropping it entirely, so mid-size laptops keep the
+     full set of links rather than jumping straight to a burger. */
+  nav.links { gap: 0; }
+  nav.links a { padding: 7px 8px; font-size: 0.88rem; }
+}
+@media (max-width: 1023px) {
+  /* Below this the eight links no longer fit, so the drawer takes over and the
+     bar keeps only the identity and the two controls. */
   nav.links { display: none; }
   .nav { gap: 10px; }
   .nav-auth { margin-left: auto; }
@@ -280,9 +285,12 @@ footer.site .legal a:hover { color: var(--ink); }
 /* ---------- Mobile drawer ---------- */
 /* The bar only has room for a couple of links on a phone, so everything lives
    in a drawer instead. The burger is hidden wherever the full bar fits. */
-.nav-burger { display: none; margin-left: 4px; }
-@media (max-width: 720px) {
-  .nav-burger { display: grid; }
+/* Beats `.icon-btn { display: grid }` from the chat stylesheet, which is
+   loaded on demand and otherwise wins on source order, leaving the burger
+   showing on desktop once someone had visited Charge. */
+.nav .nav-burger { display: none; margin-left: 4px; }
+@media (max-width: 1023px) {
+  .nav .nav-burger { display: grid; }
 }
 /* Both are portalled to <body> (see Nav.jsx): header.site sets backdrop-filter,
    which makes it the containing block for fixed children, and inside it these

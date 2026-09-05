@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
+import { asset } from '../lib/asset.js'
 
 export default function Footer() {
   return (
     <footer className="site">
       <div className="wrap">
-        <div className="nav-logo"><img src="/assets/logo.png" alt="" /></div>
+        <div className="nav-logo"><img src={asset('assets/logo.png')} alt="" /></div>
         <div className="fine"><b>Get There One Day</b> · © 2026 · One day at a time</div>
         <div className="legal">
           <Link to="/privacy">Privacy</Link>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { track } from '../lib/analytics.js'
 import { TikTokIcon, InstagramIcon, SpotifyIcon, YouTubeIcon } from '../components/SocialIcons.jsx'
 import { ChargeMark } from '../components/Wordmark.jsx'
+import { asset } from '../lib/asset.js'
 
 const TIKTOK = 'https://www.tiktok.com/@getthereonedaypod'
 // TODO: confirm Instagram handle
@@ -20,12 +21,12 @@ function PhoneReel() {
       <div className="phone">
         <div className="screen">
           <div className="screen-fallback">
-            <img src="/assets/favicon.png" alt="Get There One Day logo" />
+            <img src={asset('assets/favicon.png')} alt="Get There One Day logo" />
             <span>@getthereonedaypod</span>
           </div>
           {reelOk && (
             <video
-              src="/assets/reel.mp4" autoPlay muted loop playsInline preload="metadata"
+              src={asset('assets/reel.mp4')} autoPlay muted loop playsInline preload="metadata"
               aria-label="Get There One Day TikTok videos"
               onError={() => setReelOk(false)}
             />

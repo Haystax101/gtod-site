@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react'
 import { Menu, X } from 'lucide-react'
 import { backendConfigured } from '../lib/backend.jsx'
+import { asset } from '../lib/asset.js'
 
 /**
  * Everything reachable from the top of the site.
@@ -87,17 +88,28 @@ export default function Nav() {
   return (
     <header className="site">
       <div className="nav">
-        <div className="nav-logo"><img src="/assets/logo.png" alt="Get There One Day logo" /></div>
+        <div className="nav-logo"><img src={asset('assets/logo.png')} alt="Get There One Day logo" /></div>
         <Link className="nav-name" to="/">Get There <span>One Day</span></Link>
 
+        {/* The same items as the drawer, so nothing is reachable from only one
+            of them. Below the breakpoint this is hidden and the burger takes
+            over; above it there is room for the lot and no burger appears. */}
         <nav className="links" aria-label="Main">
-          <a className="hide-mobile" href={href('podcast')}>Podcast</a>
-          <NavLink className="hide-mobile" to="/apprenticeships">Playbook</NavLink>
-          <NavLink className="hide-mobile" to="/timeline">This week</NavLink>
-          <NavLink to="/charge" className={({ isActive }) => `charge-link${isActive ? ' active' : ''}`}>
-            <ChargeWord />
-          </NavLink>
-          <a className="hide-mobile" href={href('ask')}>Ask the pod</a>
+          {SECTIONS.flatMap((section) => section.items).map((item) =>
+            item.hash ? (
+              <a key={item.label} href={href(item.hash)}>{item.label}</a>
+            ) : item.wordmark ? (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => `charge-link${isActive ? ' active' : ''}`}
+              >
+                <ChargeWord />
+              </NavLink>
+            ) : (
+              <NavLink key={item.to} to={item.to} className={cls}>{item.label}</NavLink>
+            ),
+          )}
         </nav>
 
         <AuthControls />
