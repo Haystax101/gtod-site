@@ -99,6 +99,66 @@ export default defineSchema({
     .index('by_slug', ['slug'])
     .index('by_sourceId', ['sourceId']),
 
+  // ------------------------------------------------------------------- cv
+
+  // A CV in progress.
+  //
+  // The sections mirror the playbook exactly, because the playbook is what we
+  // tell people a CV should contain: deviating here would teach one thing and
+  // build another. Every field holds the user's own words. Charge critiques a
+  // CV and never writes one, so nothing in this table is generated.
+  //
+  // A CV is tied to a target role because the playbook's first rule is to
+  // rewrite it for every application. Several CVs per user is the point, not
+  // an accident.
+  cvs: defineTable({
+    userId: v.id('users'),
+    title: v.string(),
+    targetRole: v.optional(v.string()),
+    targetEmployer: v.optional(v.string()),
+
+    fullName: v.optional(v.string()),
+    email: v.optional(v.string()),
+    phone: v.optional(v.string()),
+    personalStatement: v.optional(v.string()),
+
+    // Part-time jobs, volunteering, clubs. Bullets are stored separately rather
+    // than as one blob so the checks can look at them one at a time.
+    roles: v.optional(v.array(v.object({
+      title: v.string(),
+      employer: v.optional(v.string()),
+      dates: v.optional(v.string()),
+      bullets: v.array(v.string()),
+    }))),
+    internships: v.optional(v.array(v.object({
+      scheme: v.string(),
+      employer: v.optional(v.string()),
+      dates: v.optional(v.string()),
+      bullets: v.array(v.string()),
+    }))),
+    education: v.optional(v.array(v.object({
+      qualification: v.string(),
+      detail: v.optional(v.string()),
+      school: v.optional(v.string()),
+      dates: v.optional(v.string()),
+    }))),
+    skills: v.optional(v.object({
+      tools: v.array(v.string()),
+      industry: v.array(v.string()),
+      soft: v.array(v.string()),
+    })),
+    references: v.optional(v.array(v.object({
+      name: v.string(),
+      role: v.optional(v.string()),
+      company: v.optional(v.string()),
+      email: v.optional(v.string()),
+    }))),
+    achievements: v.optional(v.array(v.string())),
+
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index('by_user', ['userId', 'updatedAt']),
+
   // ---------------------------------------------------------------- timeline
 
   // Curated employer schemes. Hand-maintained, not scraped: scraping vacancy

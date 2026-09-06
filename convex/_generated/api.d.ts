@@ -19,6 +19,8 @@ import type * as content_playbook from "../content/playbook.js";
 import type * as content_schemes from "../content/schemes.js";
 import type * as conversations from "../conversations.js";
 import type * as crons from "../crons.js";
+import type * as cv from "../cv.js";
+import type * as cvChecks from "../cvChecks.js";
 import type * as dev from "../dev.js";
 import type * as embeddings from "../embeddings.js";
 import type * as http from "../http.js";
@@ -52,6 +54,8 @@ declare const fullApi: ApiFromModules<{
   "content/schemes": typeof content_schemes;
   conversations: typeof conversations;
   crons: typeof crons;
+  cv: typeof cv;
+  cvChecks: typeof cvChecks;
   dev: typeof dev;
   embeddings: typeof embeddings;
   http: typeof http;

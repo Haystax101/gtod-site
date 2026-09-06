@@ -9,6 +9,7 @@ import { trackPageview } from './lib/analytics.js'
 
 // The chat app pulls in the markdown renderer and file parsers, so it loads on demand.
 const Charge = lazy(() => import('./pages/Charge.jsx'))
+const CvBuilder = lazy(() => import('./pages/CvBuilder.jsx'))
 
 // The signed-in app surfaces. Each one pulls its own stylesheet and Convex
 // hooks, so they stay out of the marketing bundle.
@@ -48,6 +49,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/apprenticeships" element={<Apprenticeships />} />
+        <Route path="/cv" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><CvBuilder /></Suspense>} />
         <Route path="/charge" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Charge /></Suspense>} />
         <Route path="/timeline" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><Timeline /></Suspense>} />
         <Route path="/answers" element={<Suspense fallback={<div className="gate"><div className="spinner" /></div>}><AnswerBank /></Suspense>} />

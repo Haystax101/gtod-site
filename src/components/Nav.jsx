@@ -20,6 +20,7 @@ const SECTIONS = [
       { to: '/charge', label: 'Charge', wordmark: true },
       { to: '/timeline', label: 'This week' },
       { to: '/answers', label: 'Answers' },
+      { to: '/cv', label: 'CV' },
       { to: '/interview', label: 'Practice' },
       { to: '/community', label: 'Cohorts' },
     ],

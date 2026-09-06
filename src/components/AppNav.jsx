@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { CalendarDays, MessageSquare, Mic, Sparkles, Users } from 'lucide-react'
+import { CalendarDays, MessageSquare, Mic, Sparkles, Users , FileText } from 'lucide-react'
 import '../styles/appnav.css'
 
 /**
@@ -16,6 +16,7 @@ import '../styles/appnav.css'
 const TABS = [
   { to: '/timeline', label: 'This week', Icon: CalendarDays },
   { to: '/answers', label: 'Answers', Icon: Sparkles },
+  { to: '/cv', label: 'CV', Icon: FileText },
   { to: '/interview', label: 'Practice', Icon: Mic },
   { to: '/community', label: 'Cohorts', Icon: Users },
   { to: '/charge', label: 'Ask Charge', Icon: MessageSquare },
