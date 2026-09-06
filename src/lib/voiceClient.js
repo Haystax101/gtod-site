@@ -171,7 +171,9 @@ export function startVoiceSession(opts) {
   let tick = null
   let muteGain = null
   let micFrames = 0
-  let micSuppressed = 0
+  let scheduled = []
+  let playbackSink = null
+  let playbackEl = null
   let inbound = 0
   let unrecognised = 0
   let audioChunks = 0
@@ -194,6 +196,10 @@ export function startVoiceSession(opts) {
     clearTimeout(hardStop)
     try { processor?.disconnect() } catch { /* already gone */ }
     try { muteGain?.disconnect() } catch { /* already gone */ }
+    for (const node of scheduled.splice(0)) {
+      try { node.stop() } catch { /* already finished */ }
+    }
+    try { playbackEl?.pause(); playbackEl.srcObject = null } catch { /* already gone */ }
     try { source?.disconnect() } catch { /* already gone */ }
     try { stream?.getTracks().forEach((t) => t.stop()) } catch { /* already gone */ }
     try { await audioCtx?.close() } catch { /* already gone */ }
@@ -230,6 +236,26 @@ export function startVoiceSession(opts) {
       // getUserMedia is awaited above, which breaks the gesture chain from the
       // click that started the call. Safari in particular then leaves the
       // context suspended, so everything looks correct and nothing is audible.
+      // Echo, handled where it should be. getUserMedia's echoCancellation
+      // cancels against what the browser is playing through its media pipeline,
+      // and raw Web Audio output is not part of that reference. Publishing the
+      // playback as a MediaStream and playing it through an audio element puts
+      // it back in scope, so Charge's voice is cancelled out of the microphone
+      // instead of being muted out of it.
+      try {
+        playbackSink = playbackCtx.createMediaStreamDestination()
+        playbackEl = new Audio()
+        playbackEl.srcObject = playbackSink.stream
+        playbackEl.autoplay = true
+        await playbackEl.play()
+      } catch (err) {
+        // If the element will not play, fall back to speaking directly. Echo
+        // cancellation is weaker, but a call with echo beats no call at all.
+        log('playback via media element unavailable, using direct output', err?.message)
+        playbackSink = null
+        playbackEl = null
+      }
+
       await Promise.all([
         audioCtx.state === 'suspended' ? audioCtx.resume() : null,
         playbackCtx.state === 'suspended' ? playbackCtx.resume() : null,
@@ -264,6 +290,16 @@ export function startVoiceSession(opts) {
             },
             systemInstruction: {
               parts: [{ text: context ? `${system}\n\n${context}` : system }],
+            },
+            // Server-side voice activity detection is what cancels Charge's
+            // turn when the user starts talking. The silence window is the
+            // pause it waits through before deciding a turn is finished; too
+            // short and it talks over someone who is still thinking.
+            realtimeInputConfig: {
+              automaticActivityDetection: {
+                silenceDurationMs: 700,
+                prefixPaddingMs: 200,
+              },
             },
           },
         }))
@@ -301,26 +337,11 @@ export function startVoiceSession(opts) {
           // browser itself is playing and Web Audio output is not part of that
           // reference signal. playHead already says when his speech ends, so
           // the microphone simply stops sending until it has.
-          const queued = playbackCtx ? playHead - playbackCtx.currentTime : 0
-          const speaking = queued + ECHO_TAIL_S > 0
-          if (speaking) {
-            micSuppressed += 1
-            // Audio arrives faster than it plays, so the queue can run well
-            // ahead of the clock. A long queue means a long stretch with the
-            // microphone shut, which is indistinguishable from a dead call.
-            if (micSuppressed === 1 || micSuppressed % 100 === 0) {
-              log('mic gated, Charge still has audio queued', {
-                frames: micSuppressed,
-                secondsQueued: +queued.toFixed(1),
-              })
-            }
-            return
-          }
-          if (micSuppressed) {
-            log('mic live again', { gatedFrames: micSuppressed })
-            micSuppressed = 0
-          }
-
+          // The microphone streams continuously, including while Charge is
+          // speaking. That is what makes interruption possible: the server's
+          // voice activity detection cancels his turn the moment it hears the
+          // user, and tells us so. Muting the microphone to dodge echo, which
+          // this used to do, removes the very signal barge-in depends on.
           const input = e.inputBuffer.getChannelData(0)
           const resampled = resample(input, audioCtx.sampleRate, INPUT_SAMPLE_RATE)
           socket.send(encodeFrame(floatTo16BitPCM(resampled)))
@@ -380,7 +401,13 @@ export function startVoiceSession(opts) {
         try {
           const parsed = JSON.parse(raw)
           if (parsed?.serverContent?.interrupted) {
-            log('server interrupted the turn, clearing the audio queue')
+            // The server cancelled the turn because the user started talking.
+            // Everything already queued is speech he is no longer supposed to
+            // be saying, so it has to be stopped, not just left to finish.
+            log('interrupted by the user, dropping queued speech', { queued: scheduled.length })
+            for (const node of scheduled.splice(0)) {
+              try { node.stop() } catch { /* already finished */ }
+            }
             playHead = playbackCtx?.currentTime ?? 0
           }
         } catch { /* handled by decodeFrame */ }
@@ -428,10 +455,18 @@ export function startVoiceSession(opts) {
           for (let i = 0; i < pcm.length; i++) channel[i] = pcm[i] / 0x8000
           const node = playbackCtx.createBufferSource()
           node.buffer = buffer
-          node.connect(playbackCtx.destination)
+          node.connect(playbackSink ?? playbackCtx.destination)
           playHead = Math.max(playHead, playbackCtx.currentTime)
           node.start(playHead)
           playHead += buffer.duration
+          // Audio is scheduled well ahead of real time, so an interruption has
+          // to stop nodes that have already been queued. Without a handle on
+          // them, Charge talks over the person who interrupted him.
+          scheduled.push(node)
+          node.onended = () => {
+            const i = scheduled.indexOf(node)
+            if (i !== -1) scheduled.splice(i, 1)
+          }
         }
       }
 
