@@ -1,0 +1,60 @@
+name: Preview build to GitHub Pages
+
+# A testing target, separate from production. Production is Hostinger, served
+# from the `deploy` branch by deploy.yml; nothing here touches that path.
+#
+# Published at https://haystax101.github.io/gtod-site/, so the build needs
+# BASE_PATH. Vite bakes VITE_* values into the bundle at build time, so the
+# Convex URL and Clerk publishable key come from repository secrets. Both are
+# public values by design: they ship inside the JavaScript either way.
+on:
+  push:
+    branches: [integration]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          # Project pages live under /<repo>/, so assets need that prefix.
+          BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+          VITE_CLERK_PUBLISHABLE_KEY: ${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
+          VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ secrets.VITE_POSTHOG_HOST }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

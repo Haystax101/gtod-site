@@ -1,0 +1,46 @@
+/* Live voice screen. Deliberately calm: the user is nervous before a call, so
+   the page stays quiet and gives them one obvious thing to press. */
+.voice-page { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+.voice-head { text-align: center; margin-bottom: 28px; }
+.voice-head h1 { font-family: 'Oswald', sans-serif; text-transform: uppercase;
+  font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.1; margin-bottom: 12px; }
+.voice-head .hl { color: var(--orange); }
+.voice-head .copy { color: var(--muted); max-width: 34rem; margin: 0 auto; }
+
+.voice-allowance { text-align: center; color: var(--muted); font-size: 0.9rem;
+  margin-bottom: 28px; }
+.voice-allowance strong { color: var(--cream); }
+
+.voice-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+@media (max-width: 560px) { .voice-choices { grid-template-columns: 1fr; } }
+.voice-choice { text-align: left; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 18px; cursor: pointer; color: inherit; font: inherit;
+  transition: border-color 0.15s, background 0.15s; display: flex; flex-direction: column; gap: 6px; }
+.voice-choice:hover { border-color: var(--orange); }
+.voice-choice:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+.voice-choice.is-on { border-color: var(--orange); background: var(--panel-2); }
+.voice-choice-name { font-family: 'Oswald', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.04em; font-weight: 600; }
+.voice-choice-sub { color: var(--muted); font-size: 0.88rem; }
+
+.voice-stage { display: flex; flex-direction: column; align-items: center; gap: 16px;
+  min-height: 220px; justify-content: center; }
+.voice-start { min-width: 220px; justify-content: center; }
+
+.voice-orb { width: 96px; height: 96px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--orange-hot), var(--orange) 55%, var(--teal) 130%);
+  box-shadow: 0 0 60px rgba(242, 102, 43, 0.35); }
+.voice-orb.is-live { animation: voice-pulse 2.4s ease-in-out infinite; }
+@keyframes voice-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(242, 102, 43, 0.3); }
+  50% { transform: scale(1.06); box-shadow: 0 0 80px rgba(242, 102, 43, 0.5); }
+}
+@media (prefers-reduced-motion: reduce) { .voice-orb.is-live { animation: none; } }
+
+.voice-status { color: var(--muted); font-size: 0.92rem; }
+.voice-timer { font-family: 'Oswald', sans-serif; font-size: 2rem; letter-spacing: 0.04em; }
+.voice-error { margin-top: 20px; padding: 14px 16px; border-radius: 10px;
+  background: rgba(242, 102, 43, 0.1); border: 1px solid var(--orange); }
+.voice-done { margin-top: 20px; text-align: center; color: var(--cream);
+  background: var(--teal-deep); border: 1px solid var(--teal); border-radius: 12px; padding: 16px; }
+.voice-fineprint { margin-top: 36px; text-align: center; color: var(--muted); font-size: 0.82rem; }

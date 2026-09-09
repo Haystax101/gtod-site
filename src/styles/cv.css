@@ -1,0 +1,70 @@
+/* ===== CV builder ===== */
+.cv-page { display: grid; grid-template-columns: 240px 1fr; gap: 0; align-items: start; }
+@media (max-width: 900px) { .cv-page { grid-template-columns: 1fr; } }
+
+.cv-list { border-right: 1px solid var(--line); min-height: 60vh; padding: 14px 10px; }
+@media (max-width: 900px) { .cv-list { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; } }
+.cv-list-top { padding: 0 4px 10px; }
+.cv-list-top .btn { width: 100%; }
+.cv-empty { color: var(--muted); font-size: 0.86rem; padding: 8px 6px; }
+.cv-row {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  padding: 10px; border: 0; background: transparent; border-radius: 9px;
+  cursor: pointer; color: var(--ink-2);
+}
+.cv-row:hover { background: var(--surface-2); }
+.cv-row.active { background: var(--teal-soft); color: var(--ink); }
+.cv-row-main { flex: 1; min-width: 0; display: grid; }
+.cv-row-title { font-weight: 600; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-row-sub { font-size: 0.78rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-row-score { font-size: 0.76rem; font-weight: 600; color: var(--muted); }
+
+.cv-blank { padding: 12vh 24px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.cv-editor { padding: 18px 20px 60px; min-width: 0; }
+.cv-editor-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.cv-head-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.cv-title {
+  font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink);
+  border: 1px solid transparent; background: transparent; border-radius: 8px;
+  padding: 6px 8px; min-width: 12rem; flex: 1;
+}
+.cv-title:hover { border-color: var(--line); }
+.cv-title:focus { outline: none; border-color: var(--teal); background: var(--surface); }
+
+.cv-body { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 28px; align-items: start; }
+@media (max-width: 1100px) { .cv-body { grid-template-columns: 1fr; } }
+
+.cv-section { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 14px; }
+.cv-section h3 { font-size: 1.05rem; margin-bottom: 10px; }
+.cv-hint { color: var(--muted); font-size: 0.88rem; margin-bottom: 12px; }
+.cv-field { display: grid; gap: 5px; margin-bottom: 10px; }
+.cv-field > span { font-size: 0.8rem; font-weight: 600; color: var(--ink-2); }
+.cv-field input, .cv-field textarea, .cv-textarea {
+  width: 100%; background: var(--bg); border: 1px solid var(--line-strong);
+  border-radius: 9px; padding: 10px 12px; color: var(--ink);
+  font-family: inherit; font-size: 0.95rem; resize: vertical;
+}
+.cv-field input:focus, .cv-field textarea:focus, .cv-textarea:focus {
+  outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px var(--teal-soft);
+}
+.cv-entry { position: relative; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; background: var(--bg); }
+.cv-entry-remove { position: absolute; top: 8px; right: 8px; }
+
+/* Checks and preview */
+.cv-side { display: grid; gap: 16px; position: sticky; top: calc(var(--nav-h) + 16px); }
+@media (max-width: 1100px) { .cv-side { position: static; } }
+.cv-checks { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 18px; }
+.cv-checks-head { display: flex; align-items: baseline; justify-content: space-between; }
+.cv-checks-head .eyebrow { margin-bottom: 8px; }
+.cv-checks-score { font-weight: 700; color: var(--teal); }
+.cv-checks ul { list-style: none; display: grid; gap: 9px; margin-top: 14px; }
+.cv-checks li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; font-size: 0.88rem; color: var(--muted); }
+.cv-checks li.ok { color: var(--ink-2); }
+.cv-checks li em { display: block; font-style: normal; font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+.cv-checks .tick {
+  width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  border: 1.5px solid var(--line-strong); color: var(--teal); margin-top: 1px;
+}
+.cv-checks li.ok .tick { border-color: var(--teal); background: var(--teal-soft); }
+.cv-words { margin-top: 12px; font-size: 0.8rem; color: var(--muted); }
+.cv-preview .paper { font-size: 0.8rem; padding: 22px; margin-top: 8px; }

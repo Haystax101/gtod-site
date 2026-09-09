@@ -1,0 +1,152 @@
+# Launch checklist
+
+Everything needed to take this from "code exists" to "running", in order. Each
+item says who can do it and what breaks if it is skipped.
+
+## 1. Keys and environment (you)
+
+Set with the CLI, which is faster than the dashboard and works before you have
+even opened it. Nothing here belongs in git.
+
+```bash
+npx convex dev          # first run: logs you in and creates the project
+                        # (this is what creates the dashboard - no setup needed first)
+
+npx convex env set OPENROUTER_API_KEY sk-or-...
+npx convex env set OPENROUTER_MODEL_FLASH <slug>
+npx convex env set OPENROUTER_MODEL_PRO <slug>
+npx convex env set GEMINI_API_KEY AIza...
+npx convex env set CLERK_JWT_ISSUER_DOMAIN https://...
+npx convex env set STRIPE_SECRET_KEY sk_test_...
+npx convex env set STRIPE_PRICE_ID price_...
+npx convex env set STRIPE_WEBHOOK_SECRET whsec_...
+
+npx convex env list     # check what landed
+```
+
+`VOICE_USD_PER_MINUTE` and the voice allowances have working defaults, so set
+them only to override.
+
+| Variable | Needed for | If missing |
+|---|---|---|
+| `OPENROUTER_API_KEY` | all chat and coaching | Charge returns a clear "not configured yet" message |
+| `OPENROUTER_MODEL_FLASH` | free tier model | falls back to a default slug that is **unverified** |
+| `OPENROUTER_MODEL_PRO` | Pro tier model | as above |
+| `GEMINI_API_KEY` | voice calls | voice returns "not configured yet"; everything else works |
+| `VOICE_USD_PER_MINUTE` | cost accounting | defaults to 0.023, verified for gemini-3.1-flash-live-preview on 2026-09-03 |
+| `VOICE_MINUTES_PRO` / `VOICE_MINUTES_FLASH` | allowances | defaults to 60 / 10 |
+| `CLERK_JWT_ISSUER_DOMAIN`, `STRIPE_*` | existing auth and billing | unchanged from before this work |
+
+Front end (`.env.local`, baked in at build time):
+
+| Variable | Needed for |
+|---|---|
+| `VITE_VOICE_WS_URL` | the voice websocket endpoint. **Has a working default now** - only set it to override |
+| `VITE_VOICE_MODEL` | the Live model id: `gemini-3.1-flash-live-preview`. **Required** - voice refuses to start without it |
+
+## 2. Things that must be verified, not assumed (you)
+
+This build environment had **no network access**, so the following could not be
+checked against any provider documentation. Each is isolated so that fixing it
+is a small, contained edit.
+
+1. **OpenRouter model slugs** in `convex/tiers.ts`. Confirm against OpenRouter's
+   model list. They are env-overridable, so this is a dashboard change.
+2. **Whether OpenRouter exposes an embeddings endpoint.** If it does not, point
+   `EMBEDDINGS_URL` and `EMBEDDINGS_MODEL` at any OpenAI-compatible provider.
+   Retrieval works lexically without embeddings, so this is optional.
+3. **The voice ephemeral-token request** in `mintEphemeralCredential`
+   (`convex/voice.ts`). One fetch. Two rules must survive the edit: the
+   credential stays short-lived and single-session, and the raw API key is never
+   returned to the browser.
+4. **The voice websocket frame format** in `src/lib/voiceClient.js` -
+   `encodeFrame`, `decodeFrame` and the `onmessage` branch.
+
+   The endpoint itself is no longer a guess. Read out of the official
+   `@google/genai` SDK (v2.21.0), the Gemini Developer API builds
+   `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent`,
+   with the ephemeral credential passed as `?access_token=` (a raw API key would
+   be `?key=`, which we never send to a browser). That is now the default.
+
+   **Strongly consider replacing the hand-rolled client with the official SDK**
+   (`npm i @google/genai`, `ai.live.connect(...)`). It owns the endpoint, the
+   handshake and the frame format, so it removes the last unverified thing in
+   the voice path and stops the protocol being our problem when it changes.
+   Everything that governs cost - the budget check, the reservation, the TTL,
+   the concurrency limit - lives server-side in `convex/voice.ts` and is
+   untouched by that swap.
+   Also set `VITE_VOICE_MODEL` to a Live-capable model id. Find it with
+   `GEMINI_API_KEY=... tools/voice/list-live-models.sh`, which asks your own key
+   which models support `bidiGenerateContent`. Do not take a model id from
+   documentation, a blog post or an assistant's recollection: the list changes,
+   models get retired, and only a subset of any generation supports Live. The setup frame
+   requires it and the client now refuses to open a socket without one, rather
+   than connecting and dying on an opaque close.
+5. ~~The real per-minute audio rate.~~ **Done.** gemini-3.1-flash-live-preview
+   is $0.005/min audio in and $0.018/min out, so 0.023 worst case. At 60 Pro
+   minutes a user exhausting every cap still leaves 53% margin, with 276
+   minutes of headroom before break-even.
+
+   The open cost question is now the **text** side, not voice: at the assumed
+   rates a heavy user's chat costs $4.32 against voice's $1.38. Set
+   `--input-usd-per-m` and `--output-usd-per-m` from the OpenRouter model you
+   actually pick and re-run before trusting the totals.
+
+## 3. Deploy (you)
+
+```bash
+npm install
+npx convex dev          # regenerates convex/_generated - REQUIRED
+npx convex run knowledge:seed
+npx convex run knowledge:reindex
+npx convex run timeline:seedSchemes   # 40 employers, all unverified, no dates
+npm run build
+```
+
+`npx convex dev` matters more than it looks: `convex/_generated/api.d.ts` is
+checked in and does not know about the new modules until codegen runs. Until it
+does, typecheck reports "Property 'voice' does not exist" and similar. Those
+errors disappear on first codegen and are not real defects.
+
+## 4. Before community opens to anyone (you, and a lawyer)
+
+Community ships **disabled** (`cohorts.enabled`). Before turning it on:
+
+- A **named human** owns the moderation queue with an agreed response time.
+  `convex/moderation.ts` is a triage filter that routes to that person; it is
+  not a safety system and does not claim to be.
+- Take **actual advice** on Online Safety Act duties and the Children's code.
+  The audience is 16-19, so this is the core case, not an edge case.
+- Decide the auto-approve policy. Default is off: every post is reviewed.
+
+The cost of getting this wrong is not a bug report. Do not shortcut it.
+
+## 5. Verification you can run now
+
+```bash
+tools/test.sh                                    # every test
+python3 tools/corpus/verify.py                   # corpus integrity
+python3 tools/corpus/verify.py --net             # + every cited URL resolves
+npx tsc --noEmit -p convex/tsconfig.json         # backend types
+npm run build                                    # front end
+```
+
+`verify.py --net` has never been run successfully from this environment because
+egress is blocked here. **On your machine it will actually work**, and it is the
+one check nobody has been able to do: that every URL in the corpus resolves.
+Run it first.
+
+## 6. Seeding real content (you)
+
+The corpus is the moat, and it is the part that needs you:
+
+1. Paste research into `content/inbox/`.
+2. `python3 tools/corpus/normalise.py content/inbox/*.md`
+3. `python3 tools/corpus/verify.py --net`
+4. Move passing documents to `content/apprenticeships/<section>/`.
+5. `npx convex run knowledge:reindex`
+
+Scheme dates in `convex/content/schemes.ts` ship **unverified with no dates**,
+deliberately. A wrong deadline is worse than a missing one: it sends someone to
+a closed application and they never trust the product again. Fill them in
+against each employer's own page, then set `verified: true`.
