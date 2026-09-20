@@ -1,7 +1,8 @@
 // Password and token hashing on Web Crypto, which the default Convex runtime
 // supports, so none of this needs a Node action.
 
-const PBKDF2_ITERATIONS = 120_000
+// OWASP's 2023 figure for PBKDF2-HMAC-SHA256. ~75 ms in the Convex runtime.
+const PBKDF2_ITERATIONS = 600_000
 
 function toHex(buf: ArrayBuffer | Uint8Array) {
   const bytes = buf instanceof Uint8Array ? buf : new Uint8Array(buf)
@@ -36,6 +37,12 @@ export async function verifyPassword(password: string, stored: string) {
   let diff = 0
   for (let i = 0; i < hash.length; i++) diff |= candidate.charCodeAt(i) ^ hash.charCodeAt(i)
   return diff === 0
+}
+
+/** True when a stored hash uses fewer iterations than we now require; rehash it at the next successful login. */
+export function needsRehash(stored: string) {
+  const [scheme, iter] = stored.split('$')
+  return scheme !== 'pbkdf2' || Number(iter) < PBKDF2_ITERATIONS
 }
 
 export function newToken() {

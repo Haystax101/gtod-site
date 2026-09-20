@@ -56,6 +56,15 @@ export default defineSchema({
     .index('by_agent', ['agentId'])
     .index('by_expiresAt', ['expiresAt']),
 
+  // Failed-login tracking per handle. Five failures locks the handle for a
+  // growing window; a successful login clears it. Rows are tiny and pruned.
+  loginAttempts: defineTable({
+    handle: v.string(),
+    failures: v.number(),
+    lockedUntil: v.optional(v.number()),
+    updatedAt: v.number(),
+  }).index('by_handle', ['handle']),
+
   // The official mission list. Agents can also log a free-form mission
   // (submission.freeformTitle) without a row here.
   challenges: defineTable({

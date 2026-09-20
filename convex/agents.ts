@@ -283,14 +283,54 @@ export const createSession = internalMutation({
 })
 
 export const setPasswordHash = internalMutation({
-  args: { agentId: v.id('agents'), passwordHash: v.string(), actorId: v.id('agents'), revokeSessions: v.boolean() },
-  handler: async (ctx, { agentId, passwordHash, actorId, revokeSessions }) => {
+  args: { agentId: v.id('agents'), passwordHash: v.string(), actorId: v.id('agents'), revokeSessions: v.boolean(), silent: v.optional(v.boolean()) },
+  handler: async (ctx, { agentId, passwordHash, actorId, revokeSessions, silent }) => {
     await ctx.db.patch(agentId, { passwordHash })
+    if (silent) return
     if (revokeSessions) {
       const sessions = await ctx.db.query('sessions').withIndex('by_agent', (q) => q.eq('agentId', agentId)).collect()
       for (const s of sessions) await ctx.db.delete(s._id)
     }
     await log(ctx, actorId, actorId === agentId ? 'password-change' : 'password-reset', agentId)
+  },
+})
+
+// ------------------------------------------------------- login throttling
+
+const MAX_FAILURES = 5
+const LOCK_BASE_MS = 5 * 60 * 1000
+
+export const loginLock = internalQuery({
+  args: { handle: v.string() },
+  handler: async (ctx, { handle }) => {
+    const row = await ctx.db.query('loginAttempts').withIndex('by_handle', (q) => q.eq('handle', handle)).unique()
+    if (!row?.lockedUntil || row.lockedUntil < Date.now()) return null
+    return row.lockedUntil
+  },
+})
+
+export const recordLogin = internalMutation({
+  args: { handle: v.string(), ok: v.boolean() },
+  handler: async (ctx, { handle, ok }) => {
+    const row = await ctx.db.query('loginAttempts').withIndex('by_handle', (q) => q.eq('handle', handle)).unique()
+    if (ok) {
+      if (row) await ctx.db.delete(row._id)
+      return
+    }
+    const now = Date.now()
+    const failures = (row && now - row.updatedAt < 60 * 60 * 1000 ? row.failures : 0) + 1
+    // 5 fails -> 5 min, 10 -> 10 min, 15 -> 20 min, ...
+    const lockedUntil = failures >= MAX_FAILURES ? now + LOCK_BASE_MS * 2 ** Math.floor(failures / MAX_FAILURES - 1) : undefined
+    if (row) await ctx.db.patch(row._id, { failures, lockedUntil, updatedAt: now })
+    else await ctx.db.insert('loginAttempts', { handle, failures, lockedUntil, updatedAt: now })
+  },
+})
+
+export const purgeLoginAttempts = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const stale = (await ctx.db.query('loginAttempts').collect()).filter((r) => Date.now() - r.updatedAt > 24 * 60 * 60 * 1000)
+    for (const r of stale) await ctx.db.delete(r._id)
   },
 })
 
