@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useAction, useMutation, useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
@@ -401,28 +402,70 @@ function Conversation({ agentId, onBack }) {
 
 // ----------------------------------------------------------------- reports
 
+const REPORT_KIND = { post: 'Forum post', story: 'Field report', comment: 'Story comment' }
+
+/**
+ * One queue for everything members have flagged: forum posts, published
+ * stories and story comments. Each row carries what was said and the control
+ * that deals with it.
+ */
 function Reports({ reports }) {
-  const { token } = useSession()
-  const moderatePost = useMutation(api.forum.moderatePost)
   return (
     <div className="card">
       <div className="card-head"><span className="eyebrow">Open reports</span></div>
       {reports === undefined && <div className="empty"><span className="spin" /></div>}
       {reports?.length === 0 && <div className="empty">Nothing reported.</div>}
-      {reports?.map((r) => (
-        <div key={r._id} className="sub-row">
-          <div className="body">
-            <div className="m">@{r.reporter?.displayHandle} reported @{r.author?.displayHandle} · {timeAgo(r.createdAt)}</div>
-            <div className="note">Reason: {r.reason || '(none given)'}</div>
-            {r.post ? <div className="small" style={{ marginTop: 6, whiteSpace: 'pre-wrap' }}>{r.post.body}</div> : <div className="dim small">Post deleted.</div>}
-            <div className="row" style={{ marginTop: 8 }}>
-              {r.post && <button className="btn xs danger" onClick={() => moderatePost({ token, postId: r.postId, hidden: true, resolveReports: true })}>Hide post</button>}
-              {r.post && <button className="btn xs ghost" onClick={() => moderatePost({ token, postId: r.postId, hidden: r.post.hidden, resolveReports: true })}>Dismiss</button>}
-              {r.post?.authorId && <a className="btn xs ghost" href={`/agents/forum/${r.post.threadId}`}>Open thread</a>}
-            </div>
-          </div>
+      {reports?.map((r) => <ReportRow key={r._id} r={r} />)}
+    </div>
+  )
+}
+
+function ReportRow({ r }) {
+  const { token } = useSession()
+  const moderatePost = useMutation(api.forum.moderatePost)
+  const moderateComment = useMutation(api.stories.moderateComment)
+  const review = useMutation(api.missions.review)
+  const resolve = useMutation(api.forum.resolveReport)
+  const [busy, setBusy] = useState(false)
+
+  async function run(fn) {
+    setBusy(true)
+    try { await fn() } finally { setBusy(false) }
+  }
+
+  return (
+    <div className="sub-row">
+      <div className="body">
+        <div className="row between">
+          <span className="pill">{REPORT_KIND[r.kind] ?? r.kind}</span>
+          <span className="m">{timeAgo(r.createdAt)}</span>
         </div>
-      ))}
+        <div className="m">@{r.reporter?.displayHandle ?? '[gone]'} reported @{r.author?.displayHandle ?? '[gone]'}</div>
+        <div className="note">Reason: {r.reason || '(none given)'}</div>
+        {r.gone
+          ? <div className="dim small" style={{ marginTop: 6 }}>Deleted already.</div>
+          : <div className="small" style={{ marginTop: 6, whiteSpace: 'pre-wrap' }}>{r.body}</div>}
+        {r.hidden && <div className="m" style={{ color: 'var(--amber)' }}>Currently hidden / unpublished</div>}
+
+        <div className="row" style={{ marginTop: 8 }}>
+          {!r.gone && r.kind === 'post' && !r.hidden && (
+            <button className="btn xs danger" disabled={busy} onClick={() => run(() => moderatePost({ token, postId: r.postId, hidden: true, resolveReports: true }))}>Hide post</button>
+          )}
+          {!r.gone && r.kind === 'comment' && !r.hidden && (
+            <button className="btn xs danger" disabled={busy} onClick={() => run(() => moderateComment({ token, commentId: r.commentId, hidden: true, resolveReports: true }))}>Hide comment</button>
+          )}
+          {!r.gone && r.kind === 'story' && !r.hidden && (
+            <button className="btn xs danger" disabled={busy} onClick={() => run(async () => {
+              if (!window.confirm('Unpublish this story? It comes off the brief and its points come back off the board.')) return
+              await review({ token, submissionId: r.submissionId, status: 'rejected', reviewNote: 'Taken down after a report.' })
+              await resolve({ token, reportId: r._id })
+            })}>Unpublish story</button>
+          )}
+          <button className="btn xs ghost" disabled={busy} onClick={() => run(() => resolve({ token, reportId: r._id }))}>Dismiss</button>
+          {r.kind === 'post' && r.threadId && <Link className="btn xs ghost" to={`/forum/${r.threadId}`}>Open thread</Link>}
+          {(r.kind === 'story' || r.kind === 'comment') && r.submissionId && <Link className="btn xs ghost" to={`/s/${r.submissionId}`}>Open story</Link>}
+        </div>
+      </div>
     </div>
   )
 }

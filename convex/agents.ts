@@ -125,9 +125,11 @@ export const profile = query({
       .withIndex('by_agent', (q) => q.eq('agentId', a._id))
       .order('desc')
       .collect()
+    const own = viewer._id === a._id || viewer.rank === 'lead'
     const stories = await Promise.all(
       approved
-        .filter((s) => s.status === 'approved')
+        // A private report stays off the profile, but its author (and HQ) still see it there.
+        .filter((s) => s.status === 'approved' && (own || (s.visibility ?? 'public') === 'public'))
         .slice(0, 20)
         .map(async (s) => {
           const c = s.challengeId ? await ctx.db.get(s.challengeId) : null
@@ -137,6 +139,7 @@ export const profile = query({
             story: s.story ?? null,
             points: s.verifiedCount ?? 0,
             reviewedAt: s.reviewedAt,
+            private: (s.visibility ?? 'public') === 'private',
           }
         }),
     )

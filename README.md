@@ -7,7 +7,7 @@ members' area for followers (missions, ranks, forum, direct line to HQ).
 
 - `index.html` - the landing page. Static, styles inlined, unchanged from the original site.
 - `agents/index.html` + `src/agents/` - the Field Operations app (React + Vite, React Router under `/agents/*`).
-- `convex/` - the backend (Convex): auth, missions and field reports, forum, direct line, Stripe webhook.
+- `convex/` - the backend (Convex): auth, missions and field reports, story comments and reactions, forum, year rooms, direct line, Stripe webhook.
 - `public/` - copied verbatim into the build: `assets/` (logo, favicon, hero reel) and `.htaccess` (SPA fallback for `/agents/*`).
 
 ## Running locally
@@ -46,8 +46,18 @@ Deploy keys → Production).
 3. George reads it and either approves it - awarding points, one by default - or rejects it, with an
    optional note back to the agent. Points land on the agent and the board immediately, and a
    re-score moves them the other way just as cleanly.
-4. Approved stories are published inside the app: the brief's field-report feed and the agent's
-   profile. Rejected and pending ones stay private to the agent and HQ.
+4. Approved stories are published inside the app, if the author left them public: the brief's
+   field-report feed and the agent's profile. Private, rejected and pending ones are seen only by
+   the author and HQ. Visibility is the author's call and can be flipped at any time from their
+   reports list; points already awarded stay either way.
+5. A published story takes reactions (salute / laugh / heart, one row per agent per emoji, so a tap
+   toggles) and comments, on its own page at `/agents/s/<id>`. Stories and comments are reportable
+   alongside forum posts: `reports` is polymorphic (`kind` plus one of postId / submissionId /
+   commentId; rows filed before stories existed carry no kind and are posts), and HQ works one
+   queue that hides a post or comment, unpublishes a story, or dismisses.
+
+Everything a non-author can reach goes through `readableStory()` in `convex/stories.ts`, so an
+unapproved or private story cannot be read, reacted to or commented on.
 
 Voice evidence was retired in favour of this. The audio-era columns are still on the `submissions`
 table so old rows validate and so HQ can finish reviewing anything left in the queue; recordings

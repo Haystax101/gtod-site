@@ -113,12 +113,18 @@ export const report = mutation({
   handler: async (ctx, { token, postId, reason }) => {
     const me = await requireAgent(ctx, token)
     if (!(await ctx.db.get(postId))) throw new ConvexError('Post not found')
-    await ctx.db.insert('reports', { reporterId: me._id, postId, reason: reason.trim().slice(0, 300), createdAt: Date.now() })
+    await ctx.db.insert('reports', { reporterId: me._id, kind: 'post', postId, reason: reason.trim().slice(0, 300), createdAt: Date.now() })
   },
 })
 
 // ---------------------------------------------------------------------- HQ
 
+/**
+ * Everything members have reported, of any kind, flattened into one shape so
+ * HQ works a single queue: what was said, who said it, and which control
+ * deals with it. Rows filed before stories existed carry no `kind` and are
+ * always forum posts.
+ */
 export const openReports = query({
   args: { token: v.string() },
   handler: async (ctx, { token }) => {
@@ -126,12 +132,35 @@ export const openReports = query({
     const rows = await ctx.db.query('reports').withIndex('by_open', (q) => q.eq('resolvedAt', undefined)).order('desc').take(100)
     return Promise.all(
       rows.map(async (r) => {
-        const post = await ctx.db.get(r.postId)
-        const author = post ? await ctx.db.get(post.authorId) : null
+        const kind = r.kind ?? 'post'
         const reporter = await ctx.db.get(r.reporterId)
-        return { ...r, post, author: author ? publicAgent(author) : null, reporter: reporter ? publicAgent(reporter) : null }
+        const base = { ...r, kind, reporter: reporter ? publicAgent(reporter) : null }
+
+        if (kind === 'comment' && r.commentId) {
+          const c = await ctx.db.get(r.commentId)
+          const author = c ? await ctx.db.get(c.authorId) : null
+          return { ...base, body: c?.body ?? null, hidden: c?.hidden ?? false, gone: !c, submissionId: c?.submissionId ?? null, author: author ? publicAgent(author) : null }
+        }
+        if (kind === 'story' && r.submissionId) {
+          const sub = await ctx.db.get(r.submissionId)
+          const author = sub ? await ctx.db.get(sub.agentId) : null
+          return { ...base, body: sub?.story ?? null, hidden: sub?.status !== 'approved', gone: !sub, submissionId: r.submissionId, author: author ? publicAgent(author) : null }
+        }
+        const post = r.postId ? await ctx.db.get(r.postId) : null
+        const author = post ? await ctx.db.get(post.authorId) : null
+        return { ...base, body: post?.body ?? null, hidden: post?.hidden ?? false, gone: !post, threadId: post?.threadId ?? null, author: author ? publicAgent(author) : null }
       }),
     )
+  },
+})
+
+/** Close a report without touching what was reported. */
+export const resolveReport = mutation({
+  args: { token: v.string(), reportId: v.id('reports') },
+  handler: async (ctx, { token, reportId }) => {
+    const lead = await requireLead(ctx, token)
+    await ctx.db.patch(reportId, { resolvedAt: Date.now() })
+    await log(ctx, lead._id, 'report-dismiss', reportId)
   },
 })
 

@@ -19,12 +19,16 @@ export default function Terms() {
             <li>Missions are light-hearted. Never harass anyone, and never persist if someone is not up for it.</li>
             <li>A mission is written up in your own words. No recordings, no photos, nothing taken of anyone else: just your story of what happened.</li>
             <li>Do not name or identify the person you asked. No surnames, no handles, no addresses. Keep it to the story.</li>
-            <li>HQ reads every report and decides whether it earns a point. Approved reports are published inside the app, under your handle, for other members to read.</li>
-            <li>The decision on a mission is final, but you can always plead your case on the direct line.</li>
+            <li>HQ reads every report and decides whether it earns a point. That decision is final, but you can always plead your case on the direct line.</li>
+            <li>You choose public or private when you file, and you can change it whenever you like. Public reports are published inside the app, under your handle, once HQ approves them: other members can read them, react to them and comment. Private ones are seen only by you and HQ, and still count for points.</li>
+            <li>Comments are yours to delete and everyone's to report. Report anything that should not be there, on a story or in the forum, and HQ will deal with it.</li>
           </ul>
 
+          <h2 className="display">Year rooms</h2>
+          <p>You tell us your year when you enrol, and it is editable on your file. Your year room is a group chat with the people in your year and nobody else: other years cannot see it or post in it. Change your year and you move rooms. The Lead Operative can read every room, to moderate.</p>
+
           <h2 className="display">Your data</h2>
-          <p>We store your TikTok username, a hashed password, what you post and the reports you file, and when you were last here. No email, no name, no location. Log out on shared devices: there is no email reset, so if you forget your password, message @getthereonedaypod on TikTok and HQ will reset it.</p>
+          <p>We store your TikTok username, a hashed password, your university and year, what you post and the reports you file, and when you were last here. No email, no name, no location. Log out on shared devices: there is no email reset, so if you forget your password, message @getthereonedaypod on TikTok and HQ will reset it.</p>
           <p>Donations are handled by Stripe. We never see your card details; we only learn that a donation was made and which agent it came from.</p>
 
           <h2 className="display">Forum</h2>
