@@ -20,8 +20,8 @@ async function issueSession(ctx: any, agentId: Doc<'agents'>['_id']) {
 }
 
 export const signUp = action({
-  args: { handle: v.string(), password: v.string(), universityId: v.string() },
-  handler: async (ctx, { handle: raw, password, universityId }): Promise<{ token: string }> => {
+  args: { handle: v.string(), password: v.string(), universityId: v.string(), universityOther: v.optional(v.string()) },
+  handler: async (ctx, { handle: raw, password, universityId, universityOther }): Promise<{ token: string }> => {
     const problem = handleProblem(raw)
     if (problem) throw new ConvexError(problem)
     if (!validUniversityId(universityId)) throw new ConvexError('Pick your university from the list.')
@@ -45,6 +45,7 @@ export const signUp = action({
       // First sign-up with the configured lead handle becomes Lead Operative.
       rank: handle === leadHandle ? 'lead' : 'junior',
       universityId,
+      universityOther,
     })
     return { token: await issueSession(ctx, agentId) }
   },

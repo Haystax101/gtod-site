@@ -34,6 +34,8 @@ export default defineSchema({
     bio: v.optional(v.string()),
     // Id from convex/lib/universities.ts, or 'none' / 'other'. Drives the coverage map.
     universityId: v.optional(v.string()),
+    // Free text when universityId is 'other': what they typed, so HQ can add it to the list.
+    universityOther: v.optional(v.string()),
     // Verified encounters, denormalised from approved submissions so the
     // leaderboard is one indexed read.
     points: v.number(),

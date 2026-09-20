@@ -65,7 +65,7 @@ export function publicAgent(a: Doc<'agents'>) {
     points: a.points,
     bio: a.bio,
     universityId: a.universityId,
-    university: universityById(a.universityId)?.name ?? null,
+    university: a.universityId === OTHER_UNI.id && a.universityOther ? a.universityOther : universityById(a.universityId)?.name ?? null,
     createdAt: a.createdAt,
   }
 }
@@ -162,12 +162,15 @@ export const auditLog = query({
 // ---------------------------------------------------------------- mutations
 
 export const updateProfile = mutation({
-  args: { token: v.string(), bio: v.string(), universityId: v.optional(v.string()) },
-  handler: async (ctx, { token, bio, universityId }) => {
+  args: { token: v.string(), bio: v.string(), universityId: v.optional(v.string()), universityOther: v.optional(v.string()) },
+  handler: async (ctx, { token, bio, universityId, universityOther }) => {
     const me = await requireAgent(ctx, token)
     const trimmed = bio.trim().slice(0, 200)
     if (universityId !== undefined && !validUniversityId(universityId)) throw new ConvexError('Pick a university from the list')
-    await ctx.db.patch(me._id, { bio: trimmed || undefined, ...(universityId !== undefined ? { universityId } : {}) })
+    await ctx.db.patch(me._id, {
+      bio: trimmed || undefined,
+      ...(universityId !== undefined ? { universityId, universityOther: universityId === OTHER_UNI.id ? universityOther?.trim().slice(0, 80) || undefined : undefined } : {}),
+    })
   },
 })
 
@@ -179,13 +182,14 @@ export const coverage = query({
     const all = await ctx.db.query('agents').withIndex('by_points', (q) => q.eq('status', 'active')).order('desc').collect()
     const groups = new Map<string, ReturnType<typeof publicAgent>[]>()
     for (const a of all) {
-      const key = a.universityId ?? 'unset'
+      const key = a.universityId === OTHER_UNI.id && a.universityOther ? `other:${a.universityOther.toLowerCase()}` : a.universityId ?? 'unset'
       if (!groups.has(key)) groups.set(key, [])
       groups.get(key)!.push(publicAgent(a))
     }
     return Array.from(groups, ([universityId, agents]) => {
       const u = universityById(universityId)
-      return { universityId, name: u?.name ?? 'Undisclosed', lat: u?.lat ?? null, lng: u?.lng ?? null, agents }
+      const name = universityId.startsWith('other:') ? `${agents[0].university} (not on the map yet)` : u?.name ?? 'Undisclosed'
+      return { universityId, name, lat: u?.lat ?? null, lng: u?.lng ?? null, agents }
     }).sort((x, y) => y.agents.length - x.agents.length)
   },
 })
@@ -254,7 +258,7 @@ export const byHandle = internalQuery({
 })
 
 export const create = internalMutation({
-  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank), universityId: v.optional(v.string()) },
+  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank), universityId: v.optional(v.string()), universityOther: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const existing = await ctx.db.query('agents').withIndex('by_handle', (q) => q.eq('handle', args.handle)).unique()
     if (existing) throw new ConvexError('That TikTok username is already enrolled.')
@@ -265,6 +269,7 @@ export const create = internalMutation({
       passwordHash: args.passwordHash,
       rank: args.rank ?? 'junior',
       universityId: args.universityId,
+      universityOther: args.universityId === OTHER_UNI.id ? args.universityOther?.trim().slice(0, 80) || undefined : undefined,
       loyal: false,
       status: 'active',
       points: 0,

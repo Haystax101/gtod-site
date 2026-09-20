@@ -5,7 +5,7 @@ import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
 import { Avatar, LoyalPill, RankPill } from '../components/Badges'
 import { fileNo } from '../lib/format'
-import UniversityPicker from '../components/UniversityPicker'
+import { UniversityField } from '../components/UniversityPicker'
 
 export default function Me() {
   const { token, me, logOut } = useSession()
@@ -14,13 +14,14 @@ export default function Me() {
   const changePassword = useAction(api.auth.changePassword)
   const [bio, setBio] = useState(me.bio ?? '')
   const [universityId, setUniversityId] = useState(me.universityId ?? '')
+  const [universityOther, setUniversityOther] = useState(me.universityId === 'other' ? me.university ?? '' : '')
   const [saved, setSaved] = useState(false)
   const [pw, setPw] = useState({ current: '', next: '' })
   const [pwMsg, setPwMsg] = useState(null)
 
   async function saveBio(e) {
     e.preventDefault()
-    await updateProfile({ token, bio, ...(universityId ? { universityId } : {}) })
+    await updateProfile({ token, bio, ...(universityId ? { universityId, universityOther: universityOther || undefined } : {}) })
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -59,7 +60,7 @@ export default function Me() {
         <form onSubmit={saveBio}>
           <div className="field">
             <label>University</label>
-            <UniversityPicker value={universityId} onChange={setUniversityId} />
+            <UniversityField value={universityId} onChange={setUniversityId} other={universityOther} onOther={setUniversityOther} />
             {!me.universityId && <div className="hint" style={{ color: 'var(--orange)' }}>Not set. Pick one to appear on the coverage map.</div>}
           </div>
           <div className="field">

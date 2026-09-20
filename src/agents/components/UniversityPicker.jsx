@@ -12,6 +12,18 @@ function norm(s) {
  * the university id. Matching ignores "University of" so "leeds" finds all
  * three Leeds institutions and "ucl" finds UCL.
  */
+/** Picker plus the free-text box that appears when "Somewhere else" is chosen. */
+export function UniversityField({ value, onChange, other, onOther, id = 'uni' }) {
+  return (
+    <>
+      <UniversityPicker id={id} value={value} onChange={onChange} />
+      {value === OTHER_UNI.id && (
+        <input className="input" style={{ marginTop: 8 }} placeholder="Name it, and HQ will add it to the list" value={other} onChange={(e) => onOther(e.target.value)} maxLength={80} />
+      )}
+    </>
+  )
+}
+
 export default function UniversityPicker({ value, onChange, id = 'uni', autoFocus }) {
   const selected = universityById(value)
   const [text, setText] = useState(selected?.name ?? '')

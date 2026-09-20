@@ -194,6 +194,7 @@ function Roster({ onMessage }) {
           <div style={{ minWidth: 0 }}>
             <div className="h"><Handle agent={a} /> {a.loyal && <LoyalPill />}</div>
             <div className="m">{a.points} verified · seen {timeAgo(a.lastSeenAt)} · joined {timeAgo(a.createdAt)}{a.status === 'removed' && ' · REMOVED'}</div>
+            {a.university && <div className="m" style={{ color: a.universityId === 'other' ? 'var(--amber)' : undefined }}>{a.universityId === 'other' ? `Not in list: ${a.university}` : a.university}</div>}
           </div>
           {a._id === me._id ? (
             <RankPill rank={a.rank} rankLabel={a.rankLabel} />

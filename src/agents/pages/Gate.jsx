@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAction } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
-import UniversityPicker from '../components/UniversityPicker'
+import { UniversityField } from '../components/UniversityPicker'
 
 export default function Gate() {
   const { setToken } = useSession()
@@ -12,6 +12,7 @@ export default function Gate() {
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [universityId, setUniversityId] = useState('')
+  const [universityOther, setUniversityOther] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
   const signUp = useAction(api.auth.signUp)
@@ -24,7 +25,7 @@ export default function Gate() {
     if (mode === 'join' && password !== confirm) return setError('Passwords do not match.')
     setBusy(true)
     try {
-      const { token } = mode === 'join' ? await signUp({ handle, password, universityId }) : await logIn({ handle, password })
+      const { token } = mode === 'join' ? await signUp({ handle, password, universityId, universityOther: universityOther || undefined }) : await logIn({ handle, password })
       setToken(token)
     } catch (err) {
       setError(errMsg(err))
@@ -89,8 +90,8 @@ export default function Gate() {
             {mode === 'join' && (
               <div className="field">
                 <label htmlFor="uni">Your university</label>
-                <UniversityPicker id="uni" value={universityId} onChange={setUniversityId} />
-                <div className="hint">Puts you on the coverage map. Not at uni? That is an option in the list.</div>
+                <UniversityField id="uni" value={universityId} onChange={setUniversityId} other={universityOther} onOther={setUniversityOther} />
+                <div className="hint">Puts you on the coverage map. Not at uni, or not listed? Both are options at the bottom of the list.</div>
               </div>
             )}
             <div className="field">
