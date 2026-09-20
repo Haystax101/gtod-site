@@ -21,10 +21,10 @@ export function Handle({ agent, link = true }) {
 
 export function StatusPill({ status }) {
   const map = {
-    processing: ['amber', 'Analysing'],
-    pending: ['amber', 'Awaiting HQ'],
-    approved: ['green', 'Verified'],
-    rejected: ['red', 'Not verified'],
+    processing: ['amber', 'Awaiting HQ'], // legacy rows, before the rescue cron moves them
+    pending: ['amber', 'HQ reading it'],
+    approved: ['green', 'Up on the brief'],
+    rejected: ['red', 'Not approved'],
   }
   const [cls, label] = map[status] ?? ['', status]
   return <span className={`pill ${cls}`}>{label}</span>

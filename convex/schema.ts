@@ -11,8 +11,8 @@ export const rank = v.union(
 )
 
 export const submissionStatus = v.union(
-  v.literal('processing'), // evidence uploaded, classifier running
-  v.literal('pending'),    // classifier unsure or unavailable: HQ decides
+  v.literal('processing'), // legacy: audio uploaded, classifier running
+  v.literal('pending'),    // written up and waiting on HQ to read it
   v.literal('approved'),
   v.literal('rejected'),
 )
@@ -72,7 +72,7 @@ export default defineSchema({
   challenges: defineTable({
     title: v.string(),
     brief: v.string(),
-    // The line the classifier listens for. Defaults to the founding phrase.
+    // The line the mission is built around. Defaults to the founding phrase.
     phrase: v.string(),
     status: v.union(v.literal('active'), v.literal('archived')),
     createdBy: v.id('agents'),
@@ -80,24 +80,35 @@ export default defineSchema({
     sortOrder: v.number(),
   }).index('by_status', ['status', 'sortOrder']),
 
+  // A field report: the agent writes up what happened in their own words and
+  // HQ reads it and decides whether it earns a point. Nothing is automated:
+  // every story waits for a human.
   submissions: defineTable({
     agentId: v.id('agents'),
     challengeId: v.optional(v.id('challenges')),
     freeformTitle: v.optional(v.string()),
-    // Audio recorded in the browser or uploaded. Never public: only the agent
-    // and HQ can fetch it, and it is purged 30 days after review.
+    // The story itself. Optional only so the audio-era rows below still
+    // validate; every row written from now on has one.
+    story: v.optional(v.string()),
+    status: submissionStatus,
+    // Points awarded by HQ on approval. Named for the era when it counted
+    // encounters heard on a recording; it is simply points now.
+    verifiedCount: v.optional(v.number()),
+    reviewedBy: v.optional(v.union(v.id('agents'), v.literal('auto'))),
+    reviewNote: v.optional(v.string()),
+    reviewedAt: v.optional(v.number()),
+    createdAt: v.number(),
+
+    // ---- Legacy: the voice-evidence era. Nothing writes these any more.
+    // They stay so old rows keep validating and so HQ can finish reviewing
+    // whatever is left before the purge cron clears the audio.
+    claimedCount: v.optional(v.number()),
     storageId: v.optional(v.id('_storage')),
     mimeType: v.optional(v.string()),
     bytes: v.optional(v.number()),
     durationSec: v.optional(v.number()),
-    // Alternative to audio: a public TikTok / unlisted YouTube link. Always
-    // goes to HQ, since the classifier cannot fetch those.
     link: v.optional(v.string()),
     note: v.optional(v.string()),
-    claimedCount: v.number(),
-    verifiedCount: v.optional(v.number()),
-    status: submissionStatus,
-    // What the classifier heard, kept so HQ can see why it decided.
     transcript: v.optional(v.string()),
     verdict: v.optional(
       v.object({
@@ -110,11 +121,7 @@ export default defineSchema({
       }),
     ),
     classifierError: v.optional(v.string()),
-    reviewedBy: v.optional(v.union(v.id('agents'), v.literal('auto'))),
-    reviewNote: v.optional(v.string()),
-    reviewedAt: v.optional(v.number()),
     evidencePurgeAt: v.optional(v.number()),
-    createdAt: v.number(),
   })
     .index('by_agent', ['agentId', 'createdAt'])
     .index('by_status', ['status', 'createdAt'])

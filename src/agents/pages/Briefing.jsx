@@ -3,11 +3,12 @@ import { useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { useSession } from '../lib/session'
 import { Avatar, Handle, LoyalPill, RankPill } from '../components/Badges'
+import StoryText from '../components/StoryText'
 import { fileNo, pluralise, timeAgo } from '../lib/format'
 
 const LADDER = [
   ['junior', 'Junior Agent', 'Where everyone starts.'],
-  ['senior', 'Senior Agent', 'Promoted by HQ for verified field work.'],
+  ['senior', 'Senior Agent', 'Promoted by HQ for good field work.'],
   ['advanced', 'Advanced Operative', 'The inner circle. HQ decides.'],
 ]
 
@@ -42,8 +43,8 @@ export default function Briefing() {
           </div>
         </div>
         <div className="stats">
-          <div className="stat"><div className="n">{me.points}</div><div className="l">Verified</div></div>
-          <div className="stat"><div className="n">{verified}</div><div className="l">Missions</div></div>
+          <div className="stat"><div className="n">{me.points}</div><div className="l">Points</div></div>
+          <div className="stat"><div className="n">{verified}</div><div className="l">Stories up</div></div>
           <div className="stat"><div className="n">{pending}</div><div className="l">In review</div></div>
         </div>
         {me.bio && <p className="muted small" style={{ marginTop: 14 }}>{me.bio}</p>}
@@ -65,7 +66,7 @@ export default function Briefing() {
         <h2 className="display">Your first mission</h2>
         <p className="muted small" style={{ margin: '6px 0 14px' }}>
           Freshers' week. Strangers everywhere. Walk up to one and ask the only question that matters:
-          <b className="hl"> "You here for uni then?"</b> Record it. Submit it. HQ's analyst verifies it in seconds.
+          <b className="hl"> "You here for uni then?"</b> Then write up how it went. HQ reads every report and decides what it earns.
         </p>
         <Link to="/missions" className="btn">Open missions</Link>
       </div>
@@ -90,7 +91,7 @@ export default function Briefing() {
 
       <div className="card">
         <div className="card-head">
-          <span className="eyebrow">Field reports · <b>verified</b></span>
+          <span className="eyebrow">Field reports · <b>approved by HQ</b></span>
           <span className="row" style={{ gap: 10 }}>
             <Link to="/coverage" className="tiny muted">Coverage map →</Link>
             <Link to="/board" className="tiny muted">Leaderboard →</Link>
@@ -99,17 +100,19 @@ export default function Briefing() {
         {feed === undefined ? (
           <div className="empty"><span className="spin" /></div>
         ) : feed.length === 0 ? (
-          <div className="empty">No verified missions yet. Be first.</div>
+          <div className="empty">No stories up yet. Be first.</div>
         ) : (
           feed.map((f) => (
-            <div key={f._id} className="feed-item">
-              <Avatar agent={f.agent} />
-              <div className="txt">
-                <b><Handle agent={f.agent} /></b> completed <span className="hl">{f.title}</span>
-                {' '}· {pluralise(f.verifiedCount, 'encounter')}
+            <article key={f._id} className="story-item">
+              <div className="row" style={{ gap: 10 }}>
+                <Avatar agent={f.agent} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div className="h"><b><Handle agent={f.agent} /></b> · <span className="hl">{f.title}</span></div>
+                  <div className="tiny dim">{timeAgo(f.reviewedAt)}{f.points > 0 && ` · ${pluralise(f.points, 'point')}`}</div>
+                </div>
               </div>
-              <span className="when">{timeAgo(f.reviewedAt)}</span>
-            </div>
+              {f.story && <StoryText text={f.story} />}
+            </article>
           ))
         )}
       </div>

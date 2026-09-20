@@ -7,7 +7,7 @@ members' area for followers (missions, ranks, forum, direct line to HQ).
 
 - `index.html` - the landing page. Static, styles inlined, unchanged from the original site.
 - `agents/index.html` + `src/agents/` - the Field Operations app (React + Vite, React Router under `/agents/*`).
-- `convex/` - the backend (Convex): auth, missions, the evidence classifier, forum, direct line, Stripe webhook.
+- `convex/` - the backend (Convex): auth, missions and field reports, forum, direct line, Stripe webhook.
 - `public/` - copied verbatim into the build: `assets/` (logo, favicon, hero reel) and `.htaccess` (SPA fallback for `/agents/*`).
 
 ## Running locally
@@ -35,23 +35,23 @@ Deploy keys → Production).
 | Variable | Purpose |
 |---|---|
 | `LEAD_HANDLE` | TikTok handle that becomes Lead Operative on first sign-up (default `george`) |
-| `GROQ_API_KEY` | Transcription (whisper-large-v3-turbo). Cheapest option. |
-| `GEMINI_API_KEY` | Transcription fallback when there is no Groq key |
-| `DEEPSEEK_API_KEY` | The judge. Optional `DEEPSEEK_MODEL` / `DEEPSEEK_BASE_URL`. |
-| `OPENROUTER_API_KEY` | Judge fallback via OpenRouter (`deepseek/deepseek-chat`) when there is no DeepSeek key |
 | `STRIPE_PAYMENT_LINK` | The "Fund the operation" link. Absent = no donate button anywhere. |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Webhook verification. Endpoint: `https://<deployment>.convex.site/stripe/webhook`, event `checkout.session.completed`. |
 
-The classifier is optional: without keys every submission waits for a human verdict in HQ.
+## How a mission is scored
 
-## How evidence is judged
+1. The agent picks a mission and writes up what happened, in their own words (80 - 4000 characters).
+   Nothing is recorded or uploaded: the story is the whole submission.
+2. The row lands as `pending` and sits in HQ's queue. There is no automatic scoring.
+3. George reads it and either approves it - awarding points, one by default - or rejects it, with an
+   optional note back to the agent. Points land on the agent and the board immediately, and a
+   re-score moves them the other way just as cleanly.
+4. Approved stories are published inside the app: the brief's field-report feed and the agent's
+   profile. Rejected and pending ones stay private to the agent and HQ.
 
-1. Browser records audio (or the agent uploads a voice memo) → uploaded straight to Convex storage.
-2. `classify.run` transcribes it, then asks the judge whether the agent said the mission line and
-   whether anyone replied, returning `{saidPhrase, gotResponse, encounterCount, confidence}`.
-3. Confident yes → approved, points = min(heard, claimed). Confident no → rejected. Anything
-   else, or any error → `pending` in HQ. HQ can overturn any verdict; points follow.
-4. Recordings are deleted 30 days after review (daily cron).
+Voice evidence was retired in favour of this. The audio-era columns are still on the `submissions`
+table so old rows validate and so HQ can finish reviewing anything left in the queue; recordings
+are deleted 30 days after review (daily cron) and nothing writes them any more.
 
 ## Hero phone video
 

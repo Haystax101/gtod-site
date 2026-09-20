@@ -10,7 +10,7 @@ const MAX_CHARS = 1500
 
 export const DEFAULT_WELCOME = `Welcome to the programme, agent.
 
-You're in as a Junior Agent. Your first mission is on the Missions tab: find a stranger this week, ask them "you here for uni then?", and record it. The analyst verifies it in seconds and it goes on your file.
+You're in as a Junior Agent. Your first mission is on the Missions tab: find a stranger this week, ask them "you here for uni then?", then write up how it went. I read every report myself and decide what it is worth. The good ones go up on the brief for everyone.
 
 This channel comes straight to me. Use it for anything: a ruling on a mission, an idea, or just to report in.
 

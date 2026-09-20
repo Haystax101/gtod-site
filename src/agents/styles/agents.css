@@ -316,27 +316,24 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
 .mission .phrase { margin-top: 10px; font-family: var(--mono); font-size: 0.78rem; color: var(--orange); }
 .mission .phrase::before { content: '> '; color: var(--dim); }
 
-.recorder { text-align: center; padding: 8px 0; }
-.recbtn {
-  width: 96px; height: 96px; border-radius: 50%; margin: 10px auto;
-  background: var(--stamp); border: 4px solid var(--black); box-shadow: 0 0 0 2px var(--line-2);
-  display: grid; place-items: center; color: var(--cream);
-  transition: transform 0.1s, box-shadow 0.2s;
-}
-.recbtn:hover { transform: scale(1.03); }
-.recbtn.live { animation: pulse 1.2s ease-in-out infinite; box-shadow: 0 0 0 2px var(--stamp); }
-.recbtn.live svg { border-radius: 4px; }
-@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 2px var(--stamp); } 50% { box-shadow: 0 0 0 12px rgba(210, 63, 47, 0.15); } }
-.rectime { font-family: var(--mono); font-size: 1.4rem; letter-spacing: 0.1em; }
-.rectime.live { color: var(--stamp); }
-.wave { display: flex; align-items: center; justify-content: center; gap: 3px; height: 28px; margin: 6px 0; }
-.wave i { display: block; width: 3px; border-radius: 2px; background: var(--orange); height: 4px; transition: height 0.08s; }
+/* The story composer. */
+.prompts { list-style: none; margin-bottom: 12px; display: grid; gap: 4px; }
+.prompts li { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--dim); }
+.prompts li::before { content: '> '; color: var(--line-2); }
+
+/* A field report, wherever it is shown: the brief, HQ's queue, a profile. */
+.story { margin-top: 8px; }
+.story .txt { white-space: pre-wrap; word-wrap: break-word; font-size: 0.92rem; color: var(--cream); }
+.story .txt.clamped { display: -webkit-box; -webkit-line-clamp: 6; line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.story .linkbtn { margin-top: 4px; }
+.story-item { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.story-item:last-child { border-bottom: none; }
+.story-item .h { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; }
+.story-item .h b { font-family: var(--mono); font-weight: 500; }
+.story-item .when { font-family: var(--mono); font-size: 0.65rem; color: var(--dim); white-space: nowrap; }
+
+/* Legacy: the audio player still used to review voice evidence left in the queue. */
 audio.player { width: 100%; margin-top: 10px; filter: invert(0.92) hue-rotate(180deg) saturate(0.6); border-radius: 8px; }
-.upload {
-  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
-  font-size: 0.85rem; color: var(--muted); text-decoration: underline;
-}
-.upload input { display: none; }
 .counter { display: inline-flex; align-items: center; border: 1px solid var(--line-2); border-radius: 8px; overflow: hidden; }
 .counter button { width: 40px; height: 40px; background: var(--panel-2); border: none; font-size: 1.2rem; }
 .counter span { width: 48px; text-align: center; font-family: var(--mono); font-size: 1.1rem; }
@@ -434,7 +431,7 @@ select.input.sm { padding: 6px 28px 6px 10px; font-size: 0.8rem; width: auto; ba
 
 /* Keep programmatic scroll-into-view (focus, form validation, tests) clear of
    the fixed bars. */
-.main .btn, .main .input, .main .recbtn, .main .mission { scroll-margin-block: 90px; }
+.main .btn, .main .input, .main .mission { scroll-margin-block: 90px; }
 
 /* ---------- university picker ---------- */
 .combo { position: relative; }

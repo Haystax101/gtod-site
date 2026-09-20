@@ -12,7 +12,6 @@ import type * as agents from "../agents.js";
 import type * as auth from "../auth.js";
 import type * as authInternal from "../authInternal.js";
 import type * as billing from "../billing.js";
-import type * as classify from "../classify.js";
 import type * as crons from "../crons.js";
 import type * as directLine from "../directLine.js";
 import type * as forum from "../forum.js";
@@ -34,7 +33,6 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   authInternal: typeof authInternal;
   billing: typeof billing;
-  classify: typeof classify;
   crons: typeof crons;
   directLine: typeof directLine;
   forum: typeof forum;

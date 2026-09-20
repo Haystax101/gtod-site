@@ -3,6 +3,7 @@ import { useAction, useMutation, useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
 import { Avatar, Handle, LoyalPill, RankPill, StatusPill } from '../components/Badges'
+import StoryText from '../components/StoryText'
 import { mmss, pluralise, stamp, timeAgo } from '../lib/format'
 
 const TABS = [
@@ -58,13 +59,13 @@ function Queue({ queue }) {
   return (
     <div className="stack">
       <div className="card">
-        <div className="card-head"><span className="eyebrow">Awaiting verdict</span></div>
+        <div className="card-head"><span className="eyebrow">Stories to read</span></div>
         {queue === undefined ? <div className="empty"><span className="spin" /></div>
           : queue.length === 0 ? <div className="empty">Queue clear.</div>
           : queue.map((s) => <QueueItem key={s._id} s={s} />)}
       </div>
       <div className="card">
-        <div className="card-head"><span className="eyebrow">Recent verdicts</span></div>
+        <div className="card-head"><span className="eyebrow">Recent decisions</span></div>
         {recent?.length === 0 && <div className="empty">Nothing reviewed yet.</div>}
         {recent?.map((s) => <QueueItem key={s._id} s={s} compact />)}
       </div>
@@ -75,8 +76,7 @@ function Queue({ queue }) {
 function QueueItem({ s, compact }) {
   const { token } = useSession()
   const review = useMutation(api.missions.review)
-  const reanalyse = useMutation(api.missions.reanalyse)
-  const [count, setCount] = useState(s.verdict?.encounterCount ? Math.min(s.verdict.encounterCount, s.claimedCount) : s.claimedCount)
+  const [points, setPoints] = useState(s.status === 'approved' ? s.verifiedCount ?? 1 : 1)
   const [note, setNote] = useState('')
   const [busy, setBusy] = useState(false)
   const [open, setOpen] = useState(!compact)
@@ -84,7 +84,7 @@ function QueueItem({ s, compact }) {
   async function decide(status) {
     setBusy(true)
     try {
-      await review({ token, submissionId: s._id, status, verifiedCount: count, reviewNote: note || undefined })
+      await review({ token, submissionId: s._id, status, points, reviewNote: note || undefined })
     } finally {
       setBusy(false)
     }
@@ -99,51 +99,56 @@ function QueueItem({ s, compact }) {
           <StatusPill status={s.status} />
         </div>
         <div className="m">
-          {stamp(s.createdAt)} · claimed {s.claimedCount}
-          {s.verifiedCount !== undefined && <> · verified {s.verifiedCount}</>}
-          {s.durationSec ? ` · ${mmss(s.durationSec)}` : ''}
-          {s.reviewedBy === 'auto' && ' · auto'}
-          {s.classifierError && <span style={{ color: 'var(--amber)' }}> · analyst error: {s.classifierError}</span>}
+          {stamp(s.createdAt)}
+          {s.verifiedCount !== undefined && <> · {pluralise(s.verifiedCount, 'point')} awarded</>}
+          {s.reviewedBy === 'auto' && ' · auto (legacy)'}
         </div>
-        {s.note && <div className="note">Field note: {s.note}</div>}
+        {s.story && <StoryText text={s.story} />}
         {compact && !open ? (
-          <button className="linkbtn tiny" style={{ marginTop: 4 }} onClick={() => setOpen(true)}>Details / overturn</button>
+          <button className="linkbtn tiny" style={{ marginTop: 4 }} onClick={() => setOpen(true)}>Details / change verdict</button>
         ) : (
           <>
-            {s.verdict && (
-              <div className="note">
-                Analyst: {s.verdict.saidPhrase ? 'line heard' : 'line NOT heard'}, {s.verdict.gotResponse ? 'reply heard' : 'no reply'},
-                {' '}{pluralise(s.verdict.encounterCount, 'encounter')}, confidence {Math.round(s.verdict.confidence * 100)}%.
-                {' '}<span className="dim">{s.verdict.reasoning}</span>
-              </div>
-            )}
             {s.reviewNote && s.reviewedBy !== 'auto' && <div className="note">Your note: {s.reviewNote}</div>}
-            {s.storageId && <Evidence submissionId={s._id} />}
-            {s.link && <div style={{ marginTop: 8 }}><a href={s.link} target="_blank" rel="noreferrer" className="mono small">{s.link}</a></div>}
-            {s.transcript && (
-              <details className="more" style={{ marginTop: 6 }}>
-                <summary>Transcript</summary>
-                <div className="transcript">{s.transcript}</div>
-              </details>
-            )}
+            <LegacyEvidence s={s} />
             <div className="row" style={{ marginTop: 10 }}>
               <div className="counter">
-                <button type="button" onClick={() => setCount((c) => Math.max(0, c - 1))}>−</button>
-                <span>{count}</span>
-                <button type="button" onClick={() => setCount((c) => c + 1)}>+</button>
+                <button type="button" onClick={() => setPoints((p) => Math.max(0, p - 1))}>−</button>
+                <span>{points}</span>
+                <button type="button" onClick={() => setPoints((p) => Math.min(50, p + 1))}>+</button>
               </div>
               <input className="input" style={{ flex: 1, minWidth: 140, padding: '8px 10px' }} placeholder="Note to agent (optional)" value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} />
             </div>
             <div className="row" style={{ marginTop: 8 }}>
-              {s.status !== 'approved' && <button className="btn sm teal" disabled={busy} onClick={() => decide('approved')}>Verify {count}</button>}
+              {s.status !== 'approved' && <button className="btn sm teal" disabled={busy} onClick={() => decide('approved')}>Approve · {pluralise(points, 'point')}</button>}
               {s.status !== 'rejected' && <button className="btn sm danger" disabled={busy} onClick={() => decide('rejected')}>Reject</button>}
-              {s.status === 'approved' && <button className="btn sm ghost" disabled={busy} onClick={() => decide('approved')}>Re-score to {count}</button>}
-              {s.storageId && s.status !== 'processing' && <button className="btn sm ghost" disabled={busy} onClick={() => reanalyse({ token, submissionId: s._id })}>Re-run analyst</button>}
+              {s.status === 'approved' && <button className="btn sm ghost" disabled={busy} onClick={() => decide('approved')}>Re-score to {points}</button>}
             </div>
           </>
         )}
       </div>
     </div>
+  )
+}
+
+/** Whatever is left from the voice-evidence era, folded away out of the reading flow. */
+function LegacyEvidence({ s }) {
+  if (!s.storageId && !s.link && !s.note && !s.transcript && !s.verdict) return null
+  return (
+    <details className="more" style={{ marginTop: 8 }}>
+      <summary>Legacy evidence{s.durationSec ? ` · ${mmss(s.durationSec)}` : ''}</summary>
+      {s.note && <div className="note">Field note: {s.note}</div>}
+      {s.claimedCount !== undefined && <div className="m">claimed {s.claimedCount}</div>}
+      {s.verdict && (
+        <div className="note">
+          Analyst: {s.verdict.saidPhrase ? 'line heard' : 'line NOT heard'}, {s.verdict.gotResponse ? 'reply heard' : 'no reply'},
+          {' '}{pluralise(s.verdict.encounterCount, 'encounter')}, confidence {Math.round(s.verdict.confidence * 100)}%.
+          {' '}<span className="dim">{s.verdict.reasoning}</span>
+        </div>
+      )}
+      {s.storageId && <Evidence submissionId={s._id} />}
+      {s.link && <div style={{ marginTop: 8 }}><a href={s.link} target="_blank" rel="noreferrer" className="mono small">{s.link}</a></div>}
+      {s.transcript && <div className="transcript">{s.transcript}</div>}
+    </details>
   )
 }
 
@@ -193,7 +198,7 @@ function Roster({ onMessage }) {
           <Avatar agent={a} />
           <div style={{ minWidth: 0 }}>
             <div className="h"><Handle agent={a} /> {a.loyal && <LoyalPill />}</div>
-            <div className="m">{a.points} verified · seen {timeAgo(a.lastSeenAt)} · joined {timeAgo(a.createdAt)}{a.status === 'removed' && ' · REMOVED'}</div>
+            <div className="m">{a.points} points · seen {timeAgo(a.lastSeenAt)} · joined {timeAgo(a.createdAt)}{a.status === 'removed' && ' · REMOVED'}</div>
             {a.university && <div className="m" style={{ color: a.universityId === 'other' ? 'var(--amber)' : undefined }}>{a.universityId === 'other' ? `Not in list: ${a.university}` : a.university}</div>}
           </div>
           {a._id === me._id ? (
@@ -252,7 +257,7 @@ function MissionsAdmin() {
         <form className="card bracket" onSubmit={save}>
           <div className="field"><label>Title</label><input className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={80} required /></div>
           <div className="field"><label>Brief</label><textarea className="input" value={form.brief} onChange={(e) => setForm({ ...form, brief: e.target.value })} maxLength={600} /></div>
-          <div className="field"><label>The line the analyst listens for</label><input className="input mono" value={form.phrase} onChange={(e) => setForm({ ...form, phrase: e.target.value })} maxLength={120} /></div>
+          <div className="field"><label>The line the mission is built around</label><input className="input mono" value={form.phrase} onChange={(e) => setForm({ ...form, phrase: e.target.value })} maxLength={120} /></div>
           {error && <div className="error">{error}</div>}
           <div className="row" style={{ marginTop: 14 }}>
             <button className="btn sm" type="submit">Save</button>

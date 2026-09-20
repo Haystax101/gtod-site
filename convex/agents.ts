@@ -122,13 +122,22 @@ export const profile = query({
       .withIndex('by_agent', (q) => q.eq('agentId', a._id))
       .order('desc')
       .collect()
-    return {
-      ...publicAgent(a),
-      missions: approved
+    const stories = await Promise.all(
+      approved
         .filter((s) => s.status === 'approved')
         .slice(0, 20)
-        .map((s) => ({ _id: s._id, verifiedCount: s.verifiedCount ?? 0, reviewedAt: s.reviewedAt, challengeId: s.challengeId, freeformTitle: s.freeformTitle })),
-    }
+        .map(async (s) => {
+          const c = s.challengeId ? await ctx.db.get(s.challengeId) : null
+          return {
+            _id: s._id,
+            title: c?.title ?? s.freeformTitle ?? 'Mission',
+            story: s.story ?? null,
+            points: s.verifiedCount ?? 0,
+            reviewedAt: s.reviewedAt,
+          }
+        }),
+    )
+    return { ...publicAgent(a), missions: stories }
   },
 })
 

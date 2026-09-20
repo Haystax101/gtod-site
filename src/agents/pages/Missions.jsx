@@ -2,31 +2,33 @@ import { useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
-import Recorder from '../components/Recorder'
 import { StatusPill } from '../components/Badges'
-import { mmss, stamp } from '../lib/format'
+import StoryText from '../components/StoryText'
+import { pluralise, stamp } from '../lib/format'
 
 const FREEFORM = '__own__'
-const MAX_BYTES = 25 * 1024 * 1024
+const MIN_STORY = 80
+const MAX_STORY = 4000
+
+const PROMPTS = [
+  'Where were you, and who did you pick?',
+  'What did you say, and how did they take it?',
+  'What did they say back?',
+  'How did it end?',
+]
 
 export default function Missions() {
   const { token } = useSession()
   const challenges = useQuery(api.missions.list, { token })
   const mine = useQuery(api.missions.mine, { token })
-  const settings = useQuery(api.settings.get, {})
-  const uploadUrl = useMutation(api.missions.uploadUrl)
   const submit = useMutation(api.missions.submit)
 
   const [picked, setPicked] = useState(null)
   const [ownTitle, setOwnTitle] = useState('')
-  const [evidence, setEvidence] = useState(null) // { blob, durationSec, mimeType, name? }
-  const [link, setLink] = useState('')
-  const [mode, setMode] = useState('record') // record | upload | link
-  const [count, setCount] = useState(1)
-  const [note, setNote] = useState('')
+  const [story, setStory] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
-  const [done, setDone] = useState(0) // bumps per submission; drives the banner and remounts the recorder
+  const [sent, setSent] = useState(false)
   const formRef = useRef(null)
 
   // Default to the first official mission once they load.
@@ -34,44 +36,22 @@ export default function Missions() {
     if (picked === null && challenges?.length) setPicked(challenges[0]._id)
   }, [challenges, picked])
 
-  function onFile(e) {
-    const f = e.target.files?.[0]
-    if (!f) return
-    if (f.size > MAX_BYTES) return setError('That file is over 25 MB. Trim it and try again.')
-    setError(null)
-    setEvidence({ blob: f, mimeType: f.type || 'audio/mp4', name: f.name })
-  }
+  const left = MIN_STORY - story.trim().length
 
   async function send(e) {
     e.preventDefault()
     setError(null)
-    if (mode === 'link' && !link.trim()) return setError('Paste the link first.')
-    if (mode !== 'link' && !evidence) return setError(mode === 'record' ? 'Record your evidence first.' : 'Choose a file first.')
+    if (left > 0) return setError(`Give us a bit more: ${pluralise(left, 'character')} to go.`)
     setBusy(true)
     try {
-      let storageId
-      if (mode !== 'link') {
-        const url = await uploadUrl({ token })
-        const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': evidence.mimeType }, body: evidence.blob })
-        if (!res.ok) throw new Error('upload failed')
-        storageId = (await res.json()).storageId
-      }
       await submit({
         token,
         challengeId: picked === FREEFORM ? undefined : picked,
         freeformTitle: picked === FREEFORM ? ownTitle : undefined,
-        storageId,
-        mimeType: evidence?.mimeType,
-        durationSec: evidence?.durationSec,
-        link: mode === 'link' ? link.trim() : undefined,
-        note: note || undefined,
-        claimedCount: count,
+        story,
       })
-      setDone((d) => d + 1)
-      setEvidence(null)
-      setLink('')
-      setNote('')
-      setCount(1)
+      setStory('')
+      setSent(true)
       formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     } catch (err) {
       setError(errMsg(err))
@@ -85,13 +65,13 @@ export default function Missions() {
       <div className="page-head">
         <span className="eyebrow">Operations · <b>Active</b></span>
         <h1 className="display">Missions</h1>
-        <p className="small">Pick a mission, record it happening, submit. The analyst listens for the line and a reply; verified encounters go on your file and the board.</p>
+        <p className="small">Pick a mission, go and do it, then write up what happened. HQ reads every report and decides what it is worth. Approved stories go up on the brief for everyone to read.</p>
       </div>
 
-      {done > 0 && !evidence && (
+      {sent && !story && (
         <div className="card" style={{ borderColor: 'var(--green)' }}>
           <div className="row between">
-            <span className="eyebrow"><b style={{ color: 'var(--green)' }}>Received.</b> Evidence is being analysed.</span>
+            <span className="eyebrow"><b style={{ color: 'var(--green)' }}>Filed.</b> HQ will read it and come back to you.</span>
             <span className="stamp green">Logged</span>
           </div>
         </div>
@@ -111,7 +91,7 @@ export default function Missions() {
             ))}
             <button type="button" className={`mission${picked === FREEFORM ? ' selected' : ''}`} onClick={() => setPicked(FREEFORM)}>
               <div className="t">Your own mission</div>
-              <div className="b">Invented something better? Log it here. Free-form missions always go to HQ for a human verdict.</div>
+              <div className="b">Invented something better? Log it here and name it yourself.</div>
               {picked === FREEFORM && (
                 <input className="input" style={{ marginTop: 10 }} placeholder="Name the mission" value={ownTitle} onChange={(e) => setOwnTitle(e.target.value)} maxLength={80} onClick={(e) => e.stopPropagation()} />
               )}
@@ -120,77 +100,38 @@ export default function Missions() {
         </div>
 
         <div>
-          <div className="eyebrow" style={{ marginBottom: 8 }}>02 · Evidence</div>
+          <div className="eyebrow" style={{ marginBottom: 8 }}>02 · The story</div>
           <div className="card">
-            <div className="cats" style={{ marginBottom: 12 }}>
-              {[['record', 'Record now'], ['upload', 'Upload audio'], ['link', 'Paste link']].map(([m, l]) => (
-                <button type="button" key={m} className={`btn xs ${mode === m ? '' : 'ghost'}`} onClick={() => { setMode(m); setEvidence(null); setError(null) }}>{l}</button>
-              ))}
-            </div>
-
-            {mode === 'record' && (
-              <>
-                <Recorder key={done} onRecording={setEvidence} disabled={busy} />
-                <p className="tiny dim" style={{ textAlign: 'center', marginTop: 8 }}>
-                  Start recording, then go and ask. Up to {mmss(180)}. Audio only, so nobody's face ends up anywhere.
-                </p>
-              </>
-            )}
-
-            {mode === 'upload' && (
-              <div style={{ textAlign: 'center', padding: '12px 0' }}>
-                <label className="upload">
-                  <input type="file" accept="audio/*,video/mp4,.m4a,.mp3,.wav,.ogg,.webm" onChange={onFile} />
-                  {evidence ? `Selected: ${evidence.name}` : 'Choose a voice memo or audio file'}
-                </label>
-                <p className="tiny dim" style={{ marginTop: 8 }}>Voice Memos on iPhone export as .m4a. 25 MB max.</p>
-              </div>
-            )}
-
-            {mode === 'link' && (
-              <div className="field">
-                <label>Public TikTok or unlisted YouTube link</label>
-                <input className="input mono" inputMode="url" placeholder="https://www.tiktok.com/@you/video/…" value={link} onChange={(e) => setLink(e.target.value)} />
-                <div className="hint">Private TikToks cannot be viewed by HQ, even with the link. Links always wait for a human verdict.</div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div>
-          <div className="eyebrow" style={{ marginBottom: 8 }}>03 · The claim</div>
-          <div className="card">
-            <div className="row between">
-              <div>
-                <div style={{ fontWeight: 600 }}>Encounters in this recording</div>
-                <div className="tiny muted">Each person asked, and answering, counts once.</div>
-              </div>
-              <div className="counter">
-                <button type="button" onClick={() => setCount((c) => Math.max(1, c - 1))}>−</button>
-                <span>{count}</span>
-                <button type="button" onClick={() => setCount((c) => Math.min(50, c + 1))}>+</button>
-              </div>
-            </div>
-            <div className="field" style={{ marginTop: 14 }}>
-              <label>Field note <span className="dim">(optional)</span></label>
-              <input className="input" placeholder="Where, who, how it went" value={note} onChange={(e) => setNote(e.target.value)} maxLength={300} />
+            <ul className="prompts">
+              {PROMPTS.map((p) => <li key={p}>{p}</li>)}
+            </ul>
+            <textarea
+              className="input"
+              rows={10}
+              value={story}
+              onChange={(e) => { setStory(e.target.value); setSent(false) }}
+              maxLength={MAX_STORY}
+              placeholder="Tell it how it happened…"
+            />
+            <div className="row between" style={{ marginTop: 8, flexWrap: 'nowrap', alignItems: 'flex-start' }}>
+              <span className="tiny dim" style={{ flex: 1 }}>No recordings, no photos. Your words only, and no surnames or anything that identifies the person you asked.</span>
+              <span className={`tiny mono ${left > 0 ? 'dim' : ''}`} style={{ whiteSpace: 'nowrap', ...(left > 0 ? {} : { color: 'var(--green)' }) }}>
+                {left > 0 ? `${left} more` : `${story.trim().length} / ${MAX_STORY}`}
+              </span>
             </div>
           </div>
         </div>
 
         {error && <div className="error">{error}</div>}
-        {settings && !settings.classifierEnabled && mode !== 'link' && (
-          <div className="notice">The analyst is offline right now, so submissions will wait for a human verdict from HQ.</div>
-        )}
 
         <button className="btn block" type="submit" disabled={busy}>
-          {busy ? <span className="spin" /> : 'Submit evidence'}
+          {busy ? <span className="spin" /> : 'File your report'}
         </button>
       </form>
 
       <div className="card">
         <div className="card-head">
-          <span className="eyebrow">Your submissions</span>
+          <span className="eyebrow">Your reports</span>
         </div>
         {mine === undefined ? (
           <div className="empty"><span className="spin" /></div>
@@ -213,21 +154,11 @@ function SubmissionRow({ s }) {
           <StatusPill status={s.status} />
         </div>
         <div className="m">
-          {stamp(s.createdAt)} · claimed {s.claimedCount}
-          {s.status === 'approved' && <> · <span style={{ color: 'var(--green)' }}>verified {s.verifiedCount}</span></>}
-          {s.durationSec ? ` · ${mmss(s.durationSec)}` : ''}
-          {s.link ? ' · link' : ''}
+          {stamp(s.createdAt)}
+          {s.status === 'approved' && <> · <span style={{ color: 'var(--green)' }}>{pluralise(s.verifiedCount ?? 0, 'point')}</span></>}
         </div>
-        {s.reviewNote && <div className="note">{s.reviewNote}</div>}
-        {s.status === 'pending' && s.verdict && (
-          <div className="note">The analyst was not sure. HQ will listen and decide.</div>
-        )}
-        {s.transcript && (
-          <details className="more" style={{ marginTop: 6 }}>
-            <summary>What the analyst heard</summary>
-            <div className="transcript">{s.transcript}</div>
-          </details>
-        )}
+        {s.story ? <StoryText text={s.story} /> : s.note && <div className="note">Field note: {s.note}</div>}
+        {s.reviewNote && <div className="note">HQ: {s.reviewNote}</div>}
       </div>
     </div>
   )

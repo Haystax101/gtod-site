@@ -11,9 +11,9 @@ export default function Board() {
   return (
     <div className="stack">
       <div className="page-head">
-        <span className="eyebrow">Standings · <b>Verified encounters</b></span>
+        <span className="eyebrow">Standings · <b>Points awarded by HQ</b></span>
         <h1 className="display">Leaderboard</h1>
-        <p className="small">Only verified encounters count. Claims without evidence go nowhere.</p>
+        <p className="small">Points come from stories HQ has read and approved. Nothing scores itself.</p>
       </div>
       <div className="cats">
         <Link to="/board" className="btn xs">Leaderboard</Link>

@@ -3,6 +3,7 @@ import { useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { useSession } from '../lib/session'
 import { Avatar, LoyalPill, RankPill } from '../components/Badges'
+import StoryText from '../components/StoryText'
 import { fileNo, pluralise, timeAgo } from '../lib/format'
 
 export default function Profile() {
@@ -31,22 +32,25 @@ export default function Profile() {
         {a.university && <div className="eyebrow" style={{ marginTop: 14 }}>Posted at <b>{a.university}</b></div>}
         {a.bio && <p className="muted small" style={{ marginTop: 10 }}>{a.bio}</p>}
         <div className="stats">
-          <div className="stat"><div className="n">{a.points}</div><div className="l">Verified</div></div>
-          <div className="stat"><div className="n">{a.missions.length}</div><div className="l">Missions</div></div>
+          <div className="stat"><div className="n">{a.points}</div><div className="l">Points</div></div>
+          <div className="stat"><div className="n">{a.missions.length}</div><div className="l">Stories</div></div>
           <div className="stat"><div className="n">{timeAgo(a.createdAt).replace(' ago', '')}</div><div className="l">Enrolled</div></div>
         </div>
         <a className="linkbtn small" style={{ display: 'inline-block', marginTop: 14 }} href={`https://www.tiktok.com/@${a.handle}`} target="_blank" rel="noreferrer">TikTok ↗</a>
       </div>
       <div className="card">
-        <div className="card-head"><span className="eyebrow">Verified missions</span></div>
+        <div className="card-head"><span className="eyebrow">Field reports</span></div>
         {a.missions.length === 0 ? (
           <div className="empty">None yet.</div>
         ) : (
           a.missions.map((m) => (
-            <div key={m._id} className="feed-item">
-              <div className="txt">{m.freeformTitle ?? 'Mission'} · {pluralise(m.verifiedCount, 'encounter')}</div>
-              <span className="when">{m.reviewedAt ? timeAgo(m.reviewedAt) : ''}</span>
-            </div>
+            <article key={m._id} className="story-item">
+              <div className="row between">
+                <span className="h"><span className="hl">{m.title}</span></span>
+                <span className="when">{m.reviewedAt ? timeAgo(m.reviewedAt) : ''}{m.points > 0 ? ` · ${pluralise(m.points, 'point')}` : ''}</span>
+              </div>
+              {m.story && <StoryText text={m.story} />}
+            </article>
           ))
         )}
       </div>

@@ -1,27 +1,24 @@
 /**
- * Missions (the challenge list) and submissions (evidence against them).
+ * Missions (the challenge list) and submissions (the stories agents write
+ * about doing them).
  *
- * Evidence flow: the browser uploads audio straight to Convex storage, then
- * calls `submit`. The row starts as `processing` and classify.ts is scheduled
- * to transcribe and judge it. Confident verdicts apply themselves; anything
- * else lands in HQ's queue as `pending`. Link submissions skip the classifier
- * and go straight to `pending`, since we cannot fetch a TikTok.
+ * Flow: the agent picks a mission and writes up what happened. The row lands
+ * as `pending` and stays there until HQ reads it and decides whether it is
+ * worth a point. Nothing approves itself; there is no classifier any more.
+ * Approved stories become public field reports on the brief.
  */
-import { internalMutation, internalQuery, mutation, query, type MutationCtx } from './_generated/server'
+import { internalMutation, mutation, query, type MutationCtx } from './_generated/server'
 import { ConvexError, v } from 'convex/values'
-import { internal } from './_generated/api'
 import type { Doc, Id } from './_generated/dataModel'
 import { agentFromToken, log, publicAgent, requireAgent, requireLead } from './agents'
 
 export const DEFAULT_PHRASE = 'You here for uni then?'
-export const MAX_EVIDENCE_BYTES = 25 * 1024 * 1024 // Groq's per-file ceiling
-export const MAX_EVIDENCE_SECONDS = 180
-const MAX_CLAIMED = 50
-const SUBMISSIONS_PER_HOUR = 12
+export const MIN_STORY_CHARS = 80
+export const MAX_STORY_CHARS = 4000
+const MAX_POINTS = 50
+const SUBMISSIONS_PER_HOUR = 6
 const HOUR = 60 * 60 * 1000
 const PURGE_AFTER = 30 * 24 * HOUR
-
-const LINK_RULE = /^https:\/\/(?:www\.|vm\.|m\.)?(?:tiktok\.com|youtube\.com|youtu\.be)\/\S+$/i
 
 // ---------------------------------------------------------------- challenges
 
@@ -78,68 +75,37 @@ export const upsertChallenge = mutation({
 
 // --------------------------------------------------------------- submissions
 
-export const uploadUrl = mutation({
-  args: { token: v.string() },
-  handler: async (ctx, { token }) => {
-    await requireAgent(ctx, token)
-    return ctx.storage.generateUploadUrl()
-  },
-})
-
 export const submit = mutation({
   args: {
     token: v.string(),
     challengeId: v.optional(v.id('challenges')),
     freeformTitle: v.optional(v.string()),
-    storageId: v.optional(v.id('_storage')),
-    mimeType: v.optional(v.string()),
-    durationSec: v.optional(v.number()),
-    link: v.optional(v.string()),
-    note: v.optional(v.string()),
-    claimedCount: v.number(),
+    story: v.string(),
   },
   handler: async (ctx, args) => {
     const me = await requireAgent(ctx, args.token)
 
     if (!args.challengeId && !args.freeformTitle?.trim()) throw new ConvexError('Pick a mission or name your own.')
-    if (!args.storageId && !args.link) throw new ConvexError('Evidence is required: a recording, or a link.')
-    if (args.link && !LINK_RULE.test(args.link.trim())) throw new ConvexError('Links must be to TikTok or YouTube.')
-    const claimedCount = Math.max(1, Math.min(MAX_CLAIMED, Math.round(args.claimedCount)))
+    const story = args.story.trim().slice(0, MAX_STORY_CHARS)
+    if (story.length < MIN_STORY_CHARS) {
+      throw new ConvexError(`Give us the whole story: at least ${MIN_STORY_CHARS} characters. Who did you ask, and what happened?`)
+    }
 
-    // Flood guard.
     const recent = await ctx.db
       .query('submissions')
       .withIndex('by_agent', (q) => q.eq('agentId', me._id).gt('createdAt', Date.now() - HOUR))
       .collect()
     if (recent.length >= SUBMISSIONS_PER_HOUR) throw new ConvexError('Slow down, agent. Try again in a bit.')
+    if (recent.some((s) => s.story === story)) throw new ConvexError('You already filed that one.')
 
-    let bytes: number | undefined
-    if (args.storageId) {
-      const meta = await ctx.db.system.get(args.storageId)
-      if (!meta) throw new ConvexError('Upload not found')
-      bytes = meta.size
-      if (bytes > MAX_EVIDENCE_BYTES) {
-        await ctx.storage.delete(args.storageId)
-        throw new ConvexError('That file is too large (25 MB max). Trim it down and try again.')
-      }
-    }
-
-    const id = await ctx.db.insert('submissions', {
+    return ctx.db.insert('submissions', {
       agentId: me._id,
       challengeId: args.challengeId,
       freeformTitle: args.freeformTitle?.trim().slice(0, 80) || undefined,
-      storageId: args.storageId,
-      mimeType: args.mimeType,
-      bytes,
-      durationSec: args.durationSec,
-      link: args.link?.trim(),
-      note: args.note?.trim().slice(0, 300) || undefined,
-      claimedCount,
-      status: args.storageId ? 'processing' : 'pending',
+      story,
+      status: 'pending',
       createdAt: Date.now(),
     })
-    if (args.storageId) await ctx.scheduler.runAfter(0, internal.classify.run, { submissionId: id })
-    return id
   },
 })
 
@@ -153,7 +119,10 @@ export const mine = query({
   },
 })
 
-/** Evidence playback. Only the owner and HQ get a URL, and only while it exists. */
+/**
+ * Playback for the recordings left over from the voice-evidence era. Only the
+ * owner and HQ get a URL, and only until the purge cron deletes the file.
+ */
 export const evidenceUrl = query({
   args: { token: v.string(), submissionId: v.id('submissions') },
   handler: async (ctx, { token, submissionId }) => {
@@ -186,7 +155,7 @@ export const recent = query({
   },
 })
 
-/** The community feed: recently verified missions, names and counts only. */
+/** The community feed: stories HQ has approved, in full, newest first. */
 export const feed = query({
   args: { token: v.optional(v.string()) },
   handler: async (ctx, { token }) => {
@@ -200,9 +169,9 @@ export const feed = query({
           _id: s._id,
           agent: a ? publicAgent(a) : null,
           title: c?.title ?? s.freeformTitle ?? 'Mission',
-          verifiedCount: s.verifiedCount ?? 0,
+          story: s.story ?? null,
+          points: s.verifiedCount ?? 0,
           reviewedAt: s.reviewedAt ?? s.createdAt,
-          auto: s.reviewedBy === 'auto',
         }
       }),
     )
@@ -214,34 +183,21 @@ export const review = mutation({
     token: v.string(),
     submissionId: v.id('submissions'),
     status: v.union(v.literal('approved'), v.literal('rejected')),
-    verifiedCount: v.optional(v.number()),
+    points: v.optional(v.number()),
     reviewNote: v.optional(v.string()),
   },
-  handler: async (ctx, { token, submissionId, status, verifiedCount, reviewNote }) => {
+  handler: async (ctx, { token, submissionId, status, points, reviewNote }) => {
     const lead = await requireLead(ctx, token)
     const s = await ctx.db.get(submissionId)
     if (!s) throw new ConvexError('No such submission')
+    const awarded = Math.max(0, Math.min(MAX_POINTS, Math.round(points ?? 1)))
     await applyReview(ctx, s, {
       status,
-      verifiedCount: status === 'approved' ? Math.max(0, Math.round(verifiedCount ?? s.claimedCount)) : 0,
+      points: status === 'approved' ? awarded : 0,
       reviewedBy: lead._id,
       reviewNote: reviewNote?.trim().slice(0, 300) || undefined,
     })
-    await log(ctx, lead._id, `submission-${status}`, submissionId, { agentId: s.agentId, verifiedCount })
-  },
-})
-
-/** HQ can send a stuck or errored submission back through the classifier. */
-export const reanalyse = mutation({
-  args: { token: v.string(), submissionId: v.id('submissions') },
-  handler: async (ctx, { token, submissionId }) => {
-    const lead = await requireLead(ctx, token)
-    const s = await ctx.db.get(submissionId)
-    if (!s) throw new ConvexError('No such submission')
-    if (!s.storageId) throw new ConvexError('No recording to analyse')
-    await ctx.db.patch(submissionId, { status: 'processing', classifierError: undefined })
-    await ctx.scheduler.runAfter(0, internal.classify.run, { submissionId })
-    await log(ctx, lead._id, 'submission-reanalyse', submissionId)
+    await log(ctx, lead._id, `submission-${status}`, submissionId, { agentId: s.agentId, points: awarded })
   },
 })
 
@@ -259,21 +215,21 @@ async function withAgentAndChallenge(ctx: any, s: Doc<'submissions'>) {
 }
 
 /**
- * The one place a submission's status changes after creation. Keeps
+ * The one place a submission's status changes after it is filed. Keeps
  * agents.points in step whichever direction the status moves, so HQ can
- * overturn the classifier (or itself) without the board drifting.
+ * change its mind without the board drifting.
  */
 export async function applyReview(
   ctx: MutationCtx,
   s: Doc<'submissions'>,
-  next: { status: 'approved' | 'rejected'; verifiedCount: number; reviewedBy: Id<'agents'> | 'auto'; reviewNote?: string },
+  next: { status: 'approved' | 'rejected'; points: number; reviewedBy: Id<'agents'>; reviewNote?: string },
 ) {
   const before = s.status === 'approved' ? s.verifiedCount ?? 0 : 0
-  const after = next.status === 'approved' ? next.verifiedCount : 0
+  const after = next.status === 'approved' ? next.points : 0
   const now = Date.now()
   await ctx.db.patch(s._id, {
     status: next.status,
-    verifiedCount: next.status === 'approved' ? next.verifiedCount : undefined,
+    verifiedCount: next.status === 'approved' ? next.points : undefined,
     reviewedBy: next.reviewedBy,
     reviewNote: next.reviewNote,
     reviewedAt: now,
@@ -285,54 +241,9 @@ export async function applyReview(
   }
 }
 
-// ------------------------------------------------- internal (classify, crons)
+// ------------------------------------------------------------ internal (crons)
 
-export const getForClassifier = internalQuery({
-  args: { submissionId: v.id('submissions') },
-  handler: async (ctx, { submissionId }) => {
-    const s = await ctx.db.get(submissionId)
-    if (!s) return null
-    const c = s.challengeId ? await ctx.db.get(s.challengeId) : null
-    return { submission: s, phrase: c?.phrase ?? DEFAULT_PHRASE, title: c?.title ?? s.freeformTitle ?? 'Mission' }
-  },
-})
-
-export const recordVerdict = internalMutation({
-  args: {
-    submissionId: v.id('submissions'),
-    transcript: v.optional(v.string()),
-    verdict: v.optional(
-      v.object({
-        saidPhrase: v.boolean(),
-        gotResponse: v.boolean(),
-        encounterCount: v.number(),
-        confidence: v.number(),
-        reasoning: v.string(),
-        model: v.string(),
-      }),
-    ),
-    decision: v.union(v.literal('approved'), v.literal('rejected'), v.literal('pending')),
-    verifiedCount: v.optional(v.number()),
-    error: v.optional(v.string()),
-  },
-  handler: async (ctx, { submissionId, transcript, verdict, decision, verifiedCount, error }) => {
-    const s = await ctx.db.get(submissionId)
-    if (!s || s.status !== 'processing') return
-    await ctx.db.patch(submissionId, { transcript, verdict, classifierError: error })
-    if (decision === 'pending') {
-      await ctx.db.patch(submissionId, { status: 'pending' })
-      return
-    }
-    const fresh = (await ctx.db.get(submissionId))!
-    await applyReview(ctx, fresh, {
-      status: decision,
-      verifiedCount: verifiedCount ?? 0,
-      reviewedBy: 'auto',
-      reviewNote: verdict?.reasoning,
-    })
-  },
-})
-
+/** Legacy audio: deleted 30 days after review, and after 30 days regardless. */
 export const purgeEvidence = internalMutation({
   args: {},
   handler: async (ctx) => {
@@ -347,7 +258,10 @@ export const purgeEvidence = internalMutation({
   },
 })
 
-/** Anything stuck in `processing` for over ten minutes goes to HQ instead of vanishing. */
+/**
+ * Nothing enters `processing` any more, but a row left there when the
+ * classifier was retired must not sit invisible: move it to HQ's queue.
+ */
 export const rescueStuck = internalMutation({
   args: {},
   handler: async (ctx) => {
@@ -355,6 +269,6 @@ export const rescueStuck = internalMutation({
       .query('submissions')
       .withIndex('by_status', (q) => q.eq('status', 'processing').lt('createdAt', Date.now() - 10 * 60 * 1000))
       .take(50)
-    for (const s of stuck) await ctx.db.patch(s._id, { status: 'pending', classifierError: s.classifierError ?? 'Classifier timed out' })
+    for (const s of stuck) await ctx.db.patch(s._id, { status: 'pending' })
   },
 })
