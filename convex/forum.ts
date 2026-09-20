@@ -19,7 +19,7 @@ const category = v.union(v.literal('general'), v.literal('missions'), v.literal(
 /** Slurs and nothing else: swearing is fine, this is a forum for students. */
 const HIDE_PATTERNS = [/\bn[i1]gg(?:a|er)s?\b/i, /\bf[a@]gg?[o0]ts?\b/i, /\bretards?\b/i, /\btrann(?:y|ies)\b/i]
 
-function screen(body: string) {
+export function screen(body: string) {
   return HIDE_PATTERNS.some((p) => p.test(body))
 }
 

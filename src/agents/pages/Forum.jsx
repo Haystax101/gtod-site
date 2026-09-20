@@ -16,6 +16,7 @@ export default function Forum() {
   const [cat, setCat] = useState(null)
   const [composing, setComposing] = useState(false)
   const threads = useQuery(api.forum.threads, { token, category: cat ?? undefined })
+  const rooms = useQuery(api.rooms.list, { token })
 
   return (
     <div className="stack">
@@ -30,6 +31,24 @@ export default function Forum() {
       </div>
 
       {composing && <NewThread onDone={() => setComposing(false)} />}
+
+      {rooms && rooms.length > 0 && (
+        <div className="card bracket">
+          <div className="card-head">
+            <span className="eyebrow">{rooms.length > 1 ? 'Year rooms' : 'Your year room'} · <b>live</b></span>
+          </div>
+          {rooms.map((r) => (
+            <Link key={r.room} to={`/forum/room/${r.room}`} className="room-row">
+              <div>
+                <div className="t">{r.label}{r.mine && rooms.length > 1 && <span className="pill orange" style={{ marginLeft: 8 }}>Yours</span>}</div>
+                <div className="m">{pluralise(r.members, 'agent')}{r.lastAt ? ` · last message ${timeAgo(r.lastAt)}` : ' · quiet so far'}</div>
+              </div>
+              <span className="pill teal">Open →</span>
+            </Link>
+          ))}
+          {rooms.length === 1 && <p className="tiny dim" style={{ marginTop: 10 }}>A group chat for everyone in your year. Wrong year? Change it under your file.</p>}
+        </div>
+      )}
 
       <div className="cats">
         <button className={`btn xs ${cat === null ? '' : 'ghost'}`} onClick={() => setCat(null)}>All</button>

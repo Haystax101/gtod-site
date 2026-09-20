@@ -149,6 +149,16 @@ export default defineSchema({
     createdAt: v.number(),
   }).index('by_thread', ['threadId', 'createdAt']),
 
+  // Year rooms: one live chat per year group (room = a year id). Only agents
+  // in that year can read or post; the lead can see every room.
+  roomMessages: defineTable({
+    room: v.string(),
+    authorId: v.id('agents'),
+    body: v.string(),
+    hidden: v.boolean(),
+    createdAt: v.number(),
+  }).index('by_room', ['room', 'createdAt']),
+
   reports: defineTable({
     reporterId: v.id('agents'),
     postId: v.id('posts'),

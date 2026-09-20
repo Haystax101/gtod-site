@@ -8,6 +8,7 @@ import Board from './pages/Board'
 import Coverage from './pages/Coverage'
 import Forum from './pages/Forum'
 import Thread from './pages/Thread'
+import Room from './pages/Room'
 import Line from './pages/Line'
 import Me from './pages/Me'
 import Profile from './pages/Profile'
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="board" element={<Board />} />
         <Route path="coverage" element={<Coverage />} />
         <Route path="forum" element={<Forum />} />
+        <Route path="forum/room/:room" element={<Room />} />
         <Route path="forum/:threadId" element={<Thread />} />
         <Route path="line" element={<Line />} />
         <Route path="me" element={<Me />} />

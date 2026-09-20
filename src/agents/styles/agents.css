@@ -471,3 +471,22 @@ details.cov summary::-webkit-details-marker { display: none; }
 details.cov .cov-n { font-family: var(--display); font-weight: 700; font-size: 1.2rem; color: var(--orange); width: 34px; text-align: center; }
 details.cov .cov-name { font-weight: 600; font-size: 0.92rem; }
 details.cov .cov-list { padding: 4px 0 4px 46px; border-bottom: 1px solid var(--line); }
+
+/* ---------- year rooms ---------- */
+.room-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); text-decoration: none; }
+.room-row:last-of-type { border-bottom: none; }
+.room-row .t { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 1.05rem; display: flex; align-items: center; }
+.room-row .m { font-family: var(--mono); font-size: 0.66rem; color: var(--dim); margin-top: 3px; }
+.room { display: flex; flex-direction: column; gap: 14px; min-height: 40vh; }
+.rg { display: flex; gap: 10px; align-items: flex-start; }
+.rg.mine { justify-content: flex-end; }
+.rg-body { display: flex; flex-direction: column; gap: 4px; max-width: 82%; min-width: 0; }
+.rg.mine .rg-body { align-items: flex-end; }
+.rg-who { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: var(--mono); font-size: 0.78rem; margin-bottom: 2px; }
+.rg-who a { text-decoration: none; }
+.rg-who .when { font-size: 0.62rem; color: var(--dim); }
+.bubble { padding: 8px 12px; border-radius: 12px; background: var(--panel-2); font-size: 0.92rem; white-space: pre-wrap; word-wrap: break-word; width: fit-content; }
+.rg.mine .bubble { background: var(--teal-deep); }
+.bubble.hidden { opacity: 0.45; }
+.rg:not(.mine) .bubble:first-child { border-top-left-radius: 3px; }
+.rg.mine .bubble:first-child { border-top-right-radius: 3px; }

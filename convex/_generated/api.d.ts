@@ -21,6 +21,7 @@ import type * as lib_handles from "../lib/handles.js";
 import type * as lib_universities from "../lib/universities.js";
 import type * as lib_years from "../lib/years.js";
 import type * as missions from "../missions.js";
+import type * as rooms from "../rooms.js";
 import type * as settings from "../settings.js";
 
 import type {
@@ -43,6 +44,7 @@ declare const fullApi: ApiFromModules<{
   "lib/universities": typeof lib_universities;
   "lib/years": typeof lib_years;
   missions: typeof missions;
+  rooms: typeof rooms;
   settings: typeof settings;
 }>;
 
