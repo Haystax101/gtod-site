@@ -1,0 +1,41 @@
+# Build the site and publish the static output to the `deploy` branch, which
+# Hostinger pulls into public_html. The Convex backend deploys in the same run
+# so the frontend is always built against the live backend URL.
+#
+# Needs one repository secret: CONVEX_DEPLOY_KEY (Convex dashboard -> project
+# settings -> Deploy keys -> production).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # `convex deploy --cmd` pushes the backend, then runs the build with
+      # VITE_CONVEX_URL pointed at the production deployment.
+      - run: npx convex deploy --cmd 'npm run build'
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: deploy
+          publish_dir: ./dist
+          force_orphan: true
+          commit_message: 'deploy: ${{ github.sha }}'

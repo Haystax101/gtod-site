@@ -1,0 +1,7 @@
+# /agents/* is a single-page app; anything that is not a real file under it
+# is served the app shell so React Router can take over.
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_URI} ^/agents(/|$)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ /agents/index.html [L]

@@ -1,53 +1,65 @@
-# Get There One Day Landing Site
+# Get There One Day
 
-Single-page landing site for **Get There One Day**, the community for ambitious young
-people at uni, at school, at work, and building their own thing (degree apprentices
-especially welcome). 11K+ strong on TikTok, with a 100% Q&A podcast on Spotify & YouTube.
+getthereoneday.com: the landing page, plus **Field Operations** at `/agents`, the
+members' area for followers (missions, ranks, forum, direct line to HQ).
 
-## Structure
+## Layout
 
-- `index.html` - the whole site (styles inlined, no build step)
-- `assets/logo.png` - the GTOD circular logo (also used as favicon)
+- `index.html` - the landing page. Static, styles inlined, unchanged from the original site.
+- `agents/index.html` + `src/agents/` - the Field Operations app (React + Vite, React Router under `/agents/*`).
+- `convex/` - the backend (Convex): auth, missions, the evidence classifier, forum, direct line, Stripe webhook.
+- `public/` - copied verbatim into the build: `assets/` (logo, favicon, hero reel) and `.htaccess` (SPA fallback for `/agents/*`).
 
-## Deploying (Hostinger, tracking this repo)
+## Running locally
 
-1. hPanel → **Websites → Manage → Advanced → GIT**
-2. Repository: `https://github.com/Haystax101/gtod-site`, branch `main`, directory `public_html`
-3. Click **Deploy** once, then copy the **webhook URL** Hostinger shows and add it in
-   GitHub → repo **Settings → Webhooks** so every push auto-deploys
+```sh
+npm install
+npx convex dev        # terminal 1: backend, writes .env.local with the dev deployment URL
+npm run dev           # terminal 2: http://localhost:5173 (landing) and /agents/
+```
 
-(Alternative: GitHub Pages via Settings → Pages → deploy from `main` / root.)
+The Convex project is `gtod-agents` (team george-hastings). This is separate from the
+`gtod-site` Convex project used by the `integration` branch.
+
+## Deploying
+
+Push to `main`. The GitHub Action builds, deploys the Convex backend to production, and
+force-pushes the static output to the `deploy` branch. Hostinger must track **`deploy`**:
+hPanel → Websites → Manage → Advanced → GIT → branch `deploy`, directory `public_html`.
+
+Repository secret required: `CONVEX_DEPLOY_KEY` (Convex dashboard → gtod-agents → Settings →
+Deploy keys → Production).
+
+## Backend environment (Convex dashboard → Settings → Environment variables)
+
+| Variable | Purpose |
+|---|---|
+| `LEAD_HANDLE` | TikTok handle that becomes Lead Operative on first sign-up (default `george`) |
+| `GROQ_API_KEY` | Transcription (whisper-large-v3-turbo). Cheapest option. |
+| `GEMINI_API_KEY` | Transcription fallback when there is no Groq key |
+| `DEEPSEEK_API_KEY` | The judge. Optional `DEEPSEEK_MODEL` / `DEEPSEEK_BASE_URL`. |
+| `OPENROUTER_API_KEY` | Judge fallback via OpenRouter (`deepseek/deepseek-chat`) when there is no DeepSeek key |
+| `STRIPE_PAYMENT_LINK` | The "Fund the operation" link. Absent = no donate button anywhere. |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Webhook verification. Endpoint: `https://<deployment>.convex.site/stripe/webhook`, event `checkout.session.completed`. |
+
+The classifier is optional: without keys every submission waits for a human verdict in HQ.
+
+## How evidence is judged
+
+1. Browser records audio (or the agent uploads a voice memo) → uploaded straight to Convex storage.
+2. `classify.run` transcribes it, then asks the judge whether the agent said the mission line and
+   whether anyone replied, returning `{saidPhrase, gotResponse, encounterCount, confidence}`.
+3. Confident yes → approved, points = min(heard, claimed). Confident no → rejected. Anything
+   else, or any error → `pending` in HQ. HQ can overturn any verdict; points follow.
+4. Recordings are deleted 30 days after review (daily cron).
 
 ## Hero phone video
 
-The hero shows a phone frame that plays `assets/reel.mp4`, a portrait screen
-recording of scrolling through the TikTok videos (the frame matches the
-iPhone 16 Pro screen, 1206 x 2622; other portrait sizes get cover-cropped to fit). To add or replace it, upload
-the file at that exact path (GitHub → `assets` folder → *Add file → Upload
-files*). MP4 (H.264), ideally under ~15&nbsp;MB; it autoplays muted and loops.
-Until the file exists, the phone shows the logo and handle instead.
+`public/assets/reel.mp4`: a portrait screen recording (iPhone 16 Pro screen, 1206 x 2622;
+other portrait sizes are cover-cropped). MP4 (H.264), ideally under ~15 MB. Until the file
+exists the phone shows the logo and handle.
 
-## Analytics (PostHog)
+## Analytics and the question form
 
-`index.html` has a PostHog snippet near the top, gated behind a placeholder key
-so it does nothing until configured. To switch it on: sign up at posthog.com,
-then in the site head set `POSTHOG_KEY` to the project API key (`phc_...`, from
-Settings -> Project) and `POSTHOG_HOST` to the region shown there
-(`https://eu.i.posthog.com` or `https://us.i.posthog.com`). Pageviews and
-clicks are captured automatically; question submissions fire a
-`question_submitted` event.
-
-## Question form
-
-The ask section posts to [FormSubmit](https://formsubmit.co), which forwards
-submissions to `questions@getthereoneday.com` via the activated alias in the
-form's `action` URL (the alias hides the real address from the page source).
-The form is activated; every question lands straight in that inbox.
-
-## Links still to fill in
-
-Search `index.html` for `TODO`:
-
-- Spotify show URL
-- YouTube channel URL (currently `@getthereoneday`)
-- Instagram handle (currently `@getthereoneday`; TikTok is confirmed as `@getthereonedaypod`)
+Unchanged from the original landing page: PostHog snippet gated behind a placeholder key in
+`index.html`; the ask form posts to FormSubmit and lands in questions@getthereoneday.com.
