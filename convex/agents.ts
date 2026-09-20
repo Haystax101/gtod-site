@@ -11,6 +11,7 @@ import type { Doc, Id } from './_generated/dataModel'
 import { sha256 } from './lib/crypto'
 import { rank } from './schema'
 import { NOT_AT_UNI, OTHER_UNI, universityById } from './lib/universities'
+import { sendWelcome } from './directLine'
 
 export const SESSION_DAYS = 90
 const DAY = 24 * 60 * 60 * 1000
@@ -258,7 +259,7 @@ export const create = internalMutation({
     const existing = await ctx.db.query('agents').withIndex('by_handle', (q) => q.eq('handle', args.handle)).unique()
     if (existing) throw new ConvexError('That TikTok username is already enrolled.')
     const now = Date.now()
-    return ctx.db.insert('agents', {
+    const id = await ctx.db.insert('agents', {
       handle: args.handle,
       displayHandle: args.displayHandle,
       passwordHash: args.passwordHash,
@@ -270,6 +271,8 @@ export const create = internalMutation({
       createdAt: now,
       lastSeenAt: now,
     })
+    if ((args.rank ?? 'junior') !== 'lead') await sendWelcome(ctx, id)
+    return id
   },
 })
 

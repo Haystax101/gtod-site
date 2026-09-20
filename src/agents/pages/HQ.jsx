@@ -17,6 +17,8 @@ const TABS = [
 export default function HQ() {
   const { token } = useSession()
   const [tab, setTab] = useState(() => (location.hash.replace('#', '') || 'queue'))
+  const [inboxAgent, setInboxAgent] = useState(null)
+  const openConversation = (agentId) => { setInboxAgent(agentId); setTab('inbox') }
   const queue = useQuery(api.missions.queue, { token })
   const unread = useQuery(api.directLine.unreadForMe, { token }) ?? 0
   const reports = useQuery(api.forum.openReports, { token })
@@ -39,9 +41,9 @@ export default function HQ() {
         ))}
       </div>
       {tab === 'queue' && <Queue queue={queue} />}
-      {tab === 'roster' && <Roster />}
+      {tab === 'roster' && <Roster onMessage={openConversation} />}
       {tab === 'missions' && <MissionsAdmin />}
-      {tab === 'inbox' && <Inbox />}
+      {tab === 'inbox' && <Inbox agentId={inboxAgent} setAgentId={setInboxAgent} />}
       {tab === 'reports' && <Reports reports={reports} />}
       {tab === 'log' && <Log />}
     </div>
@@ -155,7 +157,7 @@ function Evidence({ submissionId }) {
 
 // ------------------------------------------------------------------ roster
 
-function Roster() {
+function Roster({ onMessage }) {
   const { token, me } = useSession()
   const roster = useQuery(api.agents.roster, { token })
   const setRank = useMutation(api.agents.setRank)
@@ -203,6 +205,7 @@ function Roster() {
                 <option value="advanced">Advanced Operative</option>
                 <option value="lead">Lead Operative</option>
               </select>
+              <button className="btn xs teal" onClick={() => onMessage(a._id)}>Message</button>
               <button className="btn xs ghost" onClick={() => setLoyal({ token, agentId: a._id, loyal: !a.loyal })}>{a.loyal ? 'Unloyal' : 'Loyal'}</button>
               <button className="btn xs ghost" onClick={() => reset(a)}>Reset pw</button>
               {a.status === 'active'
@@ -286,14 +289,15 @@ function MissionsAdmin() {
 
 // ------------------------------------------------------------------- inbox
 
-function Inbox() {
+function Inbox({ agentId, setAgentId }) {
   const { token } = useSession()
   const inbox = useQuery(api.directLine.inbox, { token })
-  const [agentId, setAgentId] = useState(null)
   if (agentId) return <Conversation agentId={agentId} onBack={() => setAgentId(null)} />
   return (
+    <div className="stack">
+    <WelcomeEditor />
     <div className="card">
-      <div className="card-head"><span className="eyebrow">Direct line</span></div>
+      <div className="card-head"><span className="eyebrow">Direct line</span><span className="tiny dim">To message someone new: Roster → Message</span></div>
       {inbox === undefined && <div className="empty"><span className="spin" /></div>}
       {inbox?.length === 0 && <div className="empty">Nobody has called in yet.</div>}
       {inbox?.map(({ agent, last, unread }) => (
@@ -307,6 +311,33 @@ function Inbox() {
         </a>
       ))}
     </div>
+    </div>
+  )
+}
+
+function WelcomeEditor() {
+  const { token } = useSession()
+  const welcome = useQuery(api.directLine.welcome, { token })
+  const setWelcome = useMutation(api.directLine.setWelcome)
+  const [text, setText] = useState(null)
+  const [saved, setSaved] = useState(false)
+  const value = text ?? welcome?.text ?? ''
+  if (welcome === undefined) return null
+  return (
+    <details className="card" style={{ padding: 0 }}>
+      <summary style={{ padding: 18, cursor: 'pointer', listStyle: 'none' }}>
+        <span className="eyebrow">Welcome message · <b>{welcome.text.trim() ? 'sent to every new agent' : 'off'}</b></span>
+        <span className="tiny dim" style={{ float: 'right' }}>edit</span>
+      </summary>
+      <div style={{ padding: '0 18px 18px' }}>
+        <textarea className="input" rows={8} value={value} onChange={(e) => { setText(e.target.value); setSaved(false) }} maxLength={1500} placeholder="Leave empty to send nothing on sign-up." />
+        <div className="row" style={{ marginTop: 10 }}>
+          <button className="btn sm" onClick={async () => { await setWelcome({ token, text: value }); setSaved(true) }}>Save</button>
+          {saved && <span className="pill green">Saved</span>}
+          <span className="tiny dim">Sent once, at enrolment, as the first message in their direct line. Changes only affect future sign-ups.</span>
+        </div>
+      </div>
+    </details>
   )
 }
 

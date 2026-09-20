@@ -1,11 +1,54 @@
 /**
  * Direct line: one private channel per agent with HQ.
  */
-import { mutation, query } from './_generated/server'
+import { internalMutation, mutation, query, type MutationCtx } from './_generated/server'
 import { ConvexError, v } from 'convex/values'
-import { agentFromToken, publicAgent, requireAgent, requireLead } from './agents'
+import type { Id } from './_generated/dataModel'
+import { agentFromToken, log, publicAgent, requireAgent, requireLead } from './agents'
 
 const MAX_CHARS = 1500
+
+export const DEFAULT_WELCOME = `Welcome to the programme, agent.
+
+You're in as a Junior Agent. Your first mission is on the Missions tab: find a stranger this week, ask them "you here for uni then?", and record it. The analyst verifies it in seconds and it goes on your file.
+
+This channel comes straight to me. Use it for anything: a ruling on a mission, an idea, or just to report in.
+
+- George, Lead Operative`
+
+/** The welcome text HQ has set, the default if none, or '' if HQ has switched it off. */
+export async function welcomeText(ctx: MutationCtx) {
+  const row = await ctx.db.query('config').withIndex('by_key', (q) => q.eq('key', 'welcome')).unique()
+  return row ? row.value : DEFAULT_WELCOME
+}
+
+/** Called once per enrolment: the first message in every agent's channel is from HQ. */
+export async function sendWelcome(ctx: MutationCtx, agentId: Id<'agents'>) {
+  const text = await welcomeText(ctx)
+  if (!text.trim()) return
+  await ctx.db.insert('directLine', { agentId, fromLead: true, body: text, createdAt: Date.now() })
+}
+
+export const welcome = query({
+  args: { token: v.string() },
+  handler: async (ctx, { token }) => {
+    await requireLead(ctx, token)
+    const row = await ctx.db.query('config').withIndex('by_key', (q) => q.eq('key', 'welcome')).unique()
+    return { text: row ? row.value : DEFAULT_WELCOME, isDefault: !row }
+  },
+})
+
+export const setWelcome = mutation({
+  args: { token: v.string(), text: v.string() },
+  handler: async (ctx, { token, text }) => {
+    const lead = await requireLead(ctx, token)
+    const value = text.slice(0, MAX_CHARS)
+    const row = await ctx.db.query('config').withIndex('by_key', (q) => q.eq('key', 'welcome')).unique()
+    if (row) await ctx.db.patch(row._id, { value, updatedAt: Date.now() })
+    else await ctx.db.insert('config', { key: 'welcome', value, updatedAt: Date.now() })
+    await log(ctx, lead._id, 'welcome-edit', undefined, { chars: value.length })
+  },
+})
 
 export const mine = query({
   args: { token: v.optional(v.string()) },

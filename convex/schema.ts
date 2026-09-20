@@ -165,6 +165,13 @@ export default defineSchema({
     createdAt: v.number(),
   }).index('by_stripeSessionId', ['stripeSessionId']),
 
+  // Small key/value settings HQ edits in the app (e.g. the welcome message).
+  config: defineTable({
+    key: v.string(),
+    value: v.string(),
+    updatedAt: v.number(),
+  }).index('by_key', ['key']),
+
   auditLog: defineTable({
     actorId: v.id('agents'),
     action: v.string(),
