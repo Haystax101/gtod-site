@@ -29,3 +29,8 @@ export function StatusPill({ status }) {
   const [cls, label] = map[status] ?? ['', status]
   return <span className={`pill ${cls}`}>{label}</span>
 }
+
+export function YearPill({ agent }) {
+  if (!agent?.yearLabel) return null
+  return <span className="pill">{agent.yearLabel}</span>
+}

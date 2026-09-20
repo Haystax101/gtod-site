@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { useSession } from '../lib/session'
-import { Avatar, LoyalPill, RankPill } from '../components/Badges'
+import { Avatar, LoyalPill, RankPill, YearPill } from '../components/Badges'
 import StoryText from '../components/StoryText'
 import { fileNo, pluralise, timeAgo } from '../lib/format'
 
@@ -26,7 +26,7 @@ export default function Profile() {
           <Avatar agent={a} lg />
           <div>
             <div className="name">@{a.displayHandle}</div>
-            <div className="row" style={{ marginTop: 6 }}><RankPill rank={a.rank} rankLabel={a.rankLabel} /></div>
+            <div className="row" style={{ marginTop: 6 }}><RankPill rank={a.rank} rankLabel={a.rankLabel} /><YearPill agent={a} /></div>
           </div>
         </div>
         {a.university && <div className="eyebrow" style={{ marginTop: 14 }}>Posted at <b>{a.university}</b></div>}

@@ -9,6 +9,7 @@ import { hashPassword, needsRehash, newToken, sha256, verifyPassword } from './l
 import { MIN_PASSWORD, handleProblem, normaliseHandle, passwordProblem } from './lib/handles'
 import type { Doc } from './_generated/dataModel'
 import { validUniversityId } from './agents'
+import { isYearId } from './lib/years'
 
 // A real hash of a throwaway password, verified against when the handle does not exist.
 const DUMMY_HASH = 'pbkdf2$600000$00000000000000000000000000000000$0000000000000000000000000000000000000000000000000000000000000000'
@@ -20,11 +21,12 @@ async function issueSession(ctx: any, agentId: Doc<'agents'>['_id']) {
 }
 
 export const signUp = action({
-  args: { handle: v.string(), password: v.string(), universityId: v.string(), universityOther: v.optional(v.string()) },
-  handler: async (ctx, { handle: raw, password, universityId, universityOther }): Promise<{ token: string }> => {
+  args: { handle: v.string(), password: v.string(), universityId: v.string(), universityOther: v.optional(v.string()), year: v.optional(v.string()) },
+  handler: async (ctx, { handle: raw, password, universityId, universityOther, year }): Promise<{ token: string }> => {
     const problem = handleProblem(raw)
     if (problem) throw new ConvexError(problem)
     if (!validUniversityId(universityId)) throw new ConvexError('Pick your university from the list.')
+    if (year !== undefined && !isYearId(year)) throw new ConvexError('Pick your year from the list.')
     const handle = normaliseHandle(raw)
     const weak = passwordProblem(password, handle)
     if (weak) throw new ConvexError(weak)
@@ -46,6 +48,7 @@ export const signUp = action({
       rank: handle === leadHandle ? 'lead' : 'junior',
       universityId,
       universityOther,
+      year,
     })
     return { token: await issueSession(ctx, agentId) }
   },

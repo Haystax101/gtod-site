@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { useSession } from '../lib/session'
-import { Avatar, Handle, LoyalPill, RankPill } from '../components/Badges'
+import { Avatar, Handle, LoyalPill, RankPill, YearPill } from '../components/Badges'
 import StoryText from '../components/StoryText'
 import { fileNo, pluralise, timeAgo } from '../lib/format'
 
@@ -36,6 +36,7 @@ export default function Briefing() {
             <div className="name">@{me.displayHandle}</div>
             <div className="row" style={{ marginTop: 6 }}>
               <RankPill rank={me.rank} rankLabel={me.rankLabel} />
+              <YearPill agent={me} />
             </div>
             {me.university
               ? <div className="tiny muted" style={{ marginTop: 6 }}>{me.university}</div>

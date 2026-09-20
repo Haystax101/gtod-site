@@ -12,6 +12,7 @@ import { sha256 } from './lib/crypto'
 import { rank } from './schema'
 import { NOT_AT_UNI, OTHER_UNI, universityById } from './lib/universities'
 import { sendWelcome } from './directLine'
+import { DEFAULT_YEAR, isYearId, yearById } from './lib/years'
 
 export const SESSION_DAYS = 90
 const DAY = 24 * 60 * 60 * 1000
@@ -64,6 +65,8 @@ export function publicAgent(a: Doc<'agents'>) {
     loyal: a.loyal,
     points: a.points,
     bio: a.bio,
+    year: a.year ?? DEFAULT_YEAR,
+    yearLabel: yearById(a.year).short,
     universityId: a.universityId,
     university: a.universityId === OTHER_UNI.id && a.universityOther ? a.universityOther : universityById(a.universityId)?.name ?? null,
     createdAt: a.createdAt,
@@ -171,13 +174,15 @@ export const auditLog = query({
 // ---------------------------------------------------------------- mutations
 
 export const updateProfile = mutation({
-  args: { token: v.string(), bio: v.string(), universityId: v.optional(v.string()), universityOther: v.optional(v.string()) },
-  handler: async (ctx, { token, bio, universityId, universityOther }) => {
+  args: { token: v.string(), bio: v.string(), universityId: v.optional(v.string()), universityOther: v.optional(v.string()), year: v.optional(v.string()) },
+  handler: async (ctx, { token, bio, universityId, universityOther, year }) => {
     const me = await requireAgent(ctx, token)
     const trimmed = bio.trim().slice(0, 200)
     if (universityId !== undefined && !validUniversityId(universityId)) throw new ConvexError('Pick a university from the list')
+    if (year !== undefined && !isYearId(year)) throw new ConvexError('Pick a year from the list')
     await ctx.db.patch(me._id, {
       bio: trimmed || undefined,
+      ...(year !== undefined ? { year } : {}),
       ...(universityId !== undefined ? { universityId, universityOther: universityId === OTHER_UNI.id ? universityOther?.trim().slice(0, 80) || undefined : undefined } : {}),
     })
   },
@@ -267,7 +272,7 @@ export const byHandle = internalQuery({
 })
 
 export const create = internalMutation({
-  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank), universityId: v.optional(v.string()), universityOther: v.optional(v.string()) },
+  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank), universityId: v.optional(v.string()), universityOther: v.optional(v.string()), year: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const existing = await ctx.db.query('agents').withIndex('by_handle', (q) => q.eq('handle', args.handle)).unique()
     if (existing) throw new ConvexError('That TikTok username is already enrolled.')
@@ -279,6 +284,7 @@ export const create = internalMutation({
       rank: args.rank ?? 'junior',
       universityId: args.universityId,
       universityOther: args.universityId === OTHER_UNI.id ? args.universityOther?.trim().slice(0, 80) || undefined : undefined,
+      year: isYearId(args.year) ? args.year : DEFAULT_YEAR,
       loyal: false,
       status: 'active',
       points: 0,

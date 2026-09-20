@@ -36,7 +36,7 @@ export default function Board() {
                     <RankPill rank={a.rank} rankLabel={a.rankLabel} small />
                     {a.loyal && <LoyalPill />}
                   </div>
-                  {a.university && <div className="tiny muted" style={{ marginTop: 3 }}>{a.university}</div>}
+                  {(a.university || a.yearLabel) && <div className="tiny muted" style={{ marginTop: 3 }}>{[a.yearLabel, a.university].filter(Boolean).join(' · ')}</div>}
                 </div>
                 <span className="pts">{a.points}</span>
               </li>

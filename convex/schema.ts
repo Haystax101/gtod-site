@@ -36,6 +36,8 @@ export default defineSchema({
     universityId: v.optional(v.string()),
     // Free text when universityId is 'other': what they typed, so HQ can add it to the list.
     universityOther: v.optional(v.string()),
+    // Id from convex/lib/years.ts. Absent = 'fresher' (everyone who enrolled before it existed).
+    year: v.optional(v.string()),
     // Verified encounters, denormalised from approved submissions so the
     // leaderboard is one indexed read.
     points: v.number(),

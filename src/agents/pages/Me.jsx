@@ -6,6 +6,7 @@ import { errMsg, useSession } from '../lib/session'
 import { Avatar, LoyalPill, RankPill } from '../components/Badges'
 import { fileNo } from '../lib/format'
 import { UniversityField } from '../components/UniversityPicker'
+import { YEARS } from '../../../convex/lib/years'
 
 export default function Me() {
   const { token, me, logOut } = useSession()
@@ -14,6 +15,7 @@ export default function Me() {
   const changePassword = useAction(api.auth.changePassword)
   const [bio, setBio] = useState(me.bio ?? '')
   const [universityId, setUniversityId] = useState(me.universityId ?? '')
+  const [year, setYear] = useState(me.year ?? 'fresher')
   const [universityOther, setUniversityOther] = useState(me.universityId === 'other' ? me.university ?? '' : '')
   const [saved, setSaved] = useState(false)
   const [pw, setPw] = useState({ current: '', next: '' })
@@ -21,7 +23,7 @@ export default function Me() {
 
   async function saveBio(e) {
     e.preventDefault()
-    await updateProfile({ token, bio, ...(universityId ? { universityId, universityOther: universityOther || undefined } : {}) })
+    await updateProfile({ token, bio, year, ...(universityId ? { universityId, universityOther: universityOther || undefined } : {}) })
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -62,6 +64,12 @@ export default function Me() {
             <label>University</label>
             <UniversityField value={universityId} onChange={setUniversityId} other={universityOther} onOther={setUniversityOther} />
             {!me.universityId && <div className="hint" style={{ color: 'var(--orange)' }}>Not set. Pick one to appear on the coverage map.</div>}
+          </div>
+          <div className="field">
+            <label>Year</label>
+            <select className="input" value={year} onChange={(e) => setYear(e.target.value)}>
+              {YEARS.map((y) => <option key={y.id} value={y.id}>{y.label}</option>)}
+            </select>
           </div>
           <div className="field">
             <label>Cover story <span className="dim">(bio, 200 chars)</span></label>

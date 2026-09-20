@@ -4,6 +4,7 @@ import { useAction } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
 import { UniversityField } from '../components/UniversityPicker'
+import { YEARS } from '../../../convex/lib/years'
 
 export default function Gate() {
   const { setToken } = useSession()
@@ -13,6 +14,7 @@ export default function Gate() {
   const [confirm, setConfirm] = useState('')
   const [universityId, setUniversityId] = useState('')
   const [universityOther, setUniversityOther] = useState('')
+  const [year, setYear] = useState('fresher')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState(null)
   const signUp = useAction(api.auth.signUp)
@@ -25,7 +27,7 @@ export default function Gate() {
     if (mode === 'join' && password !== confirm) return setError('Passwords do not match.')
     setBusy(true)
     try {
-      const { token } = mode === 'join' ? await signUp({ handle, password, universityId, universityOther: universityOther || undefined }) : await logIn({ handle, password })
+      const { token } = mode === 'join' ? await signUp({ handle, password, universityId, universityOther: universityOther || undefined, year }) : await logIn({ handle, password })
       setToken(token)
     } catch (err) {
       setError(errMsg(err))
@@ -92,6 +94,14 @@ export default function Gate() {
                 <label htmlFor="uni">Your university</label>
                 <UniversityField id="uni" value={universityId} onChange={setUniversityId} other={universityOther} onOther={setUniversityOther} />
                 <div className="hint">Puts you on the coverage map. Not at uni, or not listed? Both are options at the bottom of the list.</div>
+              </div>
+            )}
+            {mode === 'join' && (
+              <div className="field">
+                <label htmlFor="year">Your year</label>
+                <select id="year" className="input" value={year} onChange={(e) => setYear(e.target.value)}>
+                  {YEARS.map((y) => <option key={y.id} value={y.id}>{y.label}</option>)}
+                </select>
               </div>
             )}
             <div className="field">
