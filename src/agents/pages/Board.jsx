@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { useSession } from '../lib/session'
@@ -13,6 +14,10 @@ export default function Board() {
         <span className="eyebrow">Standings · <b>Verified encounters</b></span>
         <h1 className="display">Leaderboard</h1>
         <p className="small">Only verified encounters count. Claims without evidence go nowhere.</p>
+      </div>
+      <div className="cats">
+        <Link to="/board" className="btn xs">Leaderboard</Link>
+        <Link to="/coverage" className="btn xs ghost">Coverage map</Link>
       </div>
       <div className="card">
         {rows === undefined ? (
@@ -31,6 +36,7 @@ export default function Board() {
                     <RankPill rank={a.rank} rankLabel={a.rankLabel} small />
                     {a.loyal && <LoyalPill />}
                   </div>
+                  {a.university && <div className="tiny muted" style={{ marginTop: 3 }}>{a.university}</div>}
                 </div>
                 <span className="pts">{a.points}</span>
               </li>

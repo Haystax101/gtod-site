@@ -1,0 +1,49 @@
+{
+  "hash": "770254c7",
+  "configHash": "15b118b6",
+  "lockfileHash": "f386882f",
+  "browserHash": "a2015045",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "2f805701",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "9eb9d007",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "130d9b4f",
+      "needsInterop": false
+    },
+    "convex/react": {
+      "src": "../../node_modules/convex/dist/esm/react/index.js",
+      "file": "convex_react.js",
+      "fileHash": "b4e40614",
+      "needsInterop": false
+    },
+    "leaflet": {
+      "src": "../../node_modules/leaflet/dist/leaflet-src.js",
+      "file": "leaflet.js",
+      "fileHash": "9807aab5",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-RDMB2FCJ": {
+      "file": "chunk-RDMB2FCJ.js"
+    },
+    "chunk-IGNIO7M7": {
+      "file": "chunk-IGNIO7M7.js"
+    },
+    "chunk-PX6F3LHL": {
+      "file": "chunk-PX6F3LHL.js"
+    }
+  }
+}

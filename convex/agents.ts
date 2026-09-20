@@ -10,6 +10,7 @@ import { ConvexError, v } from 'convex/values'
 import type { Doc, Id } from './_generated/dataModel'
 import { sha256 } from './lib/crypto'
 import { rank } from './schema'
+import { NOT_AT_UNI, OTHER_UNI, universityById } from './lib/universities'
 
 export const SESSION_DAYS = 90
 const DAY = 24 * 60 * 60 * 1000
@@ -62,8 +63,15 @@ export function publicAgent(a: Doc<'agents'>) {
     loyal: a.loyal,
     points: a.points,
     bio: a.bio,
+    universityId: a.universityId,
+    university: universityById(a.universityId)?.name ?? null,
     createdAt: a.createdAt,
   }
+}
+
+export function validUniversityId(id: string | undefined) {
+  if (!id) return false
+  return id === NOT_AT_UNI.id || id === OTHER_UNI.id || universityById(id) !== null
 }
 
 export async function log(ctx: MutationCtx, actorId: Id<'agents'>, action: string, targetId?: string, meta?: unknown) {
@@ -153,11 +161,31 @@ export const auditLog = query({
 // ---------------------------------------------------------------- mutations
 
 export const updateProfile = mutation({
-  args: { token: v.string(), bio: v.string() },
-  handler: async (ctx, { token, bio }) => {
+  args: { token: v.string(), bio: v.string(), universityId: v.optional(v.string()) },
+  handler: async (ctx, { token, bio, universityId }) => {
     const me = await requireAgent(ctx, token)
     const trimmed = bio.trim().slice(0, 200)
-    await ctx.db.patch(me._id, { bio: trimmed || undefined })
+    if (universityId !== undefined && !validUniversityId(universityId)) throw new ConvexError('Pick a university from the list')
+    await ctx.db.patch(me._id, { bio: trimmed || undefined, ...(universityId !== undefined ? { universityId } : {}) })
+  },
+})
+
+/** Who is where. Members only. Agents with no mappable university are listed under 'other' / 'none'. */
+export const coverage = query({
+  args: { token: v.optional(v.string()) },
+  handler: async (ctx, { token }) => {
+    if (!(await agentFromToken(ctx, token))) return null
+    const all = await ctx.db.query('agents').withIndex('by_points', (q) => q.eq('status', 'active')).order('desc').collect()
+    const groups = new Map<string, ReturnType<typeof publicAgent>[]>()
+    for (const a of all) {
+      const key = a.universityId ?? 'unset'
+      if (!groups.has(key)) groups.set(key, [])
+      groups.get(key)!.push(publicAgent(a))
+    }
+    return Array.from(groups, ([universityId, agents]) => {
+      const u = universityById(universityId)
+      return { universityId, name: u?.name ?? 'Undisclosed', lat: u?.lat ?? null, lng: u?.lng ?? null, agents }
+    }).sort((x, y) => y.agents.length - x.agents.length)
   },
 })
 
@@ -225,7 +253,7 @@ export const byHandle = internalQuery({
 })
 
 export const create = internalMutation({
-  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank) },
+  args: { handle: v.string(), displayHandle: v.string(), passwordHash: v.string(), rank: v.optional(rank), universityId: v.optional(v.string()) },
   handler: async (ctx, args) => {
     const existing = await ctx.db.query('agents').withIndex('by_handle', (q) => q.eq('handle', args.handle)).unique()
     if (existing) throw new ConvexError('That TikTok username is already enrolled.')
@@ -235,6 +263,7 @@ export const create = internalMutation({
       displayHandle: args.displayHandle,
       passwordHash: args.passwordHash,
       rank: args.rank ?? 'junior',
+      universityId: args.universityId,
       loyal: false,
       status: 'active',
       points: 0,

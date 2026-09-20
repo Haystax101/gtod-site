@@ -19,6 +19,7 @@ import type * as forum from "../forum.js";
 import type * as http from "../http.js";
 import type * as lib_crypto from "../lib/crypto.js";
 import type * as lib_handles from "../lib/handles.js";
+import type * as lib_universities from "../lib/universities.js";
 import type * as missions from "../missions.js";
 import type * as settings from "../settings.js";
 
@@ -40,6 +41,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "lib/crypto": typeof lib_crypto;
   "lib/handles": typeof lib_handles;
+  "lib/universities": typeof lib_universities;
   missions: typeof missions;
   settings: typeof settings;
 }>;

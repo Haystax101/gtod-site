@@ -36,6 +36,9 @@ export default function Briefing() {
             <div className="row" style={{ marginTop: 6 }}>
               <RankPill rank={me.rank} rankLabel={me.rankLabel} />
             </div>
+            {me.university
+              ? <div className="tiny muted" style={{ marginTop: 6 }}>{me.university}</div>
+              : <Link to="/me" className="tiny" style={{ display: 'inline-block', marginTop: 6, color: 'var(--orange)' }}>Set your university →</Link>}
           </div>
         </div>
         <div className="stats">
@@ -88,7 +91,10 @@ export default function Briefing() {
       <div className="card">
         <div className="card-head">
           <span className="eyebrow">Field reports · <b>verified</b></span>
-          <Link to="/board" className="tiny muted">Leaderboard →</Link>
+          <span className="row" style={{ gap: 10 }}>
+            <Link to="/coverage" className="tiny muted">Coverage map →</Link>
+            <Link to="/board" className="tiny muted">Leaderboard →</Link>
+          </span>
         </div>
         {feed === undefined ? (
           <div className="empty"><span className="spin" /></div>

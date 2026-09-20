@@ -435,3 +435,42 @@ select.input.sm { padding: 6px 28px 6px 10px; font-size: 0.8rem; width: auto; ba
 /* Keep programmatic scroll-into-view (focus, form validation, tests) clear of
    the fixed bars. */
 .main .btn, .main .input, .main .recbtn, .main .mission { scroll-margin-block: 90px; }
+
+/* ---------- university picker ---------- */
+.combo { position: relative; }
+.combo-tick { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--green); font-family: var(--mono); }
+.combo-list {
+  position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 4px);
+  list-style: none; max-height: 260px; overflow: auto;
+  background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+.combo-list li { padding: 10px 12px; font-size: 0.9rem; cursor: pointer; border-bottom: 1px solid var(--line); }
+.combo-list li:last-child { border-bottom: none; }
+.combo-list li.hi { background: var(--panel-3); }
+.combo-list li.extra { color: var(--muted); font-style: italic; }
+
+/* ---------- coverage map ---------- */
+.mapcard { padding: 0; overflow: hidden; }
+.map { height: 460px; width: 100%; background: var(--black); background-image: radial-gradient(circle at 1px 1px, rgba(244, 238, 227, 0.06) 1px, transparent 0); background-size: 22px 22px; }
+@media (max-width: 520px) { .map { height: 420px; } }
+.leaflet-container { font-family: var(--body); }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--panel-2); color: var(--cream); border: 1px solid var(--line-2); box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+.leaflet-popup-content { margin: 12px 14px; line-height: 1.4; }
+.pop b { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+.pop .cnt { font-family: var(--mono); font-size: 0.66rem; color: var(--orange); letter-spacing: 0.14em; text-transform: uppercase; margin: 2px 0 8px; }
+.pop ul { list-style: none; }
+.pop li { font-family: var(--mono); font-size: 0.78rem; padding: 3px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; }
+.pop li span { color: var(--muted); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.pop li.more { color: var(--dim); }
+.leaflet-tooltip { background: var(--panel-2); color: var(--cream); border: 1px solid var(--line-2); font-family: var(--mono); font-size: 0.7rem; }
+.leaflet-tooltip-top::before { border-top-color: var(--line-2); }
+.leaflet-control-zoom a { background: var(--panel-2) !important; color: var(--cream) !important; border-color: var(--line-2) !important; }
+.leaflet-control-attribution { background: rgba(18,16,16,0.7) !important; color: var(--dim) !important; font-size: 0.6rem !important; }
+.leaflet-control-attribution a { color: var(--muted) !important; }
+details.cov summary { list-style: none; display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+details.cov summary::-webkit-details-marker { display: none; }
+details.cov .cov-n { font-family: var(--display); font-weight: 700; font-size: 1.2rem; color: var(--orange); width: 34px; text-align: center; }
+details.cov .cov-name { font-weight: 600; font-size: 0.92rem; }
+details.cov .cov-list { padding: 4px 0 4px 46px; border-bottom: 1px solid var(--line); }

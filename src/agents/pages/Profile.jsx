@@ -28,7 +28,8 @@ export default function Profile() {
             <div className="row" style={{ marginTop: 6 }}><RankPill rank={a.rank} rankLabel={a.rankLabel} /></div>
           </div>
         </div>
-        {a.bio && <p className="muted small" style={{ marginTop: 14 }}>{a.bio}</p>}
+        {a.university && <div className="eyebrow" style={{ marginTop: 14 }}>Posted at <b>{a.university}</b></div>}
+        {a.bio && <p className="muted small" style={{ marginTop: 10 }}>{a.bio}</p>}
         <div className="stats">
           <div className="stat"><div className="n">{a.points}</div><div className="l">Verified</div></div>
           <div className="stat"><div className="n">{a.missions.length}</div><div className="l">Missions</div></div>

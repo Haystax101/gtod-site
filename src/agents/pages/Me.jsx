@@ -5,6 +5,7 @@ import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
 import { Avatar, LoyalPill, RankPill } from '../components/Badges'
 import { fileNo } from '../lib/format'
+import UniversityPicker from '../components/UniversityPicker'
 
 export default function Me() {
   const { token, me, logOut } = useSession()
@@ -12,13 +13,14 @@ export default function Me() {
   const updateProfile = useMutation(api.agents.updateProfile)
   const changePassword = useAction(api.auth.changePassword)
   const [bio, setBio] = useState(me.bio ?? '')
+  const [universityId, setUniversityId] = useState(me.universityId ?? '')
   const [saved, setSaved] = useState(false)
   const [pw, setPw] = useState({ current: '', next: '' })
   const [pwMsg, setPwMsg] = useState(null)
 
   async function saveBio(e) {
     e.preventDefault()
-    await updateProfile({ token, bio })
+    await updateProfile({ token, bio, ...(universityId ? { universityId } : {}) })
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -55,6 +57,11 @@ export default function Me() {
         </div>
         <div className="divider" />
         <form onSubmit={saveBio}>
+          <div className="field">
+            <label>University</label>
+            <UniversityPicker value={universityId} onChange={setUniversityId} />
+            {!me.universityId && <div className="hint" style={{ color: 'var(--orange)' }}>Not set. Pick one to appear on the coverage map.</div>}
+          </div>
           <div className="field">
             <label>Cover story <span className="dim">(bio, 200 chars)</span></label>
             <input className="input" value={bio} onChange={(e) => setBio(e.target.value)} maxLength={200} placeholder="Course, uni, what you're about" />

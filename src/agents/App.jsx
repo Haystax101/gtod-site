@@ -5,6 +5,7 @@ import Gate from './pages/Gate'
 import Briefing from './pages/Briefing'
 import Missions from './pages/Missions'
 import Board from './pages/Board'
+import Coverage from './pages/Coverage'
 import Forum from './pages/Forum'
 import Thread from './pages/Thread'
 import Line from './pages/Line'
@@ -38,6 +39,7 @@ export default function App() {
         <Route index element={<Briefing />} />
         <Route path="missions" element={<Missions />} />
         <Route path="board" element={<Board />} />
+        <Route path="coverage" element={<Coverage />} />
         <Route path="forum" element={<Forum />} />
         <Route path="forum/:threadId" element={<Thread />} />
         <Route path="line" element={<Line />} />

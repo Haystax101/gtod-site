@@ -8,6 +8,7 @@ import { internal } from './_generated/api'
 import { hashPassword, newToken, sha256, verifyPassword } from './lib/crypto'
 import { MIN_PASSWORD, handleProblem, normaliseHandle } from './lib/handles'
 import type { Doc } from './_generated/dataModel'
+import { validUniversityId } from './agents'
 
 async function issueSession(ctx: any, agentId: Doc<'agents'>['_id']) {
   const token = newToken()
@@ -16,10 +17,11 @@ async function issueSession(ctx: any, agentId: Doc<'agents'>['_id']) {
 }
 
 export const signUp = action({
-  args: { handle: v.string(), password: v.string() },
-  handler: async (ctx, { handle: raw, password }): Promise<{ token: string }> => {
+  args: { handle: v.string(), password: v.string(), universityId: v.string() },
+  handler: async (ctx, { handle: raw, password, universityId }): Promise<{ token: string }> => {
     const problem = handleProblem(raw)
     if (problem) throw new ConvexError(problem)
+    if (!validUniversityId(universityId)) throw new ConvexError('Pick your university from the list.')
     if (password.length < MIN_PASSWORD) throw new ConvexError(`Password needs at least ${MIN_PASSWORD} characters.`)
     const handle = normaliseHandle(raw)
     const displayHandle = raw.trim().replace(/^@+/, '')
@@ -38,6 +40,7 @@ export const signUp = action({
       passwordHash: await hashPassword(password),
       // First sign-up with the configured lead handle becomes Lead Operative.
       rank: handle === leadHandle ? 'lead' : 'junior',
+      universityId,
     })
     return { token: await issueSession(ctx, agentId) }
   },

@@ -32,6 +32,8 @@ export default defineSchema({
     // `removed` keeps the row so the handle cannot be re-registered.
     status: v.union(v.literal('active'), v.literal('removed')),
     bio: v.optional(v.string()),
+    // Id from convex/lib/universities.ts, or 'none' / 'other'. Drives the coverage map.
+    universityId: v.optional(v.string()),
     // Verified encounters, denormalised from approved submissions so the
     // leaderboard is one indexed read.
     points: v.number(),
