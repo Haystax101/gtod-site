@@ -92,6 +92,9 @@ export default defineSchema({
     // The story itself. Optional only so the audio-era rows below still
     // validate; every row written from now on has one.
     story: v.optional(v.string()),
+    // Whether other agents see it once HQ approves it. Absent counts as
+    // public, which is what the audio-era rows were.
+    visibility: v.optional(v.union(v.literal('public'), v.literal('private'))),
     status: submissionStatus,
     // Points awarded by HQ on approval. Named for the era when it counted
     // encounters heard on a recording; it is simply points now.
@@ -159,13 +162,41 @@ export default defineSchema({
     createdAt: v.number(),
   }).index('by_room', ['room', 'createdAt']),
 
+  // Reports against anything a member can post. `kind` is absent on rows
+  // filed before stories could be reported; those are all forum posts.
   reports: defineTable({
     reporterId: v.id('agents'),
-    postId: v.id('posts'),
+    kind: v.optional(v.union(v.literal('post'), v.literal('story'), v.literal('comment'))),
+    postId: v.optional(v.id('posts')),
+    submissionId: v.optional(v.id('submissions')),
+    commentId: v.optional(v.id('storyComments')),
     reason: v.string(),
     resolvedAt: v.optional(v.number()),
     createdAt: v.number(),
   }).index('by_open', ['resolvedAt', 'createdAt']),
+
+  // Replies to a published story. Same moderation shape as forum posts:
+  // published immediately, screened for slurs, hideable by HQ.
+  storyComments: defineTable({
+    submissionId: v.id('submissions'),
+    authorId: v.id('agents'),
+    body: v.string(),
+    hidden: v.boolean(),
+    createdAt: v.number(),
+  })
+    .index('by_story', ['submissionId', 'createdAt'])
+    .index('by_author', ['authorId', 'createdAt']),
+
+  // One row per agent per story per emoji, so a tap toggles and nobody can
+  // stack the same reaction twice.
+  storyReactions: defineTable({
+    submissionId: v.id('submissions'),
+    agentId: v.id('agents'),
+    kind: v.union(v.literal('salute'), v.literal('laugh'), v.literal('heart')),
+    createdAt: v.number(),
+  })
+    .index('by_story', ['submissionId'])
+    .index('by_story_agent', ['submissionId', 'agentId', 'kind']),
 
   // One private channel per agent with HQ. `fromLead` says which side spoke.
   directLine: defineTable({

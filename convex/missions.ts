@@ -11,6 +11,7 @@ import { internalMutation, mutation, query, type MutationCtx } from './_generate
 import { ConvexError, v } from 'convex/values'
 import type { Doc, Id } from './_generated/dataModel'
 import { agentFromToken, log, publicAgent, requireAgent, requireLead } from './agents'
+import { commentCount, isPublished, reactionSummary } from './stories'
 
 export const DEFAULT_PHRASE = 'You here for uni then?'
 export const MIN_STORY_CHARS = 80
@@ -75,12 +76,15 @@ export const upsertChallenge = mutation({
 
 // --------------------------------------------------------------- submissions
 
+const visibility = v.union(v.literal('public'), v.literal('private'))
+
 export const submit = mutation({
   args: {
     token: v.string(),
     challengeId: v.optional(v.id('challenges')),
     freeformTitle: v.optional(v.string()),
     story: v.string(),
+    visibility: v.optional(visibility),
   },
   handler: async (ctx, args) => {
     const me = await requireAgent(ctx, args.token)
@@ -103,6 +107,7 @@ export const submit = mutation({
       challengeId: args.challengeId,
       freeformTitle: args.freeformTitle?.trim().slice(0, 80) || undefined,
       story,
+      visibility: args.visibility ?? 'public',
       status: 'pending',
       createdAt: Date.now(),
     })
@@ -116,6 +121,22 @@ export const mine = query({
     if (!me) return null
     const rows = await ctx.db.query('submissions').withIndex('by_agent', (q) => q.eq('agentId', me._id)).order('desc').take(50)
     return Promise.all(rows.map((s) => withChallenge(ctx, s)))
+  },
+})
+
+/**
+ * Public or private, the author's call, changeable at any time. Going private
+ * pulls an approved story out of the feed and off the profile at once; the
+ * points it earned stay, because HQ judged the story, not its audience.
+ */
+export const setVisibility = mutation({
+  args: { token: v.string(), submissionId: v.id('submissions'), visibility },
+  handler: async (ctx, { token, submissionId, visibility: next }) => {
+    const me = await requireAgent(ctx, token)
+    const s = await ctx.db.get(submissionId)
+    if (!s) throw new ConvexError('No such report')
+    if (s.agentId !== me._id) throw new ConvexError('Not yours')
+    await ctx.db.patch(submissionId, { visibility: next })
   },
 })
 
@@ -155,14 +176,19 @@ export const recent = query({
   },
 })
 
-/** The community feed: stories HQ has approved, in full, newest first. */
+/**
+ * The community feed: approved stories their authors left public, newest
+ * first, each with its reaction tallies and comment count.
+ */
 export const feed = query({
   args: { token: v.optional(v.string()) },
   handler: async (ctx, { token }) => {
-    if (!(await agentFromToken(ctx, token))) return null
-    const rows = await ctx.db.query('submissions').withIndex('by_status', (q) => q.eq('status', 'approved')).order('desc').take(25)
+    const me = await agentFromToken(ctx, token)
+    if (!me) return null
+    const rows = await ctx.db.query('submissions').withIndex('by_status', (q) => q.eq('status', 'approved')).order('desc').take(60)
+    const published = rows.filter(isPublished).slice(0, 25)
     return Promise.all(
-      rows.map(async (s) => {
+      published.map(async (s) => {
         const a = await ctx.db.get(s.agentId)
         const c = s.challengeId ? await ctx.db.get(s.challengeId) : null
         return {
@@ -172,6 +198,9 @@ export const feed = query({
           story: s.story ?? null,
           points: s.verifiedCount ?? 0,
           reviewedAt: s.reviewedAt ?? s.createdAt,
+          mine: s.agentId === me._id,
+          reactions: await reactionSummary(ctx, s._id, me._id),
+          comments: await commentCount(ctx, s._id),
         }
       }),
     )

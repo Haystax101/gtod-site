@@ -46,10 +46,14 @@ export default function Profile() {
           a.missions.map((m) => (
             <article key={m._id} className="story-item">
               <div className="row between">
-                <span className="h"><span className="hl">{m.title}</span></span>
+                <span className="h">
+                  <span className="hl">{m.title}</span>
+                  {m.private && <span className="pill" style={{ marginLeft: 8 }}>Private</span>}
+                </span>
                 <span className="when">{m.reviewedAt ? timeAgo(m.reviewedAt) : ''}{m.points > 0 ? ` · ${pluralise(m.points, 'point')}` : ''}</span>
               </div>
               {m.story && <StoryText text={m.story} />}
+              {!m.private && <Link to={`/s/${m._id}`} className="tiny muted" style={{ textDecoration: 'none' }}>Open →</Link>}
             </article>
           ))
         )}

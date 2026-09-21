@@ -4,6 +4,7 @@ import { api } from '@gen/api'
 import { useSession } from '../lib/session'
 import { Avatar, Handle, LoyalPill, RankPill, YearPill } from '../components/Badges'
 import StoryText from '../components/StoryText'
+import Reactions from '../components/Reactions'
 import { fileNo, pluralise, timeAgo } from '../lib/format'
 
 const LADDER = [
@@ -125,6 +126,12 @@ export default function Briefing() {
                 </div>
               </div>
               {f.story && <StoryText text={f.story} />}
+              <div className="row between" style={{ marginTop: 8 }}>
+                <Reactions submissionId={f._id} reactions={f.reactions} />
+                <Link to={`/s/${f._id}`} className="tiny muted" style={{ textDecoration: 'none' }}>
+                  {f.comments > 0 ? `${pluralise(f.comments, 'comment')} →` : 'Comment →'}
+                </Link>
+              </div>
             </article>
           ))
         )}

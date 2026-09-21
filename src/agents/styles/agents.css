@@ -332,6 +332,31 @@ textarea.input { min-height: 96px; resize: vertical; line-height: 1.5; }
 .story-item .h b { font-family: var(--mono); font-weight: 500; }
 .story-item .when { font-family: var(--mono); font-size: 0.65rem; color: var(--dim); white-space: nowrap; }
 
+/* Public or private, chosen when filing. */
+.choice { display: grid; gap: 8px; }
+.choice .opt { text-align: left; background: var(--black); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; transition: border-color 0.15s; }
+.choice .opt:hover { border-color: var(--line-2); }
+.choice .opt.on { border-color: var(--orange); }
+.choice .opt .t { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.95rem; }
+.choice .opt .b { color: var(--muted); font-size: 0.82rem; margin-top: 3px; }
+
+/* Salute / laugh / heart, under every published story. */
+.reactions { display: flex; gap: 6px; flex-wrap: wrap; }
+.reaction {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px;
+  padding: 4px 10px; line-height: 1; transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.reaction:hover { border-color: var(--line-2); }
+.reaction:active { transform: scale(0.94); }
+.reaction.on { border-color: var(--orange); background: rgba(242, 102, 43, 0.12); }
+.reaction .e { font-size: 0.95rem; }
+.reaction .n { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); }
+.reaction.on .n { color: var(--orange); }
+
+/* A story read on its own page. */
+.story-full { white-space: pre-wrap; word-wrap: break-word; font-size: 0.98rem; margin-top: 8px; }
+
 /* Legacy: the audio player still used to review voice evidence left in the queue. */
 audio.player { width: 100%; margin-top: 10px; filter: invert(0.92) hue-rotate(180deg) saturate(0.6); border-radius: 8px; }
 .counter { display: inline-flex; align-items: center; border: 1px solid var(--line-2); border-radius: 8px; overflow: hidden; }

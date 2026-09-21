@@ -13,6 +13,7 @@ import { Dispatch, DispatchList } from './pages/Dispatches'
 import Line from './pages/Line'
 import Me from './pages/Me'
 import Profile from './pages/Profile'
+import Story from './pages/Story'
 import HQ from './pages/HQ'
 import Terms from './pages/Terms'
 
@@ -50,6 +51,7 @@ export default function App() {
         <Route path="line" element={<Line />} />
         <Route path="me" element={<Me />} />
         <Route path="a/:handle" element={<Profile />} />
+        <Route path="s/:submissionId" element={<Story />} />
         <Route path="hq/*" element={me.rank === 'lead' ? <HQ /> : <Navigate to="/" replace />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
