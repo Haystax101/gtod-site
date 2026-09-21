@@ -5,11 +5,13 @@ import { errMsg, useSession } from '../lib/session'
 import { Avatar, Handle, LoyalPill, RankPill, StatusPill } from '../components/Badges'
 import StoryText from '../components/StoryText'
 import { mmss, pluralise, stamp, timeAgo } from '../lib/format'
+import Prose from '../components/Prose'
 
 const TABS = [
   ['queue', 'Queue'],
   ['roster', 'Roster'],
   ['missions', 'Missions'],
+  ['dispatches', 'Dispatches'],
   ['inbox', 'Inbox'],
   ['reports', 'Reports'],
   ['log', 'Log'],
@@ -44,6 +46,7 @@ export default function HQ() {
       {tab === 'queue' && <Queue queue={queue} />}
       {tab === 'roster' && <Roster onMessage={openConversation} />}
       {tab === 'missions' && <MissionsAdmin />}
+      {tab === 'dispatches' && <DispatchesAdmin />}
       {tab === 'inbox' && <Inbox agentId={inboxAgent} setAgentId={setInboxAgent} />}
       {tab === 'reports' && <Reports reports={reports} />}
       {tab === 'log' && <Log />}
@@ -443,6 +446,95 @@ function Log() {
           <span><b>{r.actor}</b> {r.action} {r.meta ? <span className="dim">{r.meta}</span> : null}</span>
         </div>
       ))}
+    </div>
+  )
+}
+
+// -------------------------------------------------------------- dispatches
+
+function DispatchesAdmin() {
+  const { token } = useSession()
+  const all = useQuery(api.dispatches.all, { token })
+  const save = useMutation(api.dispatches.save)
+  const remove = useMutation(api.dispatches.remove)
+  const [editing, setEditing] = useState(null) // null | 'new' | doc
+  const [form, setForm] = useState({ title: '', body: '' })
+  const [preview, setPreview] = useState(false)
+  const [error, setError] = useState(null)
+  const [busy, setBusy] = useState(false)
+
+  function edit(d) {
+    setEditing(d)
+    setForm(d === 'new' ? { title: '', body: '' } : { title: d.title, body: d.body })
+    setPreview(false)
+    setError(null)
+  }
+
+  async function submit(publish) {
+    setBusy(true)
+    setError(null)
+    try {
+      await save({ token, id: editing === 'new' ? undefined : editing._id, title: form.title, body: form.body, publish })
+      setEditing(null)
+    } catch (err) {
+      setError(errMsg(err))
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  if (editing) {
+    return (
+      <div className="stack">
+        <div className="card bracket">
+          <div className="field">
+            <label>Title</label>
+            <input className="input" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={120} autoFocus />
+          </div>
+          <div className="field">
+            <label>Body <span className="dim">· blank line = paragraph · ## heading · two+ lines of "- " = bullets · &gt; quote · **bold** _italic_</span></label>
+            {preview ? (
+              <div className="card" style={{ background: 'var(--black)' }}><Prose text={form.body || '_Nothing yet._'} /></div>
+            ) : (
+              <textarea className="input" rows={18} value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} maxLength={20000} style={{ fontSize: '1rem', lineHeight: 1.6 }} />
+            )}
+            <div className="tiny dim">{form.body.split(/\s+/).filter(Boolean).length} words</div>
+          </div>
+          {error && <div className="error">{error}</div>}
+          <div className="row" style={{ marginTop: 14 }}>
+            <button className="btn sm" disabled={busy} onClick={() => submit(true)}>{editing !== 'new' && editing.status === 'published' ? 'Update' : 'Publish'}</button>
+            <button className="btn sm ghost" disabled={busy} onClick={() => submit(false)}>{editing !== 'new' && editing.status === 'published' ? 'Unpublish to draft' : 'Save draft'}</button>
+            <button className="btn sm ghost" type="button" onClick={() => setPreview((p) => !p)}>{preview ? 'Edit' : 'Preview'}</button>
+            <button className="btn sm ghost" type="button" onClick={() => setEditing(null)}>Cancel</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="stack">
+      <button className="btn sm" onClick={() => edit('new')}>New dispatch</button>
+      <div className="card">
+        {all === undefined && <div className="empty"><span className="spin" /></div>}
+        {all?.length === 0 && <div className="empty">Nothing written yet.</div>}
+        {all?.map((d) => (
+          <div key={d._id} className="sub-row">
+            <div className="body">
+              <div className="row between">
+                <div className="t">{d.title}</div>
+                <span className={`pill ${d.status === 'published' ? 'green' : 'amber'}`}>{d.status}</span>
+              </div>
+              <div className="m">{d.status === 'published' && d.publishedAt ? `published ${stamp(d.publishedAt)} · ` : ''}edited {timeAgo(d.updatedAt)} · {d.body.split(/\s+/).filter(Boolean).length} words</div>
+              <div className="row" style={{ marginTop: 6 }}>
+                <button className="btn xs ghost" onClick={() => edit(d)}>Edit</button>
+                {d.status === 'published' && <a className="btn xs ghost" href={`/agents/dispatches/${d._id}`}>View</a>}
+                <button className="btn xs danger" onClick={() => window.confirm(`Delete "${d.title}"? This cannot be undone.`) && remove({ token, id: d._id })}>Delete</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

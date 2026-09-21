@@ -490,3 +490,18 @@ details.cov .cov-list { padding: 4px 0 4px 46px; border-bottom: 1px solid var(--
 .bubble.hidden { opacity: 0.45; }
 .rg:not(.mine) .bubble:first-child { border-top-left-radius: 3px; }
 .rg.mine .bubble:first-child { border-top-right-radius: 3px; }
+
+/* ---------- dispatches ---------- */
+.dispatch-row { display: block; text-decoration: none; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.dispatch-row:last-child { border-bottom: none; }
+.dispatch-row .t { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.3rem; line-height: 1.15; margin: 6px 0 4px; }
+.dispatch-row .x { color: var(--muted); font-size: 0.9rem; }
+.dispatch { padding: 24px 22px; }
+@media (min-width: 820px) { .dispatch { padding: 40px 48px; } }
+.dispatch h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); }
+.dispatch-body { font-size: 1.05rem; line-height: 1.75; max-width: 66ch; }
+.dispatch-body p + p, .dispatch-body p + ul, .dispatch-body ul + p, .dispatch-body blockquote + p, .dispatch-body p + blockquote { margin-top: 1em; }
+.dispatch-body h2 { margin-top: 1.8em; margin-bottom: 0.4em; font-size: 1.3rem; }
+.dispatch-body ul { padding-left: 1.3em; }
+.dispatch-body li + li { margin-top: 0.35em; }
+.dispatch-body blockquote { border-left: 3px solid var(--orange); padding: 4px 0 4px 16px; color: var(--cream); font-style: italic; font-size: 1.1rem; }

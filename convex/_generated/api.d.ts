@@ -14,6 +14,7 @@ import type * as authInternal from "../authInternal.js";
 import type * as billing from "../billing.js";
 import type * as crons from "../crons.js";
 import type * as directLine from "../directLine.js";
+import type * as dispatches from "../dispatches.js";
 import type * as forum from "../forum.js";
 import type * as http from "../http.js";
 import type * as lib_crypto from "../lib/crypto.js";
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   billing: typeof billing;
   crons: typeof crons;
   directLine: typeof directLine;
+  dispatches: typeof dispatches;
   forum: typeof forum;
   http: typeof http;
   "lib/crypto": typeof lib_crypto;

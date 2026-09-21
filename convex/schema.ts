@@ -186,6 +186,17 @@ export default defineSchema({
     createdAt: v.number(),
   }).index('by_stripeSessionId', ['stripeSessionId']),
 
+  // Dispatches: the blog. Written by the lead only; read by members.
+  dispatches: defineTable({
+    title: v.string(),
+    body: v.string(),
+    authorId: v.id('agents'),
+    status: v.union(v.literal('draft'), v.literal('published')),
+    publishedAt: v.optional(v.number()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  }).index('by_status', ['status', 'publishedAt']),
+
   // Small key/value settings HQ edits in the app (e.g. the welcome message).
   config: defineTable({
     key: v.string(),

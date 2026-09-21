@@ -9,6 +9,7 @@ import Coverage from './pages/Coverage'
 import Forum from './pages/Forum'
 import Thread from './pages/Thread'
 import Room from './pages/Room'
+import { Dispatch, DispatchList } from './pages/Dispatches'
 import Line from './pages/Line'
 import Me from './pages/Me'
 import Profile from './pages/Profile'
@@ -44,6 +45,8 @@ export default function App() {
         <Route path="forum" element={<Forum />} />
         <Route path="forum/room/:room" element={<Room />} />
         <Route path="forum/:threadId" element={<Thread />} />
+        <Route path="dispatches" element={<DispatchList />} />
+        <Route path="dispatches/:id" element={<Dispatch />} />
         <Route path="line" element={<Line />} />
         <Route path="me" element={<Me />} />
         <Route path="a/:handle" element={<Profile />} />

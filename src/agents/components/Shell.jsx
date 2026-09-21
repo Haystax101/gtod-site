@@ -41,6 +41,7 @@ export default function Shell() {
               {t.label}{t.to === '/line' && unread > 0 ? ` (${unread})` : ''}
             </NavLink>
           ))}
+          <NavLink to="/dispatches">Dispatches</NavLink>
           {isLead && <NavLink to="/hq">HQ</NavLink>}
         </nav>
         <div className="spacer" />

@@ -18,6 +18,7 @@ export default function Briefing() {
   const mine = useQuery(api.missions.mine, { token })
   const unread = useQuery(api.directLine.unreadForMe, { token })
   const settings = useQuery(api.settings.get, {})
+  const latest = useQuery(api.dispatches.latest, { token })
 
   const verified = (mine ?? []).filter((s) => s.status === 'approved').length
   const pending = (mine ?? []).filter((s) => s.status === 'pending' || s.status === 'processing').length
@@ -57,6 +58,17 @@ export default function Briefing() {
             <span className="eyebrow"><b>Direct line</b> · {pluralise(unread, 'new message')}</span>
             <span className="pill orange">Read →</span>
           </div>
+        </Link>
+      )}
+
+      {latest && (
+        <Link to={`/dispatches/${latest._id}`} className="card" style={{ display: 'block', textDecoration: 'none' }}>
+          <div className="card-head">
+            <span className="eyebrow">Latest dispatch · <b>from the Lead Operative</b></span>
+            <span className="tiny muted">All →</span>
+          </div>
+          <h2 className="display">{latest.title}</h2>
+          <p className="muted small" style={{ marginTop: 6 }}>{latest.excerpt}{latest.excerpt.length >= 200 ? '…' : ''}</p>
         </Link>
       )}
 
