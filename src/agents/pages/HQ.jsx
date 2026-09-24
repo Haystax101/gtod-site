@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAction, useMutation, useQuery } from 'convex/react'
 import { api } from '@gen/api'
 import { errMsg, useSession } from '../lib/session'
-import { Avatar, Handle, LoyalPill, RankPill, StatusPill } from '../components/Badges'
+import { Avatar, Handle, LoyalPill, RankPill, StatusPill, VisibilityPill } from '../components/Badges'
 import StoryText from '../components/StoryText'
 import { mmss, pluralise, stamp, timeAgo } from '../lib/format'
 import Prose from '../components/Prose'
@@ -60,13 +60,24 @@ export default function HQ() {
 function Queue({ queue }) {
   const { token } = useSession()
   const recent = useQuery(api.missions.recent, { token })
+  const [only, setOnly] = useState('all')
+  const isPublic = (s) => (s.visibility ?? 'public') === 'public'
+  const publicCount = (queue ?? []).filter(isPublic).length
+  const shown = (queue ?? []).filter((s) => only === 'all' || (only === 'public' ? isPublic(s) : !isPublic(s)))
   return (
     <div className="stack">
       <div className="card">
-        <div className="card-head"><span className="eyebrow">Stories to read</span></div>
+        <div className="card-head" style={{ flexWrap: 'wrap', rowGap: 8 }}>
+          <span className="eyebrow">Stories to read</span>
+          <span className="cats" style={{ gap: 4 }}>
+            {[['all', `All ${queue ? queue.length : ''}`], ['public', `Public ${publicCount}`], ['private', `Private ${(queue?.length ?? 0) - publicCount}`]].map(([k, l]) => (
+              <button key={k} className={`btn xs ${only === k ? '' : 'ghost'}`} onClick={() => setOnly(k)}>{l}</button>
+            ))}
+          </span>
+        </div>
         {queue === undefined ? <div className="empty"><span className="spin" /></div>
-          : queue.length === 0 ? <div className="empty">Queue clear.</div>
-          : queue.map((s) => <QueueItem key={s._id} s={s} />)}
+          : shown.length === 0 ? <div className="empty">{only === 'all' ? 'Queue clear.' : `No ${only} stories waiting.`}</div>
+          : shown.map((s) => <QueueItem key={s._id} s={s} />)}
       </div>
       <div className="card">
         <div className="card-head"><span className="eyebrow">Recent decisions</span></div>
@@ -100,7 +111,10 @@ function QueueItem({ s, compact }) {
       <div className="body">
         <div className="row between">
           <div className="t"><Handle agent={s.agent} /> · {s.title}</div>
-          <StatusPill status={s.status} />
+          <span className="row" style={{ gap: 6 }}>
+            <VisibilityPill visibility={s.visibility} />
+            <StatusPill status={s.status} />
+          </span>
         </div>
         <div className="m">
           {stamp(s.createdAt)}

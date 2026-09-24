@@ -34,3 +34,13 @@ export function YearPill({ agent }) {
   if (!agent?.yearLabel) return null
   return <span className="pill">{agent.yearLabel}</span>
 }
+
+/** Whether a field report is visible to other agents once approved. */
+export function VisibilityPill({ visibility }) {
+  const isPublic = (visibility ?? 'public') === 'public'
+  return (
+    <span className={`pill ${isPublic ? 'teal' : 'solid'}`} title={isPublic ? 'Other agents can read this. Fair game for a video.' : 'Only this agent and HQ can read it. Ask before using it.'}>
+      {isPublic ? 'Public' : '🔒 Private'}
+    </span>
+  )
+}
