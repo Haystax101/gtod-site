@@ -10,6 +10,7 @@ traceable origin.
 |---|---|---|---|
 | `guardian-cs-2026.json` | Guardian University Guide 2026, "Computer science and information systems" (subject id S220) | 110 institutions, all ranked | 2026-09-29 |
 | `guardian-law-2026.json` | Guardian University Guide 2026, "Law" (subject id S300) | 110 institutions, all ranked | 2026-09-29 |
+| `guardian-economics-2026.json` | Guardian University Guide 2026, "Economics" (subject id S360) | 71 institutions, all ranked | 2026-09-29 |
 | `the-cs-2026-uk.json` | THE World University Rankings 2026, Computer Science subject table, filtered to the UK | 64 UK institutions | 2026-09-29 |
 
 Guardian fields per institution: `rank`, `guardianScore`, `percentSatisfiedWithTeaching`,

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UK Economics Rankings: a consensus ranking | Get There One Day</title>
+<meta name="description" content="Four UK league tables for economics, blended into one ranking you can re-weight yourself. Complete University Guide, Guardian, QS and THE, side by side.">
+<meta name="theme-color" content="#121010">
+<link rel="canonical" href="https://getthereoneday.com/rankings/economics/">
+<meta property="og:title" content="UK economics: a consensus ranking">
+<meta property="og:description" content="Four league tables, one ranking. Drag the weights to change what counts.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://getthereoneday.com/rankings/economics/">
+<meta property="og:site_name" content="Get There One Day">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/rankings/rankings.css">
+</head>
+<body>
+
+<header class="sitehead">
+  <div class="nav">
+    <div class="nav-logo"><img src="/assets/logo.png" alt="Get There One Day logo"></div>
+    <a class="nav-name" href="/">Get There <span>One Day</span></a>
+    <nav>
+      <a href="/rankings/" aria-current="page">Rankings</a>
+      <a href="/#podcast">Podcast</a>
+      <a href="/#follow">Follow</a>
+      <a class="hl" href="/#ask">Ask a question &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+<header>
+  <a class="backlink" href="/rankings/">&larr; All rankings</a>
+  <p class="eyebrow">Rankings &middot; <b>Economics</b></p>
+  <h1>UK economics, four league tables, <span class="hl">one ranking</span></h1>
+  <p>Each university's economics position in four subject tables, blended into a single top 20. Drag the weights to change what counts. The strip beside each name shows where the four tables put it, so you can see agreement at a glance: tight clusters are consensus, wide spreads are arguments.</p>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--cug)"></i>Complete University Guide 2027</span>
+    <span><i class="dot" style="background:var(--gu)"></i>Guardian (2026 table)</span>
+    <span><i class="dot" style="background:var(--qs)"></i>QS Economics &amp; Econometrics 2026, UK only</span>
+    <span><i class="dot" style="background:var(--the)"></i>THE Business &amp; Economics 2026, UK only</span>
+  </div>
+</header>
+
+<div class="grid">
+<aside>
+  <section>
+    <h2>Start from a lens</h2>
+    <div class="presets" id="presets"></div>
+  </section>
+  <section>
+    <h2>League tables</h2>
+    <div id="srcSliders"></div>
+  </section>
+  <section>
+    <h2>Individual measures</h2>
+    <div id="metSliders"></div>
+  </section>
+  <section>
+    <h2>Options</h2>
+    <label class="opt"><input type="checkbox" id="penalise" checked><span>Count a missing ranking as last place. Untick to average only the tables a university appears in.</span></label>
+    <div class="row2" style="margin-top:10px">
+      <select id="region" aria-label="Region">
+        <option value="">All nations</option><option>England</option><option>London</option><option>Scotland</option><option>Wales</option><option>Northern Ireland</option>
+      </select>
+      <select id="group" aria-label="Group">
+        <option value="">All groups</option><option value="rg">Russell Group</option><option value="non">Not Russell Group</option>
+      </select>
+    </div>
+    <div style="margin-top:8px"><input type="search" id="q" placeholder="Find a university" aria-label="Find a university"></div>
+    <label class="opt"><input type="checkbox" id="showAll"><span>Show everyone below the top 20</span></label>
+  </section>
+</aside>
+
+<main>
+  <div class="bar"><strong id="title">Consensus ranking</strong><span class="note">Click a column to sort by it. Click a row for the source detail.</span></div>
+  <div class="tablebox"><table id="t"><thead></thead><tbody></tbody></table></div>
+
+  <footer>
+    <h3>What's in each number</h3>
+    <p><b>League table positions</b> are each source's UK position for economics. QS and THE are world tables, filtered to UK institutions. Where a table only publishes bands, everyone in the band gets the band's middle position.</p>
+    <p><b>Satisfaction, graduate prospects, research and entry standards</b> come from the Complete University Guide 2027 economics table (scores out of 100). <b>International reputation</b> averages QS's academic and employer reputation survey scores for economics.</p>
+    <p><b>Weighting.</b> Every input is rescaled to 0–100 within this pool of 44 universities, then combined as a weighted average using the sliders.</p>
+    <h3>Caveats worth knowing before you settle on anything</h3>
+    <p>THE doesn't publish an economics-only table. Its closest is Business &amp; Economics, which also counts business, management, accounting and finance, so universities with big business schools (Reading, Surrey, City) look stronger there than their economics departments alone would justify. Weight it down if that bothers you.</p>
+    <p>The Guardian's full 2027 economics table wasn't retrievable, so this uses the complete 2026 table. The Guardian is also where the biggest outliers come from: Heriot-Watt, Brighton, Essex and Stirling all sit in its top 10 but nowhere near it elsewhere.</p>
+    <p>QS positions beyond 250th in the world weren't retrieved; those departments count as unranked. QS and THE 2027 subject tables aren't out yet, so both are 2026 editions.</p>
+  </footer>
+</main>
+</div>
+</div>
+<footer class="sitefoot">
+  <a href="/rankings/">All rankings</a> &nbsp;&middot;&nbsp; <a href="/">Get There One Day</a> &nbsp;&middot;&nbsp; &copy; 2026 &nbsp;&middot;&nbsp; One day at a time
+</footer>
+
+<script>
+
+// n, reg, rg, CUG rank, sat, grad, research, entry, Guardian rank, QS world label, QS UK pos, THE band label, THE UK pos, QS academic rep, QS employer rep
+const RAW = [
+["Cambridge","England",1,1,78,94,89,100,2,"10",3,"2",2,91.7,96.4],
+["Warwick","England",1,2,83,92,92,88,6,"25",5,"5",5,80.4,73.6],
+["Oxford","England",1,3,81,93,87,91,1,"8",2,"1",1,93.5,97.0],
+["LSE","London",1,4,81,92,93,85,4,"6",1,"3",3,97.0,85.5],
+["Durham","England",1,5,81,91,83,75,5,"146",16,"=15",18,56.4,72.4],
+["St Andrews","Scotland",0,6,84,85,74,94,2,"201–250",26,"=43",49,55.6,68.2],
+["UCL","London",1,7,77,93,90,78,11,"17",4,"4",4,86.8,80.8],
+["Bath","England",0,8,78,90,72,78,21,"201–250",26,"=15",18,52.8,68.1],
+["Exeter","England",1,9,79,89,80,74,12,"180",22,"=29",29.5,55.9,64.2],
+["King's College London","London",1,10,78,88,87,78,16,"119",14,"8",8,59.9,76.0],
+["Nottingham","England",1,11,77,84,88,70,28,"96",11,"11",11,65.1,67.1],
+["Birmingham","England",1,12,78,86,83,67,21,"154",17,"13",13,55.9,66.5],
+["Bristol","England",1,13,76,86,86,72,26,"108",12,"=24",26,63.8,71.1],
+["Edinburgh","Scotland",1,14,74,88,82,84,17,"80",9,"7",7,63.9,77.4],
+["Leeds","England",1,15,79,82,86,70,19,"145",15,"=15",18,60.0,70.0],
+["Lancaster","England",0,16,79,88,85,59,13,"201–250",26,"12",12,54.0,59.4],
+["Loughborough","England",0,17,79,88,81,65,32,null,null,"=31",33,null,null],
+["Sheffield","England",1,18,81,82,81,67,30,"201–250",26,"=24",26,53.0,64.3],
+["Glasgow","Scotland",1,19,75,80,85,89,38,"109",13,"9",9,63.7,67.0],
+["Strathclyde","Scotland",0,20,77,84,82,85,21,null,null,"=24",26,null,null],
+["Manchester","England",1,21,76,79,84,74,36,"68",8,"6",6,64.9,76.8],
+["Cardiff","Wales",1,22,75,83,83,61,31,null,null,"=29",29.5,null,null],
+["York","England",1,23,72,87,82,60,41,"170",21,"=15",18,62.0,59.1],
+["Southampton","England",1,24,77,86,80,60,40,"163",20,"=15",18,55.7,61.4],
+["Queen's Belfast","Northern Ireland",1,25,77,88,77,64,58,null,null,"=43",49,null,null],
+["Aston","England",0,26,84,83,77,50,14,null,null,"=24",26,null,null],
+["Liverpool","England",1,27,80,79,85,60,20,null,null,"=15",18,null,null],
+["Surrey","England",0,28,81,75,84,57,39,null,null,"14",14,null,null],
+["Queen Mary","London",1,29,76,80,86,66,42,"87",10,"=31",33,66.2,65.0],
+["UEA","England",0,30,79,84,81,51,33,null,null,"=36",39,null,null],
+["Newcastle","England",1,31,72,80,77,63,65,null,null,"=31",33,null,null],
+["Heriot-Watt","Scotland",0,32,85,76,76,76,7,null,null,"=43",49,null,null],
+["Stirling","Scotland",0,33,82,73,75,65,10,null,null,"=66",69.5,null,null],
+["Dundee","Scotland",0,34,75,91,70,71,63,null,null,"=66",69.5,null,null],
+["Leicester","England",0,35,77,81,79,50,57,null,null,"=56",60.5,null,null],
+["Swansea","Wales",0,36,83,71,76,48,35,null,null,"=24",26,null,null],
+["Royal Holloway","London",0,37,79,73,84,51,48,null,null,"=43",49,null,null],
+["Reading","England",0,39,75,81,80,50,67,"159",18.5,"10",10,59.7,58.9],
+["Aberdeen","Scotland",0,42,81,71,74,71,24,null,null,"=31",33,null,null],
+["Sussex","England",0,43,78,68,84,50,46,"192",23,"=22",22.5,57.2,53.7],
+["Brighton","England",0,44,91,null,68,43,8,null,null,"=56",60.5,null,null],
+["Kent","England",0,45,76,75,69,51,52,null,null,"=36",39,null,null],
+["City St George's","London",0,46,75,70,75,51,69,null,null,"=15",18,null,null],
+["Essex","England",0,50,79,64,86,47,9,"159",18.5,"=22",22.5,64.3,44.0]
+];
+const U = RAW.map(r=>({n:r[0],reg:r[1],rg:!!r[2],cug:r[3],sat:r[4],grad:r[5],res:r[6],ent:r[7],gu:r[8],qsw:r[9],qs:r[10],thb:r[11],the:r[12],ar:r[13],er:r[14],intl:r[13]!=null?(r[13]+r[14])/2:null}));
+
+const SRC=[
+ {k:"cug",label:"Complete Univ. Guide",short:"CUG",c:"--cug",hint:"2027 economics table"},
+ {k:"gu",label:"Guardian",short:"Guardian",c:"--gu",hint:"2026 economics table (student-experience heavy)"},
+ {k:"qs",label:"QS Economics",short:"QS",c:"--qs",hint:"2026, reputation and citations heavy"},
+ {k:"the",label:"THE Business & Economics",short:"THE",c:"--the",hint:"2026, includes business and finance"}
+];
+const MET=[
+ {k:"sat",label:"Student satisfaction",short:"Satisfaction",hint:"CUG, from the National Student Survey"},
+ {k:"intl",label:"International reputation",short:"Intl rep",hint:"QS academic + employer surveys for economics"},
+ {k:"grad",label:"Graduate prospects",short:"Grad prosp.",hint:"CUG graduate outcomes"},
+ {k:"res",label:"Research quality",short:"Research",hint:"CUG, from REF 2021"},
+ {k:"ent",label:"Entry standards",short:"Entry",hint:"CUG average UCAS tariff"}
+];
+const PRESETS={
+ "Consensus":{cug:1,gu:1,qs:1,the:1,sat:0,intl:0,grad:0,res:0,ent:0},
+ "Student experience":{cug:1,gu:2,qs:0,the:0,sat:2,intl:0,grad:0,res:0,ent:0},
+ "Global reputation":{cug:0,gu:0,qs:2,the:1,sat:0,intl:2,grad:0,res:0,ent:0},
+ "Career outcomes":{cug:1,gu:0,qs:1,the:0,sat:0,intl:1,grad:3,res:0,ent:0},
+ "Academic strength":{cug:1,gu:0,qs:1,the:1,sat:0,intl:0,grad:0,res:2,ent:1}
+};
+let W={...PRESETS["Consensus"]};
+let sortKey="score",sortDir=-1,open=new Set(),preset="Consensus";
+
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+try{const s=JSON.parse(store.get("ukecon-w")||"null");if(s&&typeof s==="object"){W={...W,...s};preset=store.get("ukecon-p")||"";}}catch(e){}
+
+function sliderHTML(d,isSrc){return `<div class="slider"><label for="w-${d.k}">${isSrc?`<i class="dot" style="background:var(${d.c})"></i>`:""}${d.label}</label><output id="o-${d.k}"></output><input type="range" id="w-${d.k}" min="0" max="3" step="0.5"><small>${d.hint}</small></div>`}
+document.getElementById("srcSliders").innerHTML=SRC.map(d=>sliderHTML(d,1)).join("");
+document.getElementById("metSliders").innerHTML=MET.map(d=>sliderHTML(d,0)).join("");
+document.getElementById("presets").innerHTML=Object.keys(PRESETS).map(p=>`<button type="button" data-p="${p}">${p}</button>`).join("");
+
+function syncControls(){
+  [...SRC,...MET].forEach(d=>{document.getElementById("w-"+d.k).value=W[d.k];document.getElementById("o-"+d.k).textContent=W[d.k]});
+  document.querySelectorAll("#presets button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.p===preset));
+}
+
+// rescale source positions to 0–100 within pool (ties averaged)
+function srcScores(k){
+  const have=U.filter(u=>u[k]!=null).map(u=>u[k]).sort((a,b)=>a-b);
+  const N=have.length,out=new Map();
+  U.forEach(u=>{
+    if(u[k]==null){out.set(u,null);return}
+    const first=have.indexOf(u[k]),last=have.lastIndexOf(u[k]);
+    const r=(first+last)/2; // 0-based averaged rank
+    out.set(u,100*(1-r/(N-1)));
+  });
+  return out;
+}
+function metScores(k){
+  const v=U.map(u=>u[k]).filter(x=>x!=null),mn=Math.min(...v),mx=Math.max(...v),out=new Map();
+  U.forEach(u=>out.set(u,u[k]==null?null:100*(u[k]-mn)/(mx-mn)));
+  return out;
+}
+const S={};SRC.forEach(d=>S[d.k]=srcScores(d.k));MET.forEach(d=>S[d.k]=metScores(d.k));
+
+function compute(){
+  const pen=document.getElementById("penalise").checked;
+  U.forEach(u=>{
+    let num=0,den=0;
+    [...SRC,...MET].forEach(d=>{
+      const w=+W[d.k];if(!w)return;
+      let s=S[d.k].get(u);
+      if(s==null){if(pen)s=0;else return}
+      num+=w*s;den+=w;
+    });
+    u.score=den?num/den:null;
+  });
+  const ranked=[...U].filter(u=>u.score!=null).sort((a,b)=>b.score-a.score);
+  U.forEach(u=>u.pos=null);ranked.forEach((u,i)=>u.pos=i+1);
+}
+
+function strip(u){
+  const w=150,h=22,max=60,x=p=>6+(Math.min(p,max)-1)/(max-1)*(w-12);
+  const pts=[["cug",u.cug],["gu",u.gu],["qs",u.qs],["the",u.the]];
+  let g=`<line x1="6" x2="${w-6}" y1="11" y2="11" stroke="var(--line)" stroke-width="1"/>`;
+  g+=`<line x1="${x(20.5)}" x2="${x(20.5)}" y1="4" y2="18" stroke="var(--cut)" stroke-dasharray="2 2"/>`;
+  const vals=pts.filter(p=>p[1]!=null).map(p=>x(p[1]));
+  if(vals.length>1)g+=`<line x1="${Math.min(...vals)}" x2="${Math.max(...vals)}" y1="11" y2="11" stroke="var(--ink)" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>`;
+  pts.forEach(([k,p],i)=>{
+    const c=`var(--${k})`;
+    if(p==null)g+=`<circle cx="${w-6}" cy="11" r="3.2" fill="none" stroke="${c}" stroke-width="1.4"/>`;
+    else g+=`<circle cx="${x(p)}" cy="11" r="4.2" fill="${c}" stroke="var(--panel)" stroke-width="1"/>`;
+  });
+  const lab=pts.map(([k,p])=>`${k.toUpperCase()} ${p==null?"unranked":p}`).join(", ");
+  return `<svg class="strip" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="UK positions: ${lab}">${g}</svg>`;
+}
+
+const COLS=[
+ {k:"pos",h:"#",cls:"rank",get:u=>u.pos,asc:true},
+ {k:"n",h:"University",cls:"l name",get:u=>u.n,asc:true},
+ {k:"strip",h:"Where each table puts it<span class='grp'>UK position 1 → 60; dashed line = 20th</span>",cls:"l",nosort:true},
+ {k:"score",h:"Blend<span class='grp'>0–100</span>",cls:"score",get:u=>u.score},
+ {k:"cug",h:"CUG<span class='grp'>UK pos</span>",get:u=>u.cug,asc:true},
+ {k:"gu",h:"Guardian<span class='grp'>UK pos</span>",get:u=>u.gu,asc:true},
+ {k:"qs",h:"QS<span class='grp'>UK pos</span>",get:u=>u.qs,asc:true},
+ {k:"the",h:"THE<span class='grp'>UK pos</span>",get:u=>u.the,asc:true},
+ {k:"sat",h:"Satisfaction<span class='grp'>CUG</span>",get:u=>u.sat},
+ {k:"intl",h:"Intl rep<span class='grp'>QS</span>",get:u=>u.intl},
+ {k:"grad",h:"Grad prosp.<span class='grp'>CUG</span>",get:u=>u.grad},
+ {k:"res",h:"Research<span class='grp'>CUG</span>",get:u=>u.res},
+ {k:"ent",h:"Entry<span class='grp'>CUG</span>",get:u=>u.ent}
+];
+
+function renderHead(){
+  document.querySelector("#t thead").innerHTML="<tr>"+COLS.map(c=>{
+    const s=sortKey===c.k?(sortDir===1?"ascending":"descending"):"none";
+    return `<th class="${c.cls||""}" ${c.nosort?"":`tabindex="0" data-k="${c.k}" aria-sort="${s}"`}>${c.h}</th>`}).join("")+"</tr>";
+}
+function fmt(v,d=0){return v==null?`<span class="na">–</span>`:(+v).toFixed(d)}
+function cell(c,u){
+  switch(c.k){
+    case "pos":return u.pos??"–";
+    case "n":return `${u.n}<small>${u.reg}${u.rg?", Russell Group":""}</small>`;
+    case "strip":return strip(u);
+    case "score":return u.score==null?fmt(null):`${u.score.toFixed(1)}<span class="mbar" style="width:${Math.max(2,u.score*0.5)}px"></span>`;
+    case "qs":return u.qs==null?fmt(null):(u.qsw.includes("–")?`<span title="band ${u.qsw} world">≈${Math.round(u.qs)}</span>`:u.qs);
+    case "the":return u.the==null?fmt(null):(u.thb.startsWith("=")&&u.the%1!==0||u.thb.startsWith("=")?`<span title="tied band ${u.thb} in UK">≈${Math.round(u.the)}</span>`:u.the);
+    case "intl":return fmt(u.intl,1);
+    default:return fmt(u[c.k]);
+  }
+}
+function detail(u){
+  const suf=n=>{const s=["th","st","nd","rd"],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0])};
+  return `<tr class="detail"><td colspan="${COLS.length}"><dl>
+  <dt>Complete Univ. Guide 2027</dt><dd>${suf(u.cug)} for economics</dd>
+  <dt>Guardian 2026</dt><dd>${u.gu?suf(u.gu)+" for economics":"not ranked"}</dd>
+  <dt>QS Economics 2026</dt><dd>${u.qsw?`${u.qsw} in the world (about ${suf(Math.round(u.qs))} in the UK); academic rep ${u.ar}, employer rep ${u.er}`:"outside QS top 250 as retrieved (treated as unranked)"}</dd>
+  <dt>THE Business &amp; Economics 2026</dt><dd>${u.thb?`${u.thb.replace("=","joint ")} in the UK`:"not ranked"}</dd>
+  <dt>Spread</dt><dd>${(()=>{const v=[u.cug,u.gu,u.qs,u.the].filter(x=>x!=null);return v.length>1?`Tables disagree by ${Math.round(Math.max(...v)-Math.min(...v))} places`:"Only one table to go on"})()}</dd>
+  </dl></td></tr>`;
+}
+function render(){
+  compute();
+  const reg=document.getElementById("region").value,grp=document.getElementById("group").value,q=document.getElementById("q").value.trim().toLowerCase(),all=document.getElementById("showAll").checked;
+  let rows=U.filter(u=>{
+    if(reg==="London"&&u.reg!=="London")return false;
+    if(reg==="England"&&!(u.reg==="England"||u.reg==="London"))return false;
+    if(reg&&reg!=="London"&&reg!=="England"&&u.reg!==reg)return false;
+    if(grp==="rg"&&!u.rg)return false; if(grp==="non"&&u.rg)return false;
+    if(q&&!u.n.toLowerCase().includes(q))return false;
+    return true;
+  });
+  const col=COLS.find(c=>c.k===sortKey);
+  rows.sort((a,b)=>{let x=col.get(a),y=col.get(b);if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return (typeof x==="string"?x.localeCompare(y):x-y)*sortDir});
+  const byBlend=sortKey==="score"&&sortDir===-1&&!q;
+  let html="";
+  rows.forEach((u,i)=>{
+    const below=u.pos>20;
+    if(byBlend&&!all&&below)return;
+    if(byBlend&&i>0&&rows[i-1].pos<=20&&below)html+=`<tr class="cutline"><td colspan="${COLS.length}"></td></tr>`;
+    html+=`<tr class="data${below?" below":""}" tabindex="0" data-n="${u.n}" aria-expanded="${open.has(u.n)}">`+COLS.map(c=>`<td class="${c.cls||""}">${cell(c,u)}</td>`).join("")+"</tr>";
+    if(open.has(u.n))html+=detail(u);
+  });
+  if(!html)html=`<tr><td class="l" colspan="${COLS.length}">No universities match those filters. Clear the search or widen the region.</td></tr>`;
+  document.querySelector("#t tbody").innerHTML=html;
+  renderHead();
+  const lbl=sortKey==="score"?(preset?preset+" ranking":"Custom ranking"):"Sorted by "+COLS.find(c=>c.k===sortKey).h.replace(/<[^>]+>.*$/,"");
+  document.getElementById("title").textContent=lbl;
+}
+
+document.getElementById("presets").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;preset=b.dataset.p;W={...PRESETS[preset]};sortKey="score";sortDir=-1;save();syncControls();render()});
+[...SRC,...MET].forEach(d=>document.getElementById("w-"+d.k).addEventListener("input",e=>{W[d.k]=+e.target.value;preset="";save();syncControls();render()}));
+["penalise","region","group","showAll"].forEach(id=>document.getElementById(id).addEventListener("change",render));
+document.getElementById("q").addEventListener("input",render);
+function sortBy(k){const c=COLS.find(c=>c.k===k);if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=c.asc?1:-1}render()}
+document.querySelector("#t thead").addEventListener("click",e=>{const th=e.target.closest("th[data-k]");if(th)sortBy(th.dataset.k)});
+document.querySelector("#t thead").addEventListener("keydown",e=>{const th=e.target.closest("th[data-k]");if(th&&(e.key==="Enter"||e.key===" ")){e.preventDefault();sortBy(th.dataset.k)}});
+function toggleRow(tr){const n=tr.dataset.n;open.has(n)?open.delete(n):open.add(n);render()}
+document.querySelector("#t tbody").addEventListener("click",e=>{const tr=e.target.closest("tr.data");if(tr)toggleRow(tr)});
+document.querySelector("#t tbody").addEventListener("keydown",e=>{const tr=e.target.closest("tr.data");if(tr&&(e.key==="Enter"||e.key===" ")){e.preventDefault();toggleRow(tr)}});
+function save(){store.set("ukecon-w",JSON.stringify(W));store.set("ukecon-p",preset)}
+
+syncControls();render();
+</script>
+</body>
+</html>
