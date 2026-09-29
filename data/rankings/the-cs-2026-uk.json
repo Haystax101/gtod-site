@@ -1,0 +1,834 @@
+[
+ {
+  "name": "University of Oxford",
+  "rankLower": 1,
+  "rankHigher": 1,
+  "overallScore": "97.7",
+  "subScores": {
+   "teaching": 99.9,
+   "researchEnvironment": 98.2,
+   "researchQuality": 98.8,
+   "industry": 87,
+   "internationalOutlook": 95.6
+  }
+ },
+ {
+  "name": "University of Cambridge",
+  "rankLower": 2,
+  "rankHigher": 2,
+  "overallScore": "97.1",
+  "subScores": {
+   "teaching": 94.9,
+   "researchEnvironment": 99.7,
+   "researchQuality": 96.7,
+   "industry": 97.9,
+   "internationalOutlook": 95.4
+  }
+ },
+ {
+  "name": "Imperial College London",
+  "rankLower": 9,
+  "rankHigher": 9,
+  "overallScore": "93.5",
+  "subScores": {
+   "teaching": 90.4,
+   "researchEnvironment": 95.2,
+   "researchQuality": 94.9,
+   "industry": 90.9,
+   "internationalOutlook": 96.5
+  }
+ },
+ {
+  "name": "The University of Edinburgh",
+  "rankLower": 35,
+  "rankHigher": 35,
+  "overallScore": "83.5",
+  "subScores": {
+   "teaching": 79.7,
+   "researchEnvironment": 77.8,
+   "researchQuality": 88.6,
+   "industry": 88.8,
+   "internationalOutlook": 95.1
+  }
+ },
+ {
+  "name": "University College London",
+  "rankLower": 38,
+  "rankHigher": 38,
+  "overallScore": "82.7",
+  "subScores": {
+   "teaching": 77.7,
+   "researchEnvironment": 79.2,
+   "researchQuality": 91.4,
+   "industry": 70.3,
+   "internationalOutlook": 96.8
+  }
+ },
+ {
+  "name": "University of Manchester",
+  "rankLower": 76,
+  "rankHigher": 76,
+  "overallScore": "65.7",
+  "subScores": {
+   "teaching": 54.6,
+   "researchEnvironment": 52.1,
+   "researchQuality": 81.1,
+   "industry": 72.8,
+   "internationalOutlook": 95.9
+  }
+ },
+ {
+  "name": "King's College London",
+  "rankLower": 95,
+  "rankHigher": 95,
+  "overallScore": "60.9",
+  "subScores": {
+   "teaching": 48.8,
+   "researchEnvironment": 43.3,
+   "researchQuality": 80.5,
+   "industry": 66.9,
+   "internationalOutlook": 96.3
+  }
+ },
+ {
+  "name": "University of Bristol",
+  "rankLower": 101,
+  "rankHigher": 125,
+  "overallScore": "56.2\u201359.0",
+  "subScores": {
+   "teaching": 43,
+   "researchEnvironment": 39.7,
+   "researchQuality": 76.9,
+   "industry": 70.9,
+   "internationalOutlook": 89.1
+  }
+ },
+ {
+  "name": "University of Warwick",
+  "rankLower": 101,
+  "rankHigher": 125,
+  "overallScore": "56.2\u201359.0",
+  "subScores": {
+   "teaching": 38.3,
+   "researchEnvironment": 41.7,
+   "researchQuality": 81.4,
+   "industry": 70.4,
+   "internationalOutlook": 95.4
+  }
+ },
+ {
+  "name": "Queen Mary University of London",
+  "rankLower": 126,
+  "rankHigher": 150,
+  "overallScore": "54.0\u201355.9",
+  "subScores": {
+   "teaching": 30.2,
+   "researchEnvironment": 28.3,
+   "researchQuality": 95.9,
+   "industry": 67.1,
+   "internationalOutlook": 96.7
+  }
+ },
+ {
+  "name": "The University of Sheffield",
+  "rankLower": 126,
+  "rankHigher": 150,
+  "overallScore": "54.0\u201355.9",
+  "subScores": {
+   "teaching": 36.1,
+   "researchEnvironment": 36.6,
+   "researchQuality": 77.1,
+   "industry": 71.8,
+   "internationalOutlook": 93.6
+  }
+ },
+ {
+  "name": "University of Glasgow",
+  "rankLower": 126,
+  "rankHigher": 150,
+  "overallScore": "54.0\u201355.9",
+  "subScores": {
+   "teaching": 37,
+   "researchEnvironment": 36.9,
+   "researchQuality": 80.7,
+   "industry": 68.3,
+   "internationalOutlook": 93.1
+  }
+ },
+ {
+  "name": "University of Southampton",
+  "rankLower": 126,
+  "rankHigher": 150,
+  "overallScore": "54.0\u201355.9",
+  "subScores": {
+   "teaching": 30.3,
+   "researchEnvironment": 37.1,
+   "researchQuality": 81.5,
+   "industry": 67.1,
+   "internationalOutlook": 95.2
+  }
+ },
+ {
+  "name": "University of Surrey",
+  "rankLower": 126,
+  "rankHigher": 150,
+  "overallScore": "54.0\u201355.9",
+  "subScores": {
+   "teaching": 27.4,
+   "researchEnvironment": 28,
+   "researchQuality": 98.6,
+   "industry": 68.7,
+   "internationalOutlook": 97.2
+  }
+ },
+ {
+  "name": "University of Liverpool",
+  "rankLower": 151,
+  "rankHigher": 175,
+  "overallScore": "52.0\u201353.9",
+  "subScores": {
+   "teaching": 32.2,
+   "researchEnvironment": 28.8,
+   "researchQuality": 82.1,
+   "industry": 58.2,
+   "internationalOutlook": 98.6
+  }
+ },
+ {
+  "name": "University of Birmingham",
+  "rankLower": 176,
+  "rankHigher": 200,
+  "overallScore": "49.5\u201351.9",
+  "subScores": {
+   "teaching": 35.5,
+   "researchEnvironment": 29.9,
+   "researchQuality": 75.3,
+   "industry": 64.6,
+   "internationalOutlook": 96.7
+  }
+ },
+ {
+  "name": "Brunel University of London",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 18.5,
+   "researchEnvironment": 19.7,
+   "researchQuality": 87.9,
+   "industry": 60,
+   "internationalOutlook": 97.4
+  }
+ },
+ {
+  "name": "Cardiff University",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 21.3,
+   "researchEnvironment": 20.8,
+   "researchQuality": 85.6,
+   "industry": 66.1,
+   "internationalOutlook": 95.7
+  }
+ },
+ {
+  "name": "Lancaster University",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 24.3,
+   "researchEnvironment": 26.9,
+   "researchQuality": 75.6,
+   "industry": 68.5,
+   "internationalOutlook": 92.9
+  }
+ },
+ {
+  "name": "Newcastle University",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 25.7,
+   "researchEnvironment": 25.2,
+   "researchQuality": 74.8,
+   "industry": 78.8,
+   "internationalOutlook": 94.3
+  }
+ },
+ {
+  "name": "The University of Nottingham",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 29.4,
+   "researchEnvironment": 26.1,
+   "researchQuality": 73.7,
+   "industry": 67.9,
+   "internationalOutlook": 93.1
+  }
+ },
+ {
+  "name": "University of Essex",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 25.4,
+   "researchEnvironment": 19.1,
+   "researchQuality": 80.1,
+   "industry": 69.4,
+   "internationalOutlook": 98.6
+  }
+ },
+ {
+  "name": "University of Leeds",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 30.4,
+   "researchEnvironment": 25.3,
+   "researchQuality": 71.2,
+   "industry": 67.2,
+   "internationalOutlook": 97.8
+  }
+ },
+ {
+  "name": "University of York",
+  "rankLower": 201,
+  "rankHigher": 250,
+  "overallScore": "47.1\u201349.4",
+  "subScores": {
+   "teaching": 35.5,
+   "researchEnvironment": 28.7,
+   "researchQuality": 64.7,
+   "industry": 65.2,
+   "internationalOutlook": 88.2
+  }
+ },
+ {
+  "name": "Loughborough University",
+  "rankLower": 251,
+  "rankHigher": 300,
+  "overallScore": "45.3\u201347.0",
+  "subScores": {
+   "teaching": 23.4,
+   "researchEnvironment": 20.4,
+   "researchQuality": 80.3,
+   "industry": 67.6,
+   "internationalOutlook": 89.3
+  }
+ },
+ {
+  "name": "Swansea University",
+  "rankLower": 251,
+  "rankHigher": 300,
+  "overallScore": "45.3\u201347.0",
+  "subScores": {
+   "teaching": 19.1,
+   "researchEnvironment": 18.3,
+   "researchQuality": 91,
+   "industry": 53.1,
+   "internationalOutlook": 94.3
+  }
+ },
+ {
+  "name": "University of Bradford",
+  "rankLower": 251,
+  "rankHigher": 300,
+  "overallScore": "45.3\u201347.0",
+  "subScores": {
+   "teaching": 16.1,
+   "researchEnvironment": 15.6,
+   "researchQuality": 89.7,
+   "industry": 62,
+   "internationalOutlook": 95.7
+  }
+ },
+ {
+  "name": "University of Exeter",
+  "rankLower": 251,
+  "rankHigher": 300,
+  "overallScore": "45.3\u201347.0",
+  "subScores": {
+   "teaching": 23.2,
+   "researchEnvironment": 18.9,
+   "researchQuality": 82.2,
+   "industry": 54.2,
+   "internationalOutlook": 94.4
+  }
+ },
+ {
+  "name": "University of Leicester",
+  "rankLower": 251,
+  "rankHigher": 300,
+  "overallScore": "45.3\u201347.0",
+  "subScores": {
+   "teaching": 16.7,
+   "researchEnvironment": 21.6,
+   "researchQuality": 85.2,
+   "industry": 49.2,
+   "internationalOutlook": 99.2
+  }
+ },
+ {
+  "name": "De Montfort University",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 18.7,
+   "researchEnvironment": 11.3,
+   "researchQuality": 86.1,
+   "industry": 39.1,
+   "internationalOutlook": 98.2
+  }
+ },
+ {
+  "name": "Durham University",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 28,
+   "researchEnvironment": 20.4,
+   "researchQuality": 72.7,
+   "industry": 49.1,
+   "internationalOutlook": 96.9
+  }
+ },
+ {
+  "name": "Heriot-Watt University",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 20.3,
+   "researchEnvironment": 19.5,
+   "researchQuality": 64.7,
+   "industry": 68.1,
+   "internationalOutlook": 92.8
+  }
+ },
+ {
+  "name": "Manchester Metropolitan University (MMU)",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 14.3,
+   "researchEnvironment": 11.6,
+   "researchQuality": 91.5,
+   "industry": 37.5,
+   "internationalOutlook": 88.2
+  }
+ },
+ {
+  "name": "Northumbria University",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 16.2,
+   "researchEnvironment": 16.3,
+   "researchQuality": 84.2,
+   "industry": 52.4,
+   "internationalOutlook": 95.6
+  }
+ },
+ {
+  "name": "Queen's University Belfast",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 15.6,
+   "researchEnvironment": 18.9,
+   "researchQuality": 83.2,
+   "industry": 62.7,
+   "internationalOutlook": 97.4
+  }
+ },
+ {
+  "name": "University of Aberdeen",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 20.5,
+   "researchEnvironment": 16.1,
+   "researchQuality": 71.1,
+   "industry": 71.3,
+   "internationalOutlook": 97.8
+  }
+ },
+ {
+  "name": "University of Plymouth",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 20.3,
+   "researchEnvironment": 16.7,
+   "researchQuality": 73.5,
+   "industry": 59.4,
+   "internationalOutlook": 95.1
+  }
+ },
+ {
+  "name": "University of Reading",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 22.3,
+   "researchEnvironment": 16.7,
+   "researchQuality": 71.1,
+   "industry": 54.9,
+   "internationalOutlook": 94
+  }
+ },
+ {
+  "name": "University of Salford",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 13.5,
+   "researchEnvironment": 11,
+   "researchQuality": 86.3,
+   "industry": 47.7,
+   "internationalOutlook": 97.5
+  }
+ },
+ {
+  "name": "University of Strathclyde",
+  "rankLower": 301,
+  "rankHigher": 400,
+  "overallScore": "41.5\u201345.2",
+  "subScores": {
+   "teaching": 23.9,
+   "researchEnvironment": 21.1,
+   "researchQuality": 73.2,
+   "industry": 66.6,
+   "internationalOutlook": 82.8
+  }
+ },
+ {
+  "name": "Aston University",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 16,
+   "researchEnvironment": 12.1,
+   "researchQuality": 80.2,
+   "industry": 40.4,
+   "internationalOutlook": 95.8
+  }
+ },
+ {
+  "name": "City St George\u2019s, University of London",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 19.7,
+   "researchEnvironment": 15.5,
+   "researchQuality": 68.3,
+   "industry": 63.8,
+   "internationalOutlook": 93.5
+  }
+ },
+ {
+  "name": "Edinburgh Napier University",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 13.6,
+   "researchEnvironment": 13.9,
+   "researchQuality": 80.9,
+   "industry": 38.9,
+   "internationalOutlook": 89.1
+  }
+ },
+ {
+  "name": "Liverpool John Moores University (LJMU)",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 15.3,
+   "researchEnvironment": 11.3,
+   "researchQuality": 80.2,
+   "industry": 47.5,
+   "internationalOutlook": 87.9
+  }
+ },
+ {
+  "name": "Nottingham Trent University (NTU)",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 13.5,
+   "researchEnvironment": 9.5,
+   "researchQuality": 82.7,
+   "industry": 28.9,
+   "internationalOutlook": 93.2
+  }
+ },
+ {
+  "name": "Royal Holloway, University of London",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 22.8,
+   "researchEnvironment": 18.1,
+   "researchQuality": 60.6,
+   "industry": 61.8,
+   "internationalOutlook": 92.6
+  }
+ },
+ {
+  "name": "University of Bath",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 24.9,
+   "researchEnvironment": 18.4,
+   "researchQuality": 61.9,
+   "industry": 60.5,
+   "internationalOutlook": 88.6
+  }
+ },
+ {
+  "name": "University of Kent",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 20.2,
+   "researchEnvironment": 15.4,
+   "researchQuality": 63.5,
+   "industry": 61.7,
+   "internationalOutlook": 92
+  }
+ },
+ {
+  "name": "University of Lincoln",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 19.4,
+   "researchEnvironment": 13.1,
+   "researchQuality": 71.9,
+   "industry": 52.6,
+   "internationalOutlook": 90.8
+  }
+ },
+ {
+  "name": "University of Portsmouth",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 16.6,
+   "researchEnvironment": 10.2,
+   "researchQuality": 79.1,
+   "industry": 45,
+   "internationalOutlook": 94.5
+  }
+ },
+ {
+  "name": "University of Sussex",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "researchEnvironment": 18.3,
+   "researchQuality": 65.7,
+   "industry": 52.2,
+   "internationalOutlook": 94.1,
+   "teaching": 21.5
+  }
+ },
+ {
+  "name": "University of the West of Scotland",
+  "rankLower": 401,
+  "rankHigher": 500,
+  "overallScore": "38.3\u201341.4",
+  "subScores": {
+   "teaching": 13.1,
+   "researchEnvironment": 11,
+   "researchQuality": 74.5,
+   "industry": 56.1,
+   "internationalOutlook": 93.4
+  }
+ },
+ {
+  "name": "Birmingham City University",
+  "rankLower": 501,
+  "rankHigher": 600,
+  "overallScore": "35.5\u201338.2",
+  "subScores": {
+   "teaching": 14.3,
+   "researchEnvironment": 11.8,
+   "researchQuality": 69.4,
+   "industry": 28.7,
+   "internationalOutlook": 95.9
+  }
+ },
+ {
+  "name": "University of Greenwich",
+  "rankLower": 501,
+  "rankHigher": 600,
+  "overallScore": "35.5\u201338.2",
+  "subScores": {
+   "teaching": 11.8,
+   "researchEnvironment": 9.2,
+   "researchQuality": 74.5,
+   "industry": 29.9,
+   "internationalOutlook": 97.1
+  }
+ },
+ {
+  "name": "University of Hertfordshire",
+  "rankLower": 501,
+  "rankHigher": 600,
+  "overallScore": "35.5\u201338.2",
+  "subScores": {
+   "teaching": 10.7,
+   "researchEnvironment": 8.5,
+   "researchQuality": 76.8,
+   "industry": 38.1,
+   "internationalOutlook": 96.1
+  }
+ },
+ {
+  "name": "University of Huddersfield",
+  "rankLower": 501,
+  "rankHigher": 600,
+  "overallScore": "35.5\u201338.2",
+  "subScores": {
+   "teaching": 15.3,
+   "researchEnvironment": 13.9,
+   "researchQuality": 65.6,
+   "industry": 41.3,
+   "internationalOutlook": 94.8
+  }
+ },
+ {
+  "name": "Bournemouth University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 14.7,
+   "researchEnvironment": 8.4,
+   "researchQuality": 55.5,
+   "industry": 41.3,
+   "internationalOutlook": 93.4
+  }
+ },
+ {
+  "name": "Coventry University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 12.6,
+   "researchEnvironment": 10.9,
+   "researchQuality": 61.2,
+   "industry": 35.7,
+   "internationalOutlook": 91.5
+  }
+ },
+ {
+  "name": "Middlesex University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 17.1,
+   "researchEnvironment": 9.7,
+   "researchQuality": 62,
+   "industry": 42.8,
+   "internationalOutlook": 93.8
+  }
+ },
+ {
+  "name": "Teesside University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 10.4,
+   "researchEnvironment": 7.7,
+   "researchQuality": 59.7,
+   "industry": 27.4,
+   "internationalOutlook": 90.1
+  }
+ },
+ {
+  "name": "The Open University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "researchQuality": 62.3,
+   "teaching": 14.6,
+   "researchEnvironment": 12.6,
+   "industry": 38.8,
+   "internationalOutlook": 62.9
+  }
+ },
+ {
+  "name": "Ulster University",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 11.9,
+   "researchEnvironment": 13.8,
+   "researchQuality": 40.3,
+   "industry": 65.1,
+   "internationalOutlook": 86.4
+  }
+ },
+ {
+  "name": "University of St Andrews",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 32.4,
+   "researchEnvironment": 17.3,
+   "researchQuality": 31.4,
+   "industry": 52.7,
+   "internationalOutlook": 85.1
+  }
+ },
+ {
+  "name": "UWE Bristol",
+  "rankLower": 601,
+  "rankHigher": 800,
+  "overallScore": "30.0\u201335.4",
+  "subScores": {
+   "teaching": 14.7,
+   "researchEnvironment": 9.8,
+   "researchQuality": 63.9,
+   "industry": 41.4,
+   "internationalOutlook": 88.2
+  }
+ }
+]
